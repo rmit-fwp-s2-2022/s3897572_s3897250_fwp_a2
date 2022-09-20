@@ -1,0 +1,34 @@
+{
+  "name": "s3897572_s3897250_fwp_a2",
+  "version": "1.0.0",
+  "description": "Parth and Nate's Assignment 2 - with Node.js Rest Api's with Express, Sequelize & Cloud MySQL",
+  "main": "sever.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rmit-fwp-s2-2022/s3897572_s3897250_fwp_a2.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "react",
+    "sequilze",
+    "orm",
+    "api"
+  ],
+  "author": "Parth Kulkarni, Natenael Gizaw",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rmit-fwp-s2-2022/s3897572_s3897250_fwp_a2/issues"
+  },
+  "homepage": "https://github.com/rmit-fwp-s2-2022/s3897572_s3897250_fwp_a2#readme",
+  "dependencies": {
+    "argon2": "^0.29.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.23.0"
+  }
+}
