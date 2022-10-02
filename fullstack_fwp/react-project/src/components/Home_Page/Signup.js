@@ -1,19 +1,15 @@
-import React, { useState, useContext} from "react";
-import {Link, useNavigate} from "react-router-dom";
-import { userContext } from "../Global_Pages/UserContext";
-import { findUser, createUser } from "../../data/repository";
-/* eslint-disable no-useless-escape */
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import {findUser, createUser} from "../../data/repository";
+
+export default function Register() {
 
 
-import './Signup.css'
-
-function SignUp(){
 
   const navigate = useNavigate();
-  const {user, setUser} = useContext(userContext);
-
   const [fields, setFields] = useState({
-    user_email: "", first_name: "", last_name: "",  password_hash: ""
+    username: "", firstname: "", lastname: "",  password: "", confirmPassword: ""
   });
   const [errors, setErrors] = useState({ });
 
@@ -31,12 +27,9 @@ function SignUp(){
       return;
 
     // Create user.
-    const user_obj = await createUser(trimmedFields);
-
-
+    const user = await createUser(trimmedFields);
 
     // Set user state.
-    setUser(user_obj);
 
     // Navigate to the home page.
     navigate("/");
@@ -76,6 +69,11 @@ function SignUp(){
     else if(field.length < 6)
       currentErrors[key] = "Password must contain at least 6 characters.";
 
+    key = "confirmPassword";
+    field = trimmedFields[key];
+    if(field !== trimmedFields.password)
+      currentErrors[key] = "Passwords do not match.";
+
     setErrors(currentErrors);
 
     return { trimmedFields, isValid: Object.keys(currentErrors).length === 0 };
@@ -89,67 +87,62 @@ function SignUp(){
     return trimmedFields;
   };
 
-
-    
-
-  return(
-            <div>
-              <h1>Register</h1>
-              <hr />
-              <div className="row">
-                <div className="col-md-6">
-                  <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                      <label htmlFor="username" className="control-label">Username</label>
-                      <input name="username" id="username" className="form-control"
-                        value={fields.username} onChange={handleInputChange} />
-                      {errors.username &&
-                        <div className="text-danger">{errors.username}</div>
-                      }
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="firstname" className="control-label">First name</label>
-                      <input name="firstname" id="firstname" className="form-control"
-                        value={fields.firstname} onChange={handleInputChange} />
-                      {errors.firstname &&
-                        <div className="text-danger">{errors.firstname}</div>
-                      }
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="lastname" className="control-label">Last name</label>
-                      <input name="lastname" id="firstname" className="form-control"
-                        value={fields.lastname} onChange={handleInputChange} />
-                      {errors.lastname &&
-                        <div className="text-danger">{errors.lastname}</div>
-                      }
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="password" className="control-label">
-                        Password <small className="text-muted">must be at least 6 characters</small>
-                      </label>
-                      <input type="password" name="password" id="password" className="form-control"
-                        value={fields.password} onChange={handleInputChange} />
-                      {errors.password &&
-                        <div className="text-danger">{errors.password}</div>
-                      }
-                    </div>
-                    <div className="form-group">
-                      <input type="submit" className="btn btn-primary mr-5" value="Register" />
-                      <Link className="btn btn-outline-dark" to="/">Cancel</Link>
-                    </div>
-                  </form>
-                </div>
-              </div>
+  return (
+    <div>
+      <h1>Register</h1>
+      <hr />
+      <div className="row">
+        <div className="col-md-6">
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="username" className="control-label">Username</label>
+              <input name="username" id="username" className="form-control"
+                value={fields.username} onChange={handleInputChange} />
+              {errors.username &&
+                <div className="text-danger">{errors.username}</div>
+              }
             </div>
-          );
-        
-
-
+            <div className="form-group">
+              <label htmlFor="firstname" className="control-label">First name</label>
+              <input name="firstname" id="firstname" className="form-control"
+                value={fields.firstname} onChange={handleInputChange} />
+              {errors.firstname &&
+                <div className="text-danger">{errors.firstname}</div>
+              }
+            </div>
+            <div className="form-group">
+              <label htmlFor="lastname" className="control-label">Last name</label>
+              <input name="lastname" id="firstname" className="form-control"
+                value={fields.lastname} onChange={handleInputChange} />
+              {errors.lastname &&
+                <div className="text-danger">{errors.lastname}</div>
+              }
+            </div>
+            <div className="form-group">
+              <label htmlFor="password" className="control-label">
+                Password <small className="text-muted">must be at least 6 characters</small>
+              </label>
+              <input type="password" name="password" id="password" className="form-control"
+                value={fields.password} onChange={handleInputChange} />
+              {errors.password &&
+                <div className="text-danger">{errors.password}</div>
+              }
+            </div>
+            <div className="form-group">
+              <label htmlFor="confirmPassword" className="control-label">Confirm password</label>
+              <input type="password" name="confirmPassword" id="confirmPassword" className="form-control"
+                value={fields.confirmPassword} onChange={handleInputChange} />
+              {errors.confirmPassword &&
+                <div className="text-danger">{errors.confirmPassword}</div>
+              }
+            </div>
+            <div className="form-group">
+              <input type="submit" className="btn btn-primary mr-5" value="Register" />
+              <Link className="btn btn-outline-dark" to="/">Cancel</Link>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 }
-
-
-
-
-
-
-export default SignUp;

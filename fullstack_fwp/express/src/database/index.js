@@ -14,6 +14,7 @@ db.sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
 // Include models.
 db.user = require("./models/user.js")(db.sequelize, DataTypes);
 
+// Relate post and user.
 
 // Learn more about associations here: https://sequelize.org/master/manual/assocs.html
 
@@ -38,10 +39,10 @@ async function seedData() {
   const argon2 = require("argon2");
 
   let hash = await argon2.hash("abc123", { type: argon2.argon2id });
-  await db.user.create({ user_email: "ng", first_name: "Nate", last_name : "g", password_hash: hash });
+  await db.user.create({ username: "mbolger", password_hash: hash, first_name: "Matthew", last_name : "Bolger" });
 
   hash = await argon2.hash("def456", { type: argon2.argon2id });
-  await db.user.create({ user_email: "aaaapk", first_name: "Parth", last_name : "k", password_hash: hash});
+  await db.user.create({ username: "shekhar", password_hash: hash, first_name: "Shekhar", last_name : "Kalra" });
 }
 
 module.exports = db;
