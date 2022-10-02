@@ -3,22 +3,30 @@ import { BrowserRouter as Router, Routes, Route, BrowserRouter } from "react-rou
 import { userContext } from "./components/Global_Pages/UserContext";
 import SignUp from "./components/Home_Page/Signup";
 import LandingPage from "./components/Home_Page/LandingPage";
+import { getUser, removeUser } from "./data/repository";
+
 
 export default function App() {
 
-  const [user, setUser] = useState(null); // User has not been registered, so set to null. 
+  const [user, setUser] = useState(getUser());
 
-  
+  const loginUser = (user) => {
+    setUser(user);
+  };
+
+  const logoutUser = () => {
+    removeUser();
+    setUser(null);
+  };
+
 
   return (
     <BrowserRouter>
     
-    <userContext.Provider value={{user, setUser}}>
     <Routes>
           <Route path="/" element={<LandingPage/>}></Route>
-          <Route path="/SignUp" element={<SignUp/>}></Route>  
+          <Route path="/SignUp" element={<SignUp loginUser={loginUser} />}></Route>  
     </Routes>
-    </userContext.Provider>
 
     
     

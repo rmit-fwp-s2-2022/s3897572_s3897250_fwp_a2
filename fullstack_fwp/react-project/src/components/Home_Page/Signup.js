@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import {userContext} from "../Global_Pages/UserContext"
 import {findUser, createUser} from "../../data/repository";
 
-export default function Register() {
-
-
+export default function Register({loginUser}) {
 
   const navigate = useNavigate();
+
   const [fields, setFields] = useState({
     username: "", firstname: "", lastname: "",  password: "", confirmPassword: ""
   });
@@ -27,9 +27,14 @@ export default function Register() {
       return;
 
     // Create user.
-    const user = await createUser(trimmedFields);
+    const user_obj = await createUser(trimmedFields);
 
     // Set user state.
+
+    loginUser(user_obj);
+
+
+
 
     // Navigate to the home page.
     navigate("/");
