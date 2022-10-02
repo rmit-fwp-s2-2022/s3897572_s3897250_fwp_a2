@@ -1,15 +1,18 @@
+/* eslint-disable no-useless-escape */
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {userContext} from "../Global_Pages/UserContext"
 import {findUser, createUser} from "../../data/repository";
 
-export default function Register({loginUser}) {
+function SignUp() {
 
   const navigate = useNavigate();
 
+  const {user, setUser} = useContext(userContext)
+
   const [fields, setFields] = useState({
-    username: "", firstname: "", lastname: "",  password: "", confirmPassword: ""
+    username: "", firstname: "", lastname: "",  password: ""
   });
   const [errors, setErrors] = useState({ });
 
@@ -18,75 +21,80 @@ export default function Register({loginUser}) {
     setFields({ ...fields, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event ) =>{
+
     event.preventDefault();
 
-    // Validate form and if invalid do not contact API.
-    const { trimmedFields, isValid } = await handleValidation();
+    const {isValid} = await handleValidation();
+
+    console.log(fields)
+
     if(!isValid)
       return;
 
     // Create user.
-    const user_obj = await createUser(trimmedFields);
+
+    const user_obj = await createUser(fields);
     
     // Set user state.
-    loginUser(user_obj);
 
+    setUser(user_obj)
 
     // Navigate to the home page.
-    navigate("/");
-  };
+    navigate("/Profile");
+
+  }
+
 
   const handleValidation = async () => {
-    const trimmedFields = trimFields();
-    const currentErrors = { };
 
+    const currentErrors = { } // A key-pair object that is used to handle errors/ gather errors.
+
+    
     let key = "username";
-    let field = trimmedFields[key];
+    let field = fields[key];
     if(field.length === 0)
       currentErrors[key] = "Username is required.";
     else if(field.length > 32)
       currentErrors[key] = "Username length cannot be greater than 32.";
-    else if(await findUser(trimmedFields.username) !== null)
+    else if(await findUser(fields.username) !== null)
       currentErrors[key] = "Username is already registered.";
+    
+    else if (field.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) == null)
+      currentErrors[key] = "Email formatting is not correct."
 
     key = "firstname";
-    field = trimmedFields[key];
+    field = fields[key];
     if(field.length === 0)
       currentErrors[key] = "First name is required.";
     else if(field.length > 40)
       currentErrors[key] = "First name length cannot be greater than 40.";
+    
+    else if (field.match(/^[a-zA-Z]+$/) == null)
+      currentErrors[key] = "First Name cannot contain symbols or numbers";
 
     key = "lastname";
-    field = trimmedFields[key];
+    field = fields[key];
     if(field.length === 0)
       currentErrors[key] = "Last name is required.";
     else if(field.length > 40)
       currentErrors[key] = "Last name length cannot be greater than 40.";
+    else if (field.match(/^[a-zA-Z]+$/) == null)
+      currentErrors[key] = "Last Name cannot contain symbols or numbers";
 
     key = "password";
-    field = trimmedFields[key];
+    field = fields[key];
     if(field.length === 0)
       currentErrors[key] = "Password is required.";
     else if(field.length < 6)
       currentErrors[key] = "Password must contain at least 6 characters.";
-
-    key = "confirmPassword";
-    field = trimmedFields[key];
-    if(field !== trimmedFields.password)
-      currentErrors[key] = "Passwords do not match.";
+    else if(field.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/) ==  null){
+      currentErrors[key] = "Passwords should contain 8 to 15 characters, one uppercase letter, one numeric digit and one special character"
+    }
 
     setErrors(currentErrors);
 
-    return { trimmedFields, isValid: Object.keys(currentErrors).length === 0 };
-  };
-
-  const trimFields = () => {
-    const trimmedFields = { };
-    Object.keys(fields).map(key => trimmedFields[key] = fields[key].trim());
-    setFields(trimmedFields);
-
-    return trimmedFields;
+    return {isValid: Object.keys(currentErrors).length === 0 };
   };
 
   return (
@@ -131,14 +139,6 @@ export default function Register({loginUser}) {
               }
             </div>
             <div className="form-group">
-              <label htmlFor="confirmPassword" className="control-label">Confirm password</label>
-              <input type="password" name="confirmPassword" id="confirmPassword" className="form-control"
-                value={fields.confirmPassword} onChange={handleInputChange} />
-              {errors.confirmPassword &&
-                <div className="text-danger">{errors.confirmPassword}</div>
-              }
-            </div>
-            <div className="form-group">
               <input type="submit" className="btn btn-primary mr-5" value="Register" />
               <Link className="btn btn-outline-dark" to="/">Cancel</Link>
             </div>
@@ -147,4 +147,10 @@ export default function Register({loginUser}) {
       </div>
     </div>
   );
-}
+
+
+  }
+
+
+  export default SignUp;
+

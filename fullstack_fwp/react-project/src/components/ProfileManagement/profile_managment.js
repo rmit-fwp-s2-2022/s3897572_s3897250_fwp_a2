@@ -1,18 +1,21 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect, useContext} from "react";
 import './profile_manage.css';
 import { emailError, nameError, emailCheck_ProfileChange } from '../Validation_rules/validation'
-import {updateUser} from "../../data/repository";
+import { userContext } from '../Global_Pages/UserContext';
+import {deleteUser, updateUser, createUser} from "../../data/repository";
 
 
 const ProfileManage = (props) => {
+
+    const {user, setUser} = useContext(userContext)
     
-    const [userInfo, setUserInfo] = useState(props.loggedInUser)
+    const [userInfo, setUserInfo] = useState(user)
     const imageLink = userInfo['profile_pic']
     const[updatedfirstname, setnewfirstname] = useState(userInfo.first_name)
     const[updatedlastname, setnewlastname] = useState(userInfo.last_name)
     const originalemail = userInfo.email
-    const[updatedemail, setnewemail] = useState(userInfo.email) 
+    const[updatedemail, setnewemail] = useState(userInfo.username) 
     const[valid, setValid] = useState(null)
     const navigate = useNavigate();
 
@@ -20,7 +23,6 @@ const ProfileManage = (props) => {
     useEffect(() => {  // As soon as valid is set to true the the useEffect function is executed
         
         if (valid) {
-            props.loginUser(userInfo)
             redirect();
         }
 
@@ -62,9 +64,11 @@ const ProfileManage = (props) => {
         {
             setValid(true)
 
+            console.log(userInfo, "i am user info")
+
             userInfo.first_name = updatedfirstname;
             userInfo.last_name = updatedlastname;
-            userInfo.email = updatedemail;
+            userInfo.username = updatedemail;
             setUserInfo(userInfo)
 
 
@@ -84,11 +88,14 @@ const ProfileManage = (props) => {
 
         console.log(userInfo)
 
-        const updated =  await updateUser(userInfo);
+        
 
-        props.onLogin(updated)
 
-        navigate('/')
+        setUser(userInfo)
+
+        console.log("navigating failed")
+
+        navigate('/Profile')
 
     }
     
@@ -125,7 +132,7 @@ const ProfileManage = (props) => {
 
                         <div className='user-info-manage'>
                             <label> Your Email:</label>
-                            <input type= "text" defaultValue = {userInfo.email} onChange = {setemail}></input>
+                            <input type= "text" defaultValue = {userInfo.username} onChange = {setemail}></input>
                             {emailError(valid, updatedemail)}
                             {emailCheck_ProfileChange(originalemail, updatedemail)}
 

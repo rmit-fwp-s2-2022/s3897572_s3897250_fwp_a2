@@ -1,13 +1,16 @@
 import {useNavigate } from 'react-router-dom';
 import './Profile.css';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { userContext } from '../Global_Pages/UserContext';
 import {deleteUser} from "../../data/repository";
 
 
-const Profile = ({loggedInUser, onLogout}) =>{
+const Profile = () =>{
+
+    const {user, setUser} = useContext(userContext);
 
     
-    const [imageLink] = useState(loggedInUser['profile_pic'])
+    const [imageLink] = useState(user.profile_pic)
     let navigate = useNavigate()
 
 
@@ -15,12 +18,12 @@ const Profile = ({loggedInUser, onLogout}) =>{
         let val = window.confirm("Are you sure you want to delete your account? This will remove you from our system and all your created posts/replies")
 
 
-        console.log(loggedInUser.username)
+        console.log(user.username)
 
         if (val) {
 
-            const deleted_user = await deleteUser(loggedInUser)
-            onLogout()
+            const deleted_user = await deleteUser(user)
+            setUser(null)
             navigate('/')
             // Need to Delete Account, Posts and Replies at the Same Time
         }
@@ -28,6 +31,7 @@ const Profile = ({loggedInUser, onLogout}) =>{
         // Must produce a cue and confirmation
 
     }
+    
 
     function edit_account() {
         navigate('/ProfileManagement')
@@ -48,15 +52,15 @@ const Profile = ({loggedInUser, onLogout}) =>{
                 <div className='user-container'>
 
                 <div className= 'user-info'>
-                    <p>Full Name: {loggedInUser.first_name + " " +  loggedInUser.last_name}</p>
+                    <p>Full Name: {user.first_name + " " +  user.last_name}</p>
                 </div>
 
                 <div className='email-info'>
-                    <p>Email: {loggedInUser.email}</p>
+                    <p>Email: {user.email}</p>
                 </div>
 
                 <div className='joined-info'>
-                    <p>{loggedInUser.date_joined}</p>
+                    <p>{user.date_joined}</p>
                 </div>
 
                 </div>

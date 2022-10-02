@@ -1,0 +1,18 @@
+.footer {
+    display: flex;
+    padding: 20px;
+    margin-top: auto;
+    background-color: black;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  
+  .left-side, .right-side {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 16px;
+    color: white;
+  }
+  
