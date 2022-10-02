@@ -15,7 +15,20 @@ module.exports = (sequelize, DataTypes) =>
     last_name: {
       type: DataTypes.STRING(40),
       allowNull: false
+    },
+    profile_pic: {
+      type: DataTypes.STRING,
+      defaultValue: "none"
+    },
+    email: {
+      type: DataTypes.STRING,
+      default: "peanutbutterjelly@gmail.com"
+    },
+    date_joined: {
+      type: DataTypes.STRING,
+      default: "none"
     }
+
   }, {
     // Don't add the timestamp attributes (updatedAt, createdAt).
     timestamps: false

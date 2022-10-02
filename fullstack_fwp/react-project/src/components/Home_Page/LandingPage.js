@@ -8,8 +8,6 @@ function LandingPage(){
     let navigate = useNavigate()
 
 
-
-
     return(
 
         <div></div>

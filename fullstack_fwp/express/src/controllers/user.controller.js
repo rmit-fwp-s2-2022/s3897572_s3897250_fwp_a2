@@ -34,8 +34,33 @@ exports.create = async (req, res) => {
     username: req.body.username,
     password_hash: hash,
     first_name: req.body.firstname,
-    last_name: req.body.lastname
+    last_name: req.body.lastname,
   });
 
   res.json(user);
+};
+
+// Updates user from the database
+exports.update = async (req, res) => {
+
+  const to_be_updated = await db.user.update({first_name: req.body.first_name, last_name: req.body.last_name}, {
+      where: {
+        username: req.body.username
+      }
+    });
+
+  
+  res.json(to_be_updated);
+};
+
+// Deletes user from the database
+exports.delete = async (req, res) => {
+
+  const to_be_deleted = await db.user.destroy({
+      where: {
+        username: req.body.username
+      }
+    });
+
+  res.json(to_be_deleted);
 };

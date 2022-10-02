@@ -28,12 +28,9 @@ export default function Register({loginUser}) {
 
     // Create user.
     const user_obj = await createUser(trimmedFields);
-
+    
     // Set user state.
-
     loginUser(user_obj);
-
-
 
 
     // Navigate to the home page.
