@@ -9,20 +9,23 @@ import {deleteUser, updateUser, createUser} from "../../data/repository";
 const ProfileManage = (props) => {
 
     const {user, setUser} = useContext(userContext)
+
+    const updated_obj = {...user};
+
+    const imageLink = updated_obj.profile_pic;
+    const[updatedfirstname, setnewfirstname] = useState(updated_obj.first_name);
+    const[updatedlastname, setnewlastname] = useState(updated_obj.last_name);
+    const originalemail = updated_obj.email;
+    const[updatedemail, setnewemail] = useState(updated_obj.username); 
+    const[valid, setValid] = useState(null);
     
-    const [userInfo, setUserInfo] = useState(user)
-    const imageLink = userInfo['profile_pic']
-    const[updatedfirstname, setnewfirstname] = useState(userInfo.first_name)
-    const[updatedlastname, setnewlastname] = useState(userInfo.last_name)
-    const originalemail = userInfo.email
-    const[updatedemail, setnewemail] = useState(userInfo.username) 
-    const[valid, setValid] = useState(null)
     const navigate = useNavigate();
 
 
     useEffect(() => {  // As soon as valid is set to true the the useEffect function is executed
         
         if (valid) {
+            validate();
             redirect();
         }
 
@@ -64,13 +67,10 @@ const ProfileManage = (props) => {
         {
             setValid(true)
 
-            console.log(userInfo, "i am user info")
-
-            userInfo.first_name = updatedfirstname;
-            userInfo.last_name = updatedlastname;
-            userInfo.username = updatedemail;
-            setUserInfo(userInfo)
-
+            updated_obj.first_name = updatedfirstname;
+            updated_obj.last_name = updatedlastname;
+            updated_obj.username = updatedemail;
+          
 
             console.log("Login set to true")
             
@@ -86,14 +86,17 @@ const ProfileManage = (props) => {
         // Updates user information and sets it in the database, if valid is set to true
     async function redirect() {
 
-        console.log(userInfo)
+        console.log("deleting", user)
 
-        
+        await deleteUser(user)
 
+        console.log("Creating", updated_obj)
 
-        setUser(userInfo)
+        await createUser(updated_obj)
 
-        console.log("navigating failed")
+        setUser(updated_obj)
+
+        console.log("navigating...")
 
         navigate('/Profile')
 
@@ -120,19 +123,19 @@ const ProfileManage = (props) => {
 
                         <div className= 'user-info-manage'>
                             <label> First Name:</label>
-                            <input type = "text" className='input-manage' defaultValue = {userInfo.first_name} onChange = {setfirstName}></input>
+                            <input type = "text" className='input-manage' defaultValue = {updated_obj.first_name} onChange = {setfirstName}></input>
                             {nameError(valid, updatedfirstname)}
                         </div>
 
                         <div className= 'user-info-manage'>
                             <label> Last Name:</label>
-                            <input type = "text" defaultValue = {userInfo.last_name} onChange = {setlastName}></input>
+                            <input type = "text" defaultValue = {updated_obj.last_name} onChange = {setlastName}></input>
                             {nameError(valid, updatedlastname)}
                         </div>
 
                         <div className='user-info-manage'>
                             <label> Your Email:</label>
-                            <input type= "text" defaultValue = {userInfo.username} onChange = {setemail}></input>
+                            <input type= "text" defaultValue = {updated_obj.username} onChange = {setemail}></input>
                             {emailError(valid, updatedemail)}
                             {emailCheck_ProfileChange(originalemail, updatedemail)}
 
