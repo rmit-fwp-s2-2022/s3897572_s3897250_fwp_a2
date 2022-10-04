@@ -25,7 +25,7 @@ const Header = () => {
       
             <ul className = "nav-links">
               <Link to = "/" className="links"><li onClick={() => setUser(null)}>Sign out</li></Link>
-              <Link to = "/Profile" className="links"><li>Profile Management</li></Link>
+              <Link to = {`/Profile/${user.username}`} className="links"><li>Profile Management</li></Link>
               <Link to = "/create" className="links"><li>Create post</li></Link>
               <Link to = "/ProfilePosts" className="links"><li>My Posts</li></Link>
             </ul>

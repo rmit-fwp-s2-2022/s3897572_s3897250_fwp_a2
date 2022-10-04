@@ -1,0 +1,141 @@
+.post-view {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    padding: 70px;
+    gap: 40px;
+    margin: 0px 220px;
+}
+
+.post-title, .post-created-by{
+    text-align: center;
+}
+
+.post-upper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0px 300px;
+}
+
+
+.post-upper .post-body{
+    align-self: center;
+    width: auto;
+    padding: 24px 30px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.post-upper textarea {
+
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+}
+
+.post-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.image-rendering{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-view-buttons{
+    border-radius: 10px;
+    border-style: none;
+    padding: 10px;
+    box-shadow: rgba(3, 3, 3, 0.2) 0px 7px 29px 0px;
+}
+
+.post-view-buttons:hover {
+    opacity: 0.5;
+}
+
+.image-rendered-post-view{
+    height: 600px;
+    width: 700px;
+}
+
+
+.comments {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.comments-add {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: auto;
+}
+
+.comments-add button {
+    border-radius: 10px;
+    border-style: none;
+    padding: 10px;
+    box-shadow: rgba(3, 3, 3, 0.2) 0px 7px 29px 0px;
+    font-size: small;
+}
+
+.comments-add button:hover{
+    opacity: 0.5;
+}
+
+.comments-add button {
+    border-radius: 10px;
+    border-style: none;
+    padding: 5px;
+    width: 200px;
+    align-self: center;
+    font-weight: bold;
+}
+
+.comments-add textarea {
+    resize: none;
+    align-self: center;
+    box-shadow: rgba(3, 3, 3, 0.2) 0px 7px 29px 0px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+
+
+.comment-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
+}
+
+.user-info-comment{
+    font-size: 15px;
+}
+
+.image-text{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.profile-picture-comments{
+    border-radius: 50%;
+    height: 80px;
+}
+
+.comment-text{
+    display: flex;
+    margin-left: 110px;
+    margin-top: -50px;
+}
