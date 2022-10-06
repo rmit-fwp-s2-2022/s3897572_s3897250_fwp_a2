@@ -77,6 +77,7 @@ function CreatePost() {
             const post = {
                 title: title,
                 username: user.username,
+                user_id: user.user_id,
                 body: body,
                 id: parseInt(Date.now()),
                 image: image.length > 0 ? image : "no-image"

@@ -24,7 +24,7 @@ db.post = require("./models/post.js")(db.sequelize, DataTypes);
 
 db.post.belongsTo(db.user, {
   foreignKey: {
-    name: "username",
+    name: "user_id",
     allowNull: false
   },
   onDelete: "CASCADE"
@@ -57,11 +57,10 @@ async function seedData() {
 
   const argon2 = require("argon2");
 
-  let hash = await argon2.hash("abc123", { type: argon2.argon2id });
-  await db.user.create({ username: "mbolger", user_id: parseInt(Date.now()), password_hash: hash, first_name: "Matthew", last_name : "Bolger", profile_pic: "ok" , email: "g@gmail.com"});
+  const testing_id = parseInt(Date.now())
 
-  hash = await argon2.hash("def456", { type: argon2.argon2id });
-  await db.user.create({ username: "shekhar", user_id: parseInt(Date.now()), password_hash: hash, first_name: "Shekhar", last_name : "Kalra" , profile_pic: "ok", email: "g@gmail.com"});
+  let hash = await argon2.hash("abc123", { type: argon2.argon2id });
+  await db.user.create({ username: "testingrecord", user_id: testing_id, password_hash: hash, first_name: "testingrecord", last_name : "testingrecord", profile_pic: "testingrecord" , email: "testingrecord@gmail.com"});
 
 
   await db.post.create({
@@ -69,7 +68,8 @@ async function seedData() {
     username: 'shekhar',
     body: 'req.body.body',
     id: 1,
-    image: 'req.body.image'
+    image: 'req.body.image',
+    user_id: testing_id
   });
 
 }

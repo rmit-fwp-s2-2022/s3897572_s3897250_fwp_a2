@@ -13,9 +13,12 @@ function ProfilePosts() {
     const {user, setUser} = useContext(userContext)
     const user_name_params = useParams()
 
-    // [user] = useState(await findUser(user_name_params))
 
-    console.log(user_name_params)
+    async function getaUser() {
+        const userObj = await findUser(user_name_params.id)
+    }
+
+    getaUser()
 
     return (
         <div className='post-view'>
