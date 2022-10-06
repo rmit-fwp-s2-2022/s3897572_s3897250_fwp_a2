@@ -38,7 +38,7 @@ async function deleteUser(user) {
     const response = await axios.post(API_HOST + "/api/users/delete", user);
   
     return response.data;
-  }
+}
   
 
 // --- Post ---------------------------------------------------------------------------------------

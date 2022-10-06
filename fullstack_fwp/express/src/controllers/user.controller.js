@@ -10,7 +10,13 @@ exports.all = async (req, res) => {
 
 // Select one user from the database.
 exports.one = async (req, res) => {
-  const user = await db.user.findByPk(req.params.id);
+  const user = await db.user.findByPk(req.params.id, {
+      include: {
+          all: true,
+          nested: true
+      }
+    }
+  );
 
   res.json(user);
 };

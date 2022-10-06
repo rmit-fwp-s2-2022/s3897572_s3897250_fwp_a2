@@ -1,0 +1,39 @@
+.add-reply-button, .add-submit-button{
+    padding: 10px;
+}
+
+.add-reply-button:hover, .add-submit-button:hover{
+    opacity: 0.5;
+}
+
+.submit-reply-input{
+    height: 10px;
+    padding: 10px;
+}
+
+
+.nested-comments {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin-left: 5em;
+
+}
+
+.comment {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.profile-picture-comments-replies{
+    padding: 10px;
+    border-radius: 50%;
+    height: 40px;
+}
+
+.comment-text-replies{
+    display: flex;
+    margin-left: 90px;
+}
