@@ -9,12 +9,8 @@ import Profile from "./components/Profile_Page/Profile";
 import Login from "./components/Home_Page/Login";
 import Header from "./fragments/Navbar";
 import Footer from "./fragments/Footer";
-<<<<<<< HEAD
 import CreatePost from "./components/Posts/CreatePost"
 import ProfilePosts from "./components/Posts/ProfilePosts"
-=======
-import CreatePost from "./components/Posts/CreatePost";
->>>>>>> 5c24f44ef43cf5f399b7ad19807634245931d8ff
 
 // ProfilePosts, PostView
 

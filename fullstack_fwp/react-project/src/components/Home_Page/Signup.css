@@ -11,19 +11,22 @@
   }
   
   .signup-text .Title{
-    color: black;
+    display: flex;
+    color: white;
   }
-  
-  .signup-form {
+
+  .signup-form{
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    background-color: #CBC3E3;
+    color: black;
     height: 800px;
     width: 600px;
     border-radius: 15px;
-    padding: 20px;
+
+
   }
+  
+  
   
   .signup-box label{
     text-align: left;

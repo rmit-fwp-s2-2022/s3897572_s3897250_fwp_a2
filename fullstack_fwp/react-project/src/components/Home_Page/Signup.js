@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {userContext} from "../Global_Pages/UserContext"
 import {findUser, createUser} from "../../data/repository";
+import './Signup.css'
 
 function SignUp() {
 
@@ -96,61 +97,74 @@ function SignUp() {
 
     return {isValid: Object.keys(currentErrors).length === 0 };
   };
+  
+
 
   return (
-    <div>
-      <h1>Register</h1>
-      <hr />
-      <div className="row">
-        <div className="col-md-6">
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="username" className="control-label">Username</label>
-              <input name="username" id="username" className="form-control"
-                value={fields.username} onChange={handleInputChange} />
-              {errors.username &&
-                <div className="text-danger">{errors.username}</div>
-              }
-            </div>
-            <div className="form-group">
-              <label htmlFor="firstname" className="control-label">First name</label>
-              <input name="firstname" id="firstname" className="form-control"
-                value={fields.firstname} onChange={handleInputChange} />
-              {errors.firstname &&
-                <div className="text-danger">{errors.firstname}</div>
-              }
-            </div>
-            <div className="form-group">
-              <label htmlFor="lastname" className="control-label">Last name</label>
-              <input name="lastname" id="firstname" className="form-control"
-                value={fields.lastname} onChange={handleInputChange} />
-              {errors.lastname &&
-                <div className="text-danger">{errors.lastname}</div>
-              }
-            </div>
-            <div className="form-group">
-              <label htmlFor="password" className="control-label">
-                Password <small className="text-muted">must be at least 6 characters</small>
-              </label>
-              <input type="password" name="password" id="password" className="form-control"
-                value={fields.password} onChange={handleInputChange} />
-              {errors.password &&
-                <div className="text-danger">{errors.password}</div>
-              }
-            </div>
-            <div className="form-group">
-              <input type="submit" className="btn btn-primary mr-5" value="Register" />
-              <Link className="btn btn-outline-dark" to="/">Cancel</Link>
-            </div>
-          </form>
-        </div>
+
+    
+    <div className="signup-text">
+            
+    <h1 className = "signup-Title">Sign-Up Form</h1>
+
+    <h4> Already have an account with LAN? <Link to = '/Login'>Log in here</Link></h4>
+
+
+    <div className="signup-form">
+      
+      <form onSubmit={handleSubmit}></form>
+
+      <div className="signup-box">
+        <label htmlFor="username" className="control-label">Username</label>
+                <input name="username" id="username" className="form-control"
+                  value={fields.username} onChange={handleInputChange} />
+                {errors.username &&
+                  <div className="text-danger">{errors.username}</div>
+                }
       </div>
-    </div>
-  );
+
+      <div className="signup-box">
+        <label htmlFor="firstname" className="control-label">First name</label>
+                <input name="firstname" id="firstname" className="form-control"
+                  value={fields.firstname} onChange={handleInputChange} />
+                {errors.firstname &&
+                  <div className="text-danger">{errors.firstname}</div>
+                }
+      </div>
+
+      <div className="signup-box">
+        <label htmlFor="lastname" className="control-label">Last name</label>
+                <input name="lastname" id="firstname" className="form-control"
+                  value={fields.lastname} onChange={handleInputChange} />
+                {errors.lastname &&
+                  <div className="text-danger">{errors.lastname}</div>
+                }
+      
+      </div>
+
+      <div className="signup-box">
+
+        <label htmlFor="password" className="control-label">
+                  Password <small className="text-muted">must be at least 6 characters</small>
+                </label>
+                <input type="password" name="password" id="password" className="form-control"
+                  value={fields.password} onChange={handleInputChange} />
+                {errors.password &&
+                  <div className="text-danger">{errors.password}</div>
+                }
+      </div>
+
+      <button type="submit" className="submit-button">Sign up</button>
 
 
-  }
+      </div>
+
+      </div>
+
+  )
 
 
-  export default SignUp;
+}
+
+export default SignUp;
 

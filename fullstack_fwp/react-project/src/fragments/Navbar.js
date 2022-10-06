@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import './Header.css'
 import { userContext } from '../components/Global_Pages/UserContext';
 import { useContext } from 'react';
+import { removeUser } from '../data/repository';
 
 const Header = () => {
 
@@ -9,6 +10,16 @@ const Header = () => {
     // of the client viewing the website.
 
     const {user, setUser} = useContext(userContext)
+
+    function handleSignOut(){
+
+        setUser(null)
+        removeUser()
+
+
+
+
+    }
     
      return (
 
@@ -24,7 +35,7 @@ const Header = () => {
         {user ? ( 
       
             <ul className = "nav-links">
-              <Link to = "/" className="links"><li onClick={() => setUser(null)}>Sign out</li></Link>
+              <Link to = "/" className="links"><li onClick={handleSignOut}>Sign out</li></Link>
               <Link to = "/Profile" className="links"><li>Profile Management</li></Link>
               <Link to = "/create" className="links"><li>Create post</li></Link>
               <Link to = {`/ProfilePosts/${77}`} key={user.username} className="links"><li>My Posts</li></Link>
