@@ -159,7 +159,9 @@ function SignUp() {
                 }
       </div>
 
-      <button type="submit" className="submit-button" value="Register">Sign up</button>
+      <div className="submit-button-container">
+        <button type="submit" className="submit-button" value="Register">Sign up</button>
+      </div>
 
       </form>
 
@@ -172,7 +174,21 @@ function SignUp() {
       
     <div className="column">
 
-      <img src = "/images/Signup_Page/sign-up-img.jpg" className="signup-img" alt=""></img>
+      <div className="company-text">
+
+        <h3> A passion for our staff... led us here</h3>
+        
+      </div>
+
+      <div className="img-placement">
+
+        <div className="image-itself">
+
+          <img src = "/images/Signup_Page/sign-up-img.jpg" className="signup-img" alt=""></img>
+        
+        </div>
+
+      </div>
 
     </div>
 

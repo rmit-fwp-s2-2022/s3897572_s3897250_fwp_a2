@@ -1,13 +1,13 @@
 .row{
   display: flex;
-  min-height: 300vh;
+  min-height: 150vh;
 
 }
 
 .column {
   flex: 50%;
   padding: 10px;
-  height: 100px; /* Should be removed. Only for demonstration */
+  height: 50px;
 
 }
 
@@ -60,19 +60,46 @@
     padding: 5px;
       
   }
+
+  .submit-button-container{
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+  }
   
   .signup-form button {
     border: none;
-    margin-top: auto;
     padding: 20px 50px;
     border-radius: 10px;
     background-color: rgb(69, 71, 71);
     font-size: medium;
     font-weight: bold;
     color: rgb(245, 245, 245);
+   
+   
   }
   
   .signup-form button:hover {
     color: rgb(48, 36, 36);
     background-color: rgb(163, 157, 157);
+  }
+
+  .company-text{
+    display: flex;
+    align-items: center;
+  
+  }
+
+  .img-placement{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    margin-top: 300px;
+
+  }
+
+  .signup-img{
+    height: 550px;
+    width: 800px;
+    border-radius: 5px;
   }
