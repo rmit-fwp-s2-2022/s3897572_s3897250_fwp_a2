@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) =>
   sequelize.define("user", {
-    username: {
-      type: DataTypes.STRING(32),
+    user_id: {
+      type: DataTypes.BIGINT,
       primaryKey: true
     },
-    user_id: {
-      type: DataTypes.BIGINT
+    username: {
+      type: DataTypes.STRING(32),
     },
     password_hash: {
       type: DataTypes.STRING(96),

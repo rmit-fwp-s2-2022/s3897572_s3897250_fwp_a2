@@ -15,7 +15,8 @@ exports.create = async (req, res) => {
     username: req.body.username,
     body: req.body.body,
     id: req.body.id,
-    image: req.body.image
+    image: req.body.image,
+    user_id: req.body.user_id
   });
 
   res.json(post);
