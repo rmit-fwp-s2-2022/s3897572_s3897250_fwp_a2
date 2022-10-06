@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {  useNavigate, useParams } from 'react-router-dom';
 import "./ProfilePosts.css"
 import { userContext } from '../Global_Pages/UserContext';
@@ -10,8 +10,11 @@ function ProfilePosts() {
 
     // Shows the posts from a specific user (based on their id)
 
+    const {user, setUser} = useContext(userContext)
     const user_name_params = useParams()
+
     // [user] = useState(await findUser(user_name_params))
+
     console.log(user_name_params)
 
     return (
