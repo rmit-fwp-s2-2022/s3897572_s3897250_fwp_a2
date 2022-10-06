@@ -39,6 +39,7 @@ exports.create = async (req, res) => {
   const user = await db.user.create({
     username: req.body.username,
     password_hash: hash,
+    user_id: req.body.user_id,
     first_name: req.body.firstname,
     last_name: req.body.lastname,
   });

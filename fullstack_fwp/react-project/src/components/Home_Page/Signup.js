@@ -13,7 +13,7 @@ function SignUp() {
   const {user, setUser} = useContext(userContext)
 
   const [fields, setFields] = useState({
-    username: "", firstname: "", lastname: "",  password: ""
+    username: "", firstname: "", lastname: "",  password: "", user_id: parseInt(Date.now())
   });
   const [errors, setErrors] = useState({ });
 
