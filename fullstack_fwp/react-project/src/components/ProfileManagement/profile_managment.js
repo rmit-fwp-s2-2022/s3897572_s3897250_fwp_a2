@@ -6,7 +6,7 @@ import { userContext } from '../Global_Pages/UserContext';
 import {deleteUser, updateUser, createUser} from "../../data/repository";
 
 
-const ProfileManage = (props) => {
+const ProfileManage = () => {
 
     const {user, setUser} = useContext(userContext)
 
@@ -15,7 +15,7 @@ const ProfileManage = (props) => {
     const imageLink = updated_obj.profile_pic;
     const[updatedfirstname, setnewfirstname] = useState(updated_obj.first_name);
     const[updatedlastname, setnewlastname] = useState(updated_obj.last_name);
-    const originalemail = updated_obj.email;
+    const originalemail = user.username;
     const[updatedemail, setnewemail] = useState(updated_obj.username); 
     const[valid, setValid] = useState(null);
     
@@ -86,13 +86,11 @@ const ProfileManage = (props) => {
         // Updates user information and sets it in the database, if valid is set to true
     async function redirect() {
 
+    
+
         console.log("deleting", user)
 
-        await deleteUser(user)
-
-        console.log("Creating", updated_obj)
-
-        await createUser(updated_obj)
+        await updateUser(updated_obj)
 
         setUser(updated_obj)
 
