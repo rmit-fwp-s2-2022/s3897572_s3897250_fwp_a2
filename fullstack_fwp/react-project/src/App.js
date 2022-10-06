@@ -9,7 +9,7 @@ import Profile from "./components/Profile_Page/Profile";
 import Login from "./components/Home_Page/Login";
 import Header from "./fragments/Navbar";
 import Footer from "./fragments/Footer";
-import CreatePost from "./components/Posts/CreatePost"
+import CreatePost from "./components/Posts/CreatePost";
 
 // ProfilePosts, PostView
 
@@ -33,7 +33,6 @@ export default function App() {
             <Route path="/ProfileManagement" element={<ProfileManagement />}></Route>
 
             <Route path="/ProfilePosts">
-              <Route path=":id" element={<ProfilePosts/>}></Route>
             </Route>
             {/* <Route path="/PostView" >
                 <Route path=":id" element={<PostView/>}></Route>
