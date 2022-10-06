@@ -102,10 +102,15 @@ function SignUp() {
 
   return (
 
+    <div className="row">
+
+    <div className="column">
     
     <div className="signup-text">
-            
-    <h1 className = "signup-Title">Sign-Up Form</h1>
+
+    <div className="form-title">    
+      <h1 className = "signup-Title">Sign-Up Form</h1>
+    </div>
 
     <h4> Already have an account with LAN? <Link to = '/Login'>Log in here</Link></h4>
 
@@ -159,6 +164,20 @@ function SignUp() {
       </form>
 
       </div>
+
+      </div>
+
+      </div>
+
+      
+    <div className="column">
+
+      <img src = "/images/Signup_Page/sign-up-img.jpg" className="signup-img" alt=""></img>
+
+    </div>
+
+
+
 
       </div>
 

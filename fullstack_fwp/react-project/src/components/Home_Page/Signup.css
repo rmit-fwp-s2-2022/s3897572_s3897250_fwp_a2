@@ -1,19 +1,31 @@
+.row{
+  display: flex;
+  min-height: 300vh;
+
+}
+
+.column {
+  flex: 50%;
+  padding: 10px;
+  height: 100px; /* Should be removed. Only for demonstration */
+
+}
+
 .signup-text{
     margin-top: 70px;
     display: flex;
     gap: 50px;
     flex-direction: column;
-    align-items: center;
+    align-items:center;
     width: auto;
-    min-height: 100vh;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   
   }
-  
-  .signup-text .Title{
-    display: flex;
-    color: white;
+
+  .signup-Title{
+    color: purple;
   }
+  
 
   .signup-form{
     display: flex;
