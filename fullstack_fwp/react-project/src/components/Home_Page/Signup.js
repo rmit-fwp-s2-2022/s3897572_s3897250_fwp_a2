@@ -112,7 +112,7 @@ function SignUp() {
 
     <div className="signup-form">
       
-      <form onSubmit={handleSubmit}></form>
+      <form onSubmit={handleSubmit}>
 
       <div className="signup-box">
         <label htmlFor="username" className="control-label">Username</label>
@@ -154,8 +154,9 @@ function SignUp() {
                 }
       </div>
 
-      <button type="submit" className="submit-button">Sign up</button>
+      <button type="submit" className="submit-button" value="Register">Sign up</button>
 
+      </form>
 
       </div>
 
