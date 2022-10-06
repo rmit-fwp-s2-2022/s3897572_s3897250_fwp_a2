@@ -10,6 +10,7 @@ import Login from "./components/Home_Page/Login";
 import Header from "./fragments/Navbar";
 import Footer from "./fragments/Footer";
 import CreatePost from "./components/Posts/CreatePost"
+import ProfilePosts from "./components/Posts/ProfilePosts"
 
 // ProfilePosts, PostView
 
@@ -59,9 +60,23 @@ export default function App() {
 //    - Would map out the posts to their corresponding PostView component
 //    - Would map out a link for ProfilePosts (to corresponding profile id's)
 
+
+  // Credit:
+
 // For this, we would need:
-//    - An API call to retrieve all posts in the database
-//    - An API call for all posts of a specific user
-//    - An API call for all comments of a specific post
-//    - An API call for all replies of a specific comment
+//    - An API call to retrieve all posts (via users) in the database - PublicPosts
+//    - An API call (findUser) for all posts of a specific user - 
+//    - An API call for all comments of a specific post (findUser)
+//    - An API call for all replies of a specific comment (findUser)
 //    - Corresponding controllers and routes for each
+
+// Nested
+
+  // Distinction:
+
+//    - 
+
+
+// Notes:
+
+//    - Documentation for all files (seuqelize, etc)

@@ -10,9 +10,9 @@ async function ProfilePosts(user) {
     // Shows the posts from a specific user (based on their id)
 
     const user_name_params = useParams()
-    [user, setUser] = useState(await findUser(user_name_params))
+    // [user] = useState(await findUser(user_name_params))
 
-    console.log(user)
+    console.log(user_name_params)
 
     return (
         <div className='post-view'>
