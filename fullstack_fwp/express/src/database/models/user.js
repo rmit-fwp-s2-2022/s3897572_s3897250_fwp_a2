@@ -4,6 +4,9 @@ module.exports = (sequelize, DataTypes) =>
       type: DataTypes.STRING(32),
       primaryKey: true
     },
+    user_id: {
+      type: DataTypes.BIGINT
+    },
     password_hash: {
       type: DataTypes.STRING(96),
       allowNull: false
