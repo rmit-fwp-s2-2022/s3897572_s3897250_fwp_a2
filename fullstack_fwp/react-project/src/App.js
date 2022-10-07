@@ -1,6 +1,7 @@
 import React, { useState, createContext, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, BrowserRouter } from "react-router-dom";
 import { userContext } from "./components/Global_Pages/UserContext";
+import { postContext } from "./components/Global_Pages/PostContext";
 import SignUp from "./components/Home_Page/Signup";
 import LandingPage from "./components/Home_Page/LandingPage";
 import ProfileManagement from "./components/ProfileManagement/profile_managment";
@@ -18,12 +19,14 @@ import PostView from "./components/Posts/PostView";
 export default function App() {
 
   const [user, setUser] = useState(getUser()); // User has not been registered, so set to null. 
-
+  const [post, setPost] = useState([])
 
   return (
     <BrowserRouter>
     
     <userContext.Provider value={{user, setUser}}>
+    <postContext.Provider value={{post, setPost}}>
+
 
       <Header></Header>
 
@@ -32,11 +35,16 @@ export default function App() {
             <Route path="/SignUp" element={<SignUp/>}></Route> 
             <Route path="/Login" element={<Login/>}></Route>
             <Route path="/Profile" element={<Profile/>}></Route> 
-            <Route path="/ProfileManagement" element={<ProfileManagement />}></Route>
+            <Route path="/ProfileManagement" element={<ProfileManagement/>}></Route>
 
-            <Route path="/ProfilePosts">
-                <Route path=":id" element={<ProfilePosts/>}></Route>
-            </Route>
+
+                <Route path="/ProfilePosts"> 
+                  <Route path=":id" element={<ProfilePosts/>}/>
+                </Route>
+{/*               
+              <Route path="/PostView" >
+                <Route path=":id" element={<PostView/>}></Route>
+              </Route> */}
 
             <Route path="/create" element={<CreatePost/>}></Route>
 
@@ -45,6 +53,7 @@ export default function App() {
 
       <Footer></Footer>
 
+    </postContext.Provider>
     </userContext.Provider>
 
     </BrowserRouter>
