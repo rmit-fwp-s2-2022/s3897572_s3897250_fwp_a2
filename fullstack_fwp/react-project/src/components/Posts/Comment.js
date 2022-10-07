@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Comment.css"
 
-function Comment(props) {
+function Comment() {
 
     const [replying, setReplying] = useState(false)
     const [replyText, setReplyText] = useState('')
@@ -55,7 +55,7 @@ function Comment(props) {
 
   return (
     <div>
-
+{/* 
         <p>{props.content.reply}</p>
 
         <br></br>
@@ -98,7 +98,7 @@ function Comment(props) {
 
             </div>
         }
-        
+         */}
     </div>
   )
 }

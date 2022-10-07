@@ -2,11 +2,9 @@ module.exports = (sequelize, DataTypes) =>
   sequelize.define("post", {
     title: {
       type: DataTypes.STRING(144),
-      primaryKey: true
     },
     body: {
         type: DataTypes.STRING(144),
-        primaryKey: true
     },
     id: {
         type: DataTypes.BIGINT,
@@ -14,8 +12,8 @@ module.exports = (sequelize, DataTypes) =>
     },
     image: {
         type: DataTypes.STRING(144),
-        primaryKey: true
     },
+    
 
   }, {
     // Don't add the timestamp attributes (updatedAt, createdAt).

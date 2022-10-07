@@ -7,6 +7,16 @@ exports.all = async (req, res) => {
   res.json(posts);
 };
 
+exports.postsFromUser = async (req, res) => {
+  const UserPosts = await db.post.findAll({
+    where: {
+      user_id: req.params.id
+    }
+  });
+
+  res.json(UserPosts);
+};
+
 // Create a post in the database.
 exports.create = async (req, res) => {
 

@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const config = require("./config.js");
+const user = require("./models/user.js");
 
 const db = {
   Op: Sequelize.Op
@@ -29,6 +30,9 @@ db.post.belongsTo(db.user, {
   },
   onDelete: "CASCADE"
 })
+
+
+db.user.hasMany(db.post)
 
 
 // Relate post and comments

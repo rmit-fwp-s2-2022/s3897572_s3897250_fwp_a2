@@ -48,6 +48,11 @@ async function getPosts() {
   return response.data;
 }
 
+async function getPostFromUser(id) {
+  const response = await axios.get(API_HOST + `/api/posts/${id}`);
+
+}
+
 async function createPost(post) {
   const response = await axios.post(API_HOST + "/api/posts", post);
 
@@ -69,7 +74,7 @@ function removeUser() {
 
 export {
   verifyUser, findUser, createUser,
-  getPosts, createPost,
+  getPosts, createPost, getPostFromUser,
   getUser, removeUser, setUser,
   updateUser, deleteUser
 }
