@@ -4,7 +4,7 @@ import { userContext } from "./components/Global_Pages/UserContext";
 import SignUp from "./components/Home_Page/Signup";
 import LandingPage from "./components/Home_Page/LandingPage";
 import ProfileManagement from "./components/ProfileManagement/profile_managment";
-import { setUser, getUser, removeUser, findUser } from "./data/repository";
+import {getUser, removeUser, findUser } from "./data/repository";
 import Profile from "./components/Profile_Page/Profile";
 import Login from "./components/Home_Page/Login";
 import Header from "./fragments/Navbar";
