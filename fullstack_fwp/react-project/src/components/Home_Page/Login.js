@@ -1,7 +1,8 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { verifyUser } from "../../data/repository";
 import {userContext} from "../Global_Pages/UserContext"
+import './Login.css'
 
 export default function Login() {
   const navigate = useNavigate();
@@ -34,34 +35,73 @@ export default function Login() {
     navigate("/");
   };
 
+
+
   return (
-    <div>
-      <h1>Login</h1>
-      <hr />
-      <div className="row">
-        <div className="col-md-6">
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="username" className="control-label">Username</label>
-              <input name="username" id="username" className="form-control"
-                value={fields.username} onChange={handleInputChange} />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password" className="control-label">Password</label>
-              <input type="password" name="password" id="password" className="form-control"
-                value={fields.password} onChange={handleInputChange} />
-            </div>
-            <div className="form-group">
-              <input type="submit" className="btn btn-primary" value="Login" />
-            </div>
-            {errorMessage !== null &&
+    <div className="row">
+
+    <div className="column">
+    
+    <div className="login-text">
+
+    <div className="form-title-login">    
+      <h1 className = "login-Title">Welcome Back!</h1>
+    </div>
+    
+    <h4> Don't have an account with LAN? <Link to = '/Signup'>Sign up here</Link></h4>
+
+    <div className="login-form">
+      
+      <form onSubmit={handleSubmit}>
+
+      <div className="login-box">
+        <label htmlFor="username" className="control-label">Username</label>
+                <input name="username" id="username" className="form-control"
+                  value={fields.username} onChange={handleInputChange} />
+      </div>
+
+      <div className="login-box">
+        <label htmlFor="password" className="control-label">Password</label>
+                <input type="password" name="password" id="password" className="form-control"
+                  value={fields.password} onChange={handleInputChange} />
+      </div>
+
+      <div className="submit-button-container-login">
+        <button type="submit" className="submit-button" value="Register">Login</button>
+      </div>
+
+      {errorMessage !== null &&
               <div className="form-group">
                 <span className="text-danger">{errorMessage}</span>
               </div>
             }
-          </form>
-        </div>
-      </div>
+      
+      </form>
+
     </div>
-  );
-}
+
+    </div>
+
+    </div>
+
+    <div className="column">
+
+
+      <div className="img-placement-login">
+
+        <div className="image-itself-login">
+
+        <p className="passion-text-login"> A passion for our staff... led us here</p>
+          <img src = "/images/Signup_Page/sign-up-img.jpg" className="signup-img-login" alt=""></img>
+        
+        </div>
+
+      </div>
+
+    </div>
+
+  
+    </div>
+
+    );
+  }

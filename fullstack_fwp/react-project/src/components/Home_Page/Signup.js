@@ -170,20 +170,15 @@ function SignUp() {
       </div>
 
       </div>
-
       
     <div className="column">
 
-      <div className="company-text">
-
-        <h3> A passion for our staff... led us here</h3>
-        
-      </div>
 
       <div className="img-placement">
 
         <div className="image-itself">
 
+        <p className="passion-text"> A passion for our staff... led us here</p>
           <img src = "/images/Signup_Page/sign-up-img.jpg" className="signup-img" alt=""></img>
         
         </div>
@@ -192,10 +187,10 @@ function SignUp() {
 
     </div>
 
+  
+    </div>
+      
 
-
-
-      </div>
 
   )
 

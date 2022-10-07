@@ -9,11 +9,11 @@ const Footer = () => {
       
       <div className ="footer">
         <ul className="left-side">
-          <li> Developed by: Parth Kulkarni (s3897572) </li>
-          <li> Natnael Gizaw (s3897250) </li>
+          <li> Terms and Conditions </li>
+          <li> About us </li>
         </ul>
         <ul className="right-side">
-          <li>Assignment 1 - Further Web Programming</li>
+          <li>© Loop Agile Now</li>
         </ul>
       
       </div>
