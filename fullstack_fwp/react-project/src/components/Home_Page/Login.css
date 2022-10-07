@@ -1,0 +1,104 @@
+.row{
+    display: flex;
+    min-height: 130vh;
+}
+  
+.column {
+flex: 50%;
+padding: 10px;
+height: 50px;
+
+}
+
+.login-text{
+margin-top: 70px;
+display: flex;
+gap: 50px;
+flex-direction: column;
+align-items:center;
+width: auto;
+font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+
+.login-Title{
+color: purple;
+font-size: 50px;
+}
+
+
+.login-form{
+display: flex;
+flex-direction: column;
+color: black;
+height: 800px;
+width: 600px;
+border-radius: 15px;
+
+
+}
+
+
+
+.login-box label{
+text-align: left;
+font-size: 20px;
+}
+
+.login-box input{
+height: 55px;
+width: auto;
+padding: 10px;
+font-size: 20px;
+
+}
+
+.login-box{
+display: flex;
+flex-direction: column;
+gap: 5px;
+padding: 5px;
+    
+}
+
+.submit-button-container-login{
+display: flex;
+flex-direction: column;
+margin-top: 50px;
+}
+
+.login-form button {
+border: none;
+padding: 20px 50px;
+border-radius: 10px;
+background-color: rgb(69, 71, 71);
+font-size: medium;
+font-weight: bold;
+color: rgb(245, 245, 245);
+
+
+}
+
+.login-form button:hover {
+color: rgb(48, 36, 36);
+background-color: rgb(163, 157, 157);
+}
+
+
+
+.passion-text-login{
+color: black;
+font-family: sans-serif;
+}
+
+.img-placement-login{
+align-items:center;
+margin-top: 200px;
+
+}
+
+.signup-img-login{
+height: 600px;
+width: 800px;
+border-radius: 5px;
+}

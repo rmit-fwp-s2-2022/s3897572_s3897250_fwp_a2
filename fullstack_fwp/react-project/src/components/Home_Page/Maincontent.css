@@ -13,7 +13,7 @@
   
   
   .webinfo-container{
-    background-color: #1F2937;
+    background-color: black;
     height: 300px;
     display: flex;
     align-items: center;
@@ -52,7 +52,7 @@
   .boxes-info img {
     width: 200px;
     height: 200px;
-    border: solid pink;
+    border: solid black;
   }
   
   
