@@ -43,15 +43,40 @@ const Profile = () =>{
 
 
     return(
+
+        <div className='whole-container'>
+
+            <div className='profile-info-container'>
+
+                <div className='user-info-container'>
+
+                <div className='img-container'>
+
+                    <img src="/images/Profile_Page/cover_page.jpg" className='cover-img' alt=''></img>
+                
+                </div>
+
+                <div className='text-container'>
+
+                    <h3> ayoo</h3>
+
+
+
+                </div>
+
+
+                </div>
+            </div>
+
+
         <div className='profile-container'>
             <div className='profile-info'>
                 <h1 className='profile-title'>Profile Management (Your Profile)</h1>
                 <div className='img-logo'>
-                    <img className='user-profile-img' src = {`data:image/jpg;base64,${imageLink}`} alt=""></img>
+                    <img className='user-profile-img' src = "/images/Profile_Page/profile_img.jpg"  alt=""></img>
                 </div>
 
                 <div className='user-container'>
-
                 <div className= 'user-info'>
                     <p>Full Name: {user.first_name + " " +  user.last_name}</p>
                 </div>
@@ -74,6 +99,11 @@ const Profile = () =>{
             </div>
         
         </div>
+
+        </div>
+
+
+
     )
 
 }
