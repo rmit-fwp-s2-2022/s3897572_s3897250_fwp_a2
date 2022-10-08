@@ -34,9 +34,11 @@ async function updateUser(user) {
     return response.data;
 }
 
-async function deleteUser(user) {
-    const response = await axios.post(API_HOST + "/api/users/delete", user);
-  
+async function deleteUser(id) {
+    const response = await axios.delete(API_HOST + `/api/users/delete/${id}`);
+
+    console.log(response, "respoonse")
+    
     return response.data;
 }
   

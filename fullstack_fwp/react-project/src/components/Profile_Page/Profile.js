@@ -2,8 +2,7 @@ import {useNavigate } from 'react-router-dom';
 import './Profile.css';
 import { useContext, useState } from 'react';
 import { userContext } from '../Global_Pages/UserContext';
-import {deleteUser} from "../../data/repository";
-
+import {deleteUser, removeUser} from "../../data/repository";
 
 const Profile = () =>{
 
@@ -18,12 +17,14 @@ const Profile = () =>{
         let val = window.confirm("Are you sure you want to delete your account? This will remove you from our system and all your created posts/replies")
 
 
-        console.log(user.username)
+        console.log(user.username, "deleting")
 
         if (val) {
-
-            const deleted_user = await deleteUser(user)
+        
+            const deleted_user = await deleteUser(user.user_id)
+        
             setUser(null)
+            removeUser();
             navigate('/')
             // Need to Delete Account, Posts and Replies at the Same Time
         }
@@ -56,7 +57,7 @@ const Profile = () =>{
                 </div>
 
                 <div className='email-info'>
-                    <p>Email: {user.email}</p>
+                    <p>Email: {user.username}</p>
                 </div>
 
                 <div className='joined-info'>

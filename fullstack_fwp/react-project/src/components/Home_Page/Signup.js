@@ -41,7 +41,7 @@ function SignUp() {
 
     setUser(user_obj)
 
-    localStorage.setItem("user", user_obj)
+    localStorage.setItem("user", JSON.stringify(user_obj))
 
     // Navigate to the home page.
     navigate("/Profile");
