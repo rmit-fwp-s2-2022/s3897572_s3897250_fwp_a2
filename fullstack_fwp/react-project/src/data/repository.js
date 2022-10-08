@@ -59,6 +59,34 @@ async function createPost(post) {
   return response.data;
 }
 
+async function deletePost(post) {
+  const response = await axios.post(API_HOST + "/api/posts/delete", post);
+
+  return response.data;
+}
+
+async function updatePost(post) {
+  const response = await axios.post(API_HOST + "/api/posts/update", post);
+
+  return response.data;
+}
+
+
+// --- Replies ---------------------------------------------------------------------------------------
+async function allReplies(post) {
+  const response = await axios.post(API_HOST + "/api/reply", post);
+
+  return response.data;
+}
+
+async function createReply(post) {
+  const response = await axios.post(API_HOST + "/api/reply/createReply", post);
+
+  return response.data;
+}
+
+
+
 // --- Helper functions to interact with local storage --------------------------------------------
 function setUser(user) {
   localStorage.setItem(USER_KEY, JSON.stringify(user));
@@ -76,5 +104,6 @@ export {
   verifyUser, findUser, createUser,
   getPosts, createPost, getPostFromUser,
   getUser, removeUser, setUser,
-  updateUser, deleteUser
+  updateUser, deleteUser, deletePost, updatePost,
+  allReplies, createReply
 }

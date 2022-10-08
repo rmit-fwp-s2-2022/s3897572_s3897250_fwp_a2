@@ -19,13 +19,13 @@ import PostView from "./components/Posts/PostView";
 export default function App() {
 
   const [user, setUser] = useState(getUser()); // User has not been registered, so set to null. 
-  const [post, setPost] = useState([])
+  const [posts, setPosts] = useState([])
 
   return (
     <BrowserRouter>
     
     <userContext.Provider value={{user, setUser}}>
-    <postContext.Provider value={{post, setPost}}>
+    <postContext.Provider value={{posts, setPosts}}>
 
 
       <Header></Header>
@@ -41,10 +41,10 @@ export default function App() {
                 <Route path="/ProfilePosts"> 
                   <Route path=":id" element={<ProfilePosts/>}/>
                 </Route>
-{/*               
+              
               <Route path="/PostView" >
                 <Route path=":id" element={<PostView/>}></Route>
-              </Route> */}
+              </Route>
 
             <Route path="/create" element={<CreatePost/>}></Route>
 

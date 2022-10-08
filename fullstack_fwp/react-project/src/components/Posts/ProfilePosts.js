@@ -13,8 +13,7 @@ function ProfilePosts() {
     // Shows the posts from a specific user (based on their id)
 
     const {user, setUser} = useContext(userContext)
-    const {post, setPost} = useContext(postContext)
-    const [userPosts, setUserPosts] = useState([])
+    const {posts, setPosts} = useContext(postContext)
     const user_name_params = useParams()
 
 
@@ -33,8 +32,7 @@ function ProfilePosts() {
             }
         }
 
-        setUserPosts(userPosts)
-        setPost(userPosts)
+        setPosts(userPosts)
     }
 
     
@@ -43,7 +41,7 @@ function ProfilePosts() {
         <div className='post-view'>
 
 
-            {post.length > 0 ? (
+            {posts.length > 0 ? (
                 <div><h1>{user.first_name}'s posts</h1></div>
             ):
                 <div className='no-posts-to-show'><h1>No posts to show :)</h1></div>
@@ -51,7 +49,7 @@ function ProfilePosts() {
 
             {
 
-                post.map((post) =>(
+                posts.map((post) =>(
                     <div className='posts-snippet'>
 
                         {/* Creates multiple links (to PostView.js component) with the post id in the url to identify each post*/}

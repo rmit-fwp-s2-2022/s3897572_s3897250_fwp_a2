@@ -17,6 +17,7 @@ exports.postsFromUser = async (req, res) => {
   res.json(UserPosts);
 };
 
+
 // Create a post in the database.
 exports.create = async (req, res) => {
 
@@ -30,4 +31,24 @@ exports.create = async (req, res) => {
   });
 
   res.json(post);
+};
+
+exports.deletePost = async (req, res) => {
+  const deletePost = await db.post.destroy({
+    where: {
+      id: req.body.id
+    }
+  });
+
+  res.json(deletePost);
+};
+
+exports.updatePost = async (req, res) => {
+  const updatePost = await db.post.update({body: req.body.body}, {
+    where: {
+      id: req.body.id
+    }
+  });
+
+  res.json(updatePost);
 };

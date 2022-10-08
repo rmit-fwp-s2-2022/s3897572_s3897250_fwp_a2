@@ -18,6 +18,7 @@ db.sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
 // Include models.
 db.user = require("./models/user.js")(db.sequelize, DataTypes);
 db.post = require("./models/post.js")(db.sequelize, DataTypes);
+db.reply = require("./models/reply.js")(db.sequelize, DataTypes);
 
 
 
@@ -31,12 +32,21 @@ db.post.belongsTo(db.user, {
   onDelete: "CASCADE"
 })
 
-
 db.user.hasMany(db.post)
+
 
 
 // Relate post and comments
 
+db.reply.belongsTo(db.post, {
+  foreignKey: {
+    name: "id",
+    allowNull: false
+  },
+  onDelete: "CASCADE"
+})
+
+db.post.hasMany(db.reply)
 
 
 
@@ -69,12 +79,17 @@ async function seedData() {
 
   await db.post.create({
     title: 'req.body.title',
-    username: 'shekhar',
+    username: 'seq.body.username',
     body: 'req.body.body',
     id: 1,
     image: 'req.body.image',
     user_id: testing_id
   });
+
+
+  await db.reply.createReply({id: 1, reply: 'reply', user: 'testingrecord', reply_id: Date.now(), date: new Date()});
+  // console.log(replyObj)
+
 
 }
 
