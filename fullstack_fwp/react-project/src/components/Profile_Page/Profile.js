@@ -2,8 +2,7 @@ import {useNavigate } from 'react-router-dom';
 import './Profile.css';
 import { useContext, useState } from 'react';
 import { userContext } from '../Global_Pages/UserContext';
-import {deleteUser} from "../../data/repository";
-
+import {deleteUser, removeUser} from "../../data/repository";
 
 const Profile = () =>{
 
@@ -18,12 +17,14 @@ const Profile = () =>{
         let val = window.confirm("Are you sure you want to delete your account? This will remove you from our system and all your created posts/replies")
 
 
-        console.log(user.username)
+        console.log(user.username, "deleting")
 
         if (val) {
-
-            const deleted_user = await deleteUser(user)
+        
+            const deleted_user = await deleteUser(user.user_id)
+        
             setUser(null)
+            removeUser();
             navigate('/')
             // Need to Delete Account, Posts and Replies at the Same Time
         }
@@ -42,21 +43,46 @@ const Profile = () =>{
 
 
     return(
+
+        <div className='whole-container'>
+
+            <div className='profile-info-container'>
+
+                <div className='user-info-container'>
+
+                <div className='img-container'>
+
+                    <img src="/images/Profile_Page/cover_page.jpg" className='cover-img' alt=''></img>
+                
+                </div>
+
+                <div className='text-container'>
+
+                    <h3> ayoo</h3>
+
+
+
+                </div>
+
+
+                </div>
+            </div>
+
+
         <div className='profile-container'>
             <div className='profile-info'>
                 <h1 className='profile-title'>Profile Management (Your Profile)</h1>
                 <div className='img-logo'>
-                    <img className='user-profile-img' src = {`data:image/jpg;base64,${imageLink}`} alt=""></img>
+                    <img className='user-profile-img' src = "/images/Profile_Page/profile_img.jpg"  alt=""></img>
                 </div>
 
                 <div className='user-container'>
-
                 <div className= 'user-info'>
                     <p>Full Name: {user.first_name + " " +  user.last_name}</p>
                 </div>
 
                 <div className='email-info'>
-                    <p>Email: {user.email}</p>
+                    <p>Email: {user.username}</p>
                 </div>
 
                 <div className='joined-info'>
@@ -73,6 +99,11 @@ const Profile = () =>{
             </div>
         
         </div>
+
+        </div>
+
+
+
     )
 
 }

@@ -31,6 +31,9 @@ export default function Login() {
     // Set user state.
     setUser(user_obj);
 
+    localStorage.setItem("user", JSON.stringify(user_obj));
+
+
     // Navigate to the home page.
     navigate("/");
   };

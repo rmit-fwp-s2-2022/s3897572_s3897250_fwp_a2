@@ -23,7 +23,7 @@ exports.one = async (req, res) => {
 
 // Select one user from the database if username and password are a match.
 exports.login = async (req, res) => {
-  const user = await db.user.findByPk(req.query.username);
+  const user = await db.user.findOne({where:{username:req.query.username}});
 
   if(user === null || await argon2.verify(user.password_hash, req.query.password) === false)
     // Login failed.
@@ -50,11 +50,8 @@ exports.create = async (req, res) => {
 // Updates user from the database
 exports.update = async (req, res) => {
 
-
-  const to_be_updated = await db.user.update({username: req.body.username, first_name: req.body.first_name, last_name: req.body.last_name}, {
-      where: {
-        username: req.body.username
-      }
+  const to_be_updated = await db.user.update({username: req.body.username, first_name: req.body.first_name, last_name: req.body.last_name}, 
+    { where: { user_id: req.body.user_id}
     });
 
   
@@ -64,11 +61,11 @@ exports.update = async (req, res) => {
 // Deletes user from the database
 exports.delete = async (req, res) => {
 
-  const to_be_deleted = await db.user.destroy({
-      where: {
-        username: req.body.username
-      }
-    });
+  console.log(req.params.id, "damnn id")
+
+  const to_be_deleted = await db.user.destroy({where: {user_id:req.params.id} 
+  
+  });
 
   res.json(to_be_deleted);
 };

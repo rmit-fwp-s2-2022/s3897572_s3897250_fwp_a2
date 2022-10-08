@@ -11,6 +11,13 @@ const Header = () => {
 
     const {user, setUser} = useContext(userContext)
     console.log(user)
+
+    function handleLogout() {
+        removeUser();
+        setUser(null);
+    }
+
+
     
      return (
 
@@ -26,8 +33,8 @@ const Header = () => {
         {user ? ( 
       
             <ul className = "nav-links">
-              <Link to = "/" className="links"><li onClick={() => setUser(null)}>Sign out</li></Link>
-              <Link to = {`/Profile/${user.username}`} className="links"><li>Profile Management</li></Link>
+              <Link to = "/" className="links"><li onClick={handleLogout}>Sign out</li></Link>
+              <Link to = {`/Profile`} className="links"><li>Profile Management</li></Link>
               <Link to = "/create" className="links"><li>Create post</li></Link>
               <Link to = {`/ProfilePosts/${user.user_id}`} className="links"><li>My Posts</li></Link>
             </ul>

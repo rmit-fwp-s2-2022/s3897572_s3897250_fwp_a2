@@ -88,7 +88,7 @@ const ProfileManage = () => {
 
     
 
-        console.log("deleting", user)
+        console.log(updated_obj)
 
         await updateUser(updated_obj)
 
