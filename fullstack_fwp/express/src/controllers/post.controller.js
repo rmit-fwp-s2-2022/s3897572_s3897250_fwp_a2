@@ -7,6 +7,22 @@ exports.all = async (req, res) => {
   res.json(posts);
 };
 
+// Gets single post from database from its own post id
+exports.postFromUser = async (req, res) => {
+
+  const UserPost = await db.post.findByPk(req.body.id, {
+    include: {
+        all: true,
+        nested: true
+    }
+  }
+);
+
+
+  res.json(UserPost);
+};
+
+
 exports.postsFromUser = async (req, res) => {
   const UserPosts = await db.post.findAll({
     where: {

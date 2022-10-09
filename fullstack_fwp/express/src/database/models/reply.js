@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) =>
   sequelize.define("reply", {
-    id: {
+    reply_id: {
       type: DataTypes.BIGINT,
       primaryKey: true
     },

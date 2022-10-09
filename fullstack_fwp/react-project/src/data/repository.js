@@ -50,6 +50,12 @@ async function getPosts() {
   return response.data;
 }
 
+
+async function singlePostFromUser(post) {
+  const response = await axios.get(API_HOST + `/api/posts/${post.id}`);
+
+}
+
 async function getPostFromUser(id) {
   const response = await axios.get(API_HOST + `/api/posts/${id}`);
 
@@ -107,5 +113,5 @@ export {
   getPosts, createPost, getPostFromUser,
   getUser, removeUser, setUser,
   updateUser, deleteUser, deletePost, updatePost,
-  allReplies, createReply
+  allReplies, createReply, singlePostFromUser
 }

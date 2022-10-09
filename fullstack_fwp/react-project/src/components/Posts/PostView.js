@@ -4,7 +4,7 @@ import Comment from './Comment';
 import "./PostView.css"
 import { userContext } from '../Global_Pages/UserContext';
 import { postContext } from '../Global_Pages/PostContext';
-import {deletePost, updatePost, allReplies, createReply} from "../../data/repository";
+import {deletePost, updatePost, allReplies, createReply, singlePostFromUser, getPostFromUser} from "../../data/repository";
 
 
 const PostView = () => {
@@ -90,21 +90,35 @@ const PostView = () => {
 
     async function submitreply() {
 
-        // Creates reply object from reply state, adds it to JSON object of
-        // user and saves it back to localstorage. reply and post states are
-        // reset. 
+        // Should submit a reply.
+
+        // Should also update post object in state 
+        // by retrieving it from the database again.
+
+
+
+        let curDate = new Date()
+        curDate = JSON.stringify(curDate)
 
         const replyObj = {
-            id: post.id,
+            reply_id: parseInt(Date.now()),     // Primary key: always unique
+            id: post.id,        // Foreign key: id of the post
             reply: reply,
             user: user.username,
-            reply_id: Date.now(),
-            date: new Date(),
+            date: curDate,
         }
 
         console.log(replyObj)
+        await createReply(replyObj);
 
-        await createReply();
+        let ok = await singlePostFromUser(post)
+        console.log(ok)
+
+        // let updatedPost = await getPostFromUser(post.id)
+        // console.log(updatedPost)
+
+
+
 
 
         // if (reply.length > 0) {
@@ -144,7 +158,7 @@ const PostView = () => {
             <small className='post-created-by'> Post Created by: {user.first_name} {user.last_name}</small>
             <br></br>
 
-            <button onclick={submitreply()}></button>
+            <button onClick={submitreply}></button>
                         
         </div>
     )

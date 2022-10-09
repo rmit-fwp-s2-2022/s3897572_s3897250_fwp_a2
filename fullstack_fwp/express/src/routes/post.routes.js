@@ -5,6 +5,9 @@ module.exports = (express, app) => {
   // Select all posts.
   router.get("/", controller.all);
 
+  // Select a post from specific user.
+  router.get("/:id", controller.postFromUser);
+
   // Select all posts from specific user.
   router.get("/:id", controller.postsFromUser);
 
