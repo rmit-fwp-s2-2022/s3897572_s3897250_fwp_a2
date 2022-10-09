@@ -51,14 +51,16 @@ async function getPosts() {
 }
 
 
-async function singlePostFromUser(post) {
-  const response = await axios.get(API_HOST + `/api/posts/${post.id}`);
+async function singlePostFromUser(id) {
+  const response = await axios.get(API_HOST + `/api/posts/${id}`);
 
+  return response.data
 }
 
 async function getPostFromUser(id) {
-  const response = await axios.get(API_HOST + `/api/posts/${id}`);
+  const response = await axios.get(API_HOST + `/api/posts/multiple/${id}`);
 
+  return response.data
 }
 
 async function createPost(post) {

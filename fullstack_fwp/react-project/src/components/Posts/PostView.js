@@ -22,18 +22,14 @@ const PostView = () => {
     let ref = useRef();
     
 
-    function getPostFromParams() {
+    async function getPostFromParams() {
 
             // Searches for the post from the given id of the url
             // using the useParams hook.
 
-        for (let post of posts) {
-            if (post.id === parseInt(idObj.id)) {
-                setPost(post)
-                console.log(post)
-                setFound(true)
-            }
-        }
+            let postObj = await singlePostFromUser(idObj.id)
+            setPost(postObj)
+            setFound(true)
 
     }
 
@@ -63,6 +59,7 @@ const PostView = () => {
     function editing() {
         setEdit(true)
     };
+
 
     async function submit(event) {
 
@@ -108,33 +105,26 @@ const PostView = () => {
             date: curDate,
         }
 
-        console.log(replyObj)
-        await createReply(replyObj);
 
-        let ok = await singlePostFromUser(post)
-        console.log(ok)
+        if (reply.length > 0) {
 
-        // let updatedPost = await getPostFromUser(post.id)
-        // console.log(updatedPost)
+            await createReply(replyObj);
 
+            let updatedPost = await singlePostFromUser(post.id)
 
+            setPost(updatedPost)
 
+            console.log(replyObj.reply)
 
+            setReply("")
+            ref.current.value =  ''
 
-        // if (reply.length > 0) {
-
-        //     await createReply(replyObj)
-
-        //     // setPost(userParsed.posts[postIndex])
-        //     setReply("")
-        //     ref.current.value =  ''
-
-        // }
+        }
         
         
-        // else {
-        //     window.alert("You comment cannot be empty.")
-        // }
+        else {
+            window.alert("You comment cannot be empty.")
+        }
 
     }
 
@@ -158,7 +148,91 @@ const PostView = () => {
             <small className='post-created-by'> Post Created by: {user.first_name} {user.last_name}</small>
             <br></br>
 
-            <button onClick={submitreply}></button>
+            {edit === false ? (
+
+                // If edit is false, show only delete and edit options
+
+
+                <div className='post-upper'>
+                    <p className='post-body'>{post.body}</p>
+                    <div className='post-buttons'>
+                        <button className='post-view-buttons' value={post.id} onClick={deletePost}>Delete post</button>
+                        <button className='post-view-buttons' value={post.id} onClick={editing}>Edit post</button>
+                    </div>
+
+
+                    <div className='image-rendering'>
+
+                        {console.log(post.image)}
+
+                            {post.image &&(
+                            <img src={post.image} alt = 'Displayed Visual' className = 'image-rendered-post-view'></img>
+                            )}
+
+                    </div>
+                            
+                    <div className='comments'>
+
+                        <div className='comments-add'>
+                            <textarea onChange={replyinput} placeholder="Add a comment to this post" ref = {ref}></textarea>
+                            <button onClick={submitreply} className='add-comment'>Add a comment</button>
+                        </div>
+
+                        <div className='comment-section'>
+
+                            {post.replies ? (
+
+                                post.replies.map((reply) => (
+                                    <div key = {reply.reply_id}>
+                                        <hr color='gray' width = {900}></hr>
+                                        <br></br>
+                                        <div className='image-text'>
+                                        {<img className='profile-picture-comments' src={`data:image/jpg;base64,${user.profile_pic}`} alt = 'User Chosen Profile'></img>}
+                                        <small className='user-info-comment'><b> {reply.user} {user.first_name} {user.last_name}</b></small>
+                                        </div>
+                                        <br></br>
+                                        <br></br>
+                                        <div className='comment-text'>
+                                        <Comment postIndex={postIndex} loggedIn={user.loggedInUser} content={reply}/>
+                                            {/* New componenet, Comment, to render the comments to a post with following props */}
+                                        </div>
+
+                                    </div>
+                                ))
+
+                            ) :
+
+                                <div><h1>No comments on this post yet :)</h1></div>
+
+                            }
+                            
+                        </div>
+
+                    </div>
+
+                </div>
+
+                ) : 
+
+                // Else if edit is true, show body in textarea for editing, submit button and image.
+
+
+                <div>
+                    <div className='post-upper'>
+
+                        <textarea className='post-upper-textarea' cols="79" rows="20" defaultValue={post.body} onChange={bodyinput} ref = {ref}></textarea>
+
+                        
+                        <div className='post-buttons'>
+                            <button className='post-view-buttons' onClick={submit}>Submit</button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                }
+
                         
         </div>
     )

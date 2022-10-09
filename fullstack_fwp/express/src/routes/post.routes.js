@@ -9,7 +9,7 @@ module.exports = (express, app) => {
   router.get("/:id", controller.postFromUser);
 
   // Select all posts from specific user.
-  router.get("/:id", controller.postsFromUser);
+  router.get("/multiple/:id", controller.postsFromUser);
 
   // Create a new post.
   router.post("/", controller.create);

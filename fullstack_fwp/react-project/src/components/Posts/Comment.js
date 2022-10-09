@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { userContext } from '../Global_Pages/UserContext';
 import "./Comment.css"
 
-function Comment() {
 
+function Comment(props) {
+
+
+    const {user, setUser} = useContext(userContext)
     const [replying, setReplying] = useState(false)
     const [replyText, setReplyText] = useState('')
     const [content, setContent] = useState(props.content)      // Reply
@@ -12,53 +16,53 @@ function Comment() {
     }
 
 
-    function submitReply() {
+    // function submitReply() {
 
-        // Updates the whole JSON post object in local storage
-        // with updated information (the threded reply)
+    //     // Updates the whole JSON post object in local storage
+    //     // with updated information (the threded reply)
 
 
-        const replyObj = {
-            reply: replyText,
-            reply_id: Date.now(),
-            user : localStorage.getItem("loggedInUser"),    // The author, set to anyone currently logged in
-        }
+    //     const replyObj = {
+    //         reply: replyText,
+    //         reply_id: Date.now(),
+    //         user : localStorage.getItem("loggedInUser"),    // The author, set to anyone currently logged in
+    //     }
 
-        let userInfo = props.userObj
-        let postIndex = props.postIndex
-        let postReplies = userInfo.posts[postIndex].replies
+    //     let userInfo = props.userObj
+    //     let postIndex = props.postIndex
+    //     let postReplies = userInfo.posts[postIndex].replies
 
-        if (replyText.length > 0){
+    //     if (replyText.length > 0){
             
-            // Search for the index of the reply to add to, from JSON file
-            for (let i = 0; i < postReplies.length; ++i) {
-                if (parseInt(postReplies[i].id) === parseInt(props.content.id)) {
+    //         // Search for the index of the reply to add to, from JSON file
+    //         for (let i = 0; i < postReplies.length; ++i) {
+    //             if (parseInt(postReplies[i].id) === parseInt(props.content.id)) {
                     
-                    // Then, add replyObj to its replies array
-                    userInfo.posts[postIndex].replies[i].replies.unshift(replyObj)
-                    localStorage.setItem(props.loggedIn, JSON.stringify(userInfo))
+    //                 // Then, add replyObj to its replies array
+    //                 userInfo.posts[postIndex].replies[i].replies.unshift(replyObj)
+    //                 localStorage.setItem(props.loggedIn, JSON.stringify(userInfo))
 
-                    setContent(userInfo.posts[postIndex].replies[i])
-                }
-            }
+    //                 setContent(userInfo.posts[postIndex].replies[i])
+    //             }
+    //         }
 
-            setReplyText("")
-            setReplying(false)
+    //         setReplyText("")
+    //         setReplying(false)
 
-       } 
-       else{
-        window.alert("Replies cannot be empty!")
-       }
+    //    } 
+    //    else{
+    //     window.alert("Replies cannot be empty!")
+    //    }
     
-    }
+    // }
 
 
   return (
     <div>
-{/* 
+
         <p>{props.content.reply}</p>
 
-        <br></br>
+        {/* <br></br>
         <button className="add-reply-button" onClick={() => setReplying(true)}>Add reply</button>
 
         {replying ? (
@@ -83,8 +87,8 @@ function Comment() {
                             <div className="comment" key={reply.id}>
                                 <hr width = {450}></hr>
                                 <div className="image-text">
-                                {<img className='profile-picture-comments-replies' src={`data:image/jpg;base64,${props.userObj.profile_pic}`} alt = 'User Chosen Profile'></img>}
-                                <small><b>{reply.user} {props.userObj.firstname} {props.userObj.lastname}</b></small>
+                                {<img className='profile-picture-comments-replies' src={`data:image/jpg;base64,${user.profile_pic}`} alt = 'User Chosen Profile'></img>}
+                                <small><b>{reply.user} {user.first_name} {user.last_name}</b></small>
                                 </div>
                                 <div className="comment-text-replies">
                                 <p>{reply.reply}</p>
@@ -97,8 +101,8 @@ function Comment() {
                 }
 
             </div>
-        }
-         */}
+        } */}
+        
     </div>
   )
 }

@@ -10,7 +10,7 @@ exports.all = async (req, res) => {
 // Gets single post from database from its own post id
 exports.postFromUser = async (req, res) => {
 
-  const UserPost = await db.post.findByPk(req.body.id, {
+  const UserPost = await db.post.findByPk(req.params.id, {
     include: {
         all: true,
         nested: true
