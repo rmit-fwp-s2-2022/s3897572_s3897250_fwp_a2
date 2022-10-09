@@ -6,7 +6,7 @@ module.exports = (express, app) => {
   router.get("/", controller.allReplies);
 
   // Create a reply.
-  router.get("/createReply", controller.createReply);
+  router.post("/createReply", controller.createReply);
 
   // Add routes to server.
   app.use("/api/reply", router);

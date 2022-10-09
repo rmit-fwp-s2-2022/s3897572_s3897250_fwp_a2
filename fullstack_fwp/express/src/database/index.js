@@ -54,7 +54,7 @@ db.post.hasMany(db.reply)
 // Include a sync option with seed data logic included.
 db.sync = async () => {
   // Sync schema.
-  await db.sequelize.sync();
+  await db.sequelize.sync({force: true});
 
   // Can sync with force if the schema has become out of date - note that syncing with force is a destructive operation.
   // await db.sequelize.sync({ force: true });
@@ -87,9 +87,8 @@ async function seedData() {
   });
 
 
-  await db.reply.createReply({id: 1, reply: 'reply', user: 'testingrecord', reply_id: Date.now(), date: new Date()});
+  await db.reply.create({id: 1, reply: 'reply', user: 'testingrecord', reply_id: parseInt(Date.now()), date: new Date().toLocaleDateString()});
   // console.log(replyObj)
-
 
 }
 
