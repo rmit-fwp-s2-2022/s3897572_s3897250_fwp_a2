@@ -36,15 +36,24 @@ function SignUp() {
     // Create user.
 
     const user_obj = await createUser(fields);
-    
-    // Set user state.
 
-    setUser(user_obj)
+    console.log(user_obj, "user_obj")
 
-    localStorage.setItem("user", JSON.stringify(user_obj))
+    if (user_obj !== false){
+      // Set user state.
+      setUser(user_obj)
 
-    // Navigate to the home page.
-    navigate("/Profile");
+      localStorage.setItem("user", JSON.stringify(user_obj))
+
+      // Navigate to the home page.
+      navigate("/Profile");
+    }
+
+    else{
+      return(
+        <div>An Account with that username already exists!</div>
+      )
+    }
 
   }
 
