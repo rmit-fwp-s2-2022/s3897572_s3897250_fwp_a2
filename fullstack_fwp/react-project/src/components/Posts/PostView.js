@@ -18,6 +18,7 @@ const PostView = () => {
     const [edit, setEdit] = useState(false)
     const [body, setBody] = useState(null)
     const [reply, setReply] = useState('')
+    const [replies, setReplies] = useState([])
     let navigate = useNavigate();
     let ref = useRef();
     
@@ -108,13 +109,17 @@ const PostView = () => {
 
         if (reply.length > 0) {
 
-            await createReply(replyObj);
+            let newReply = await createReply(replyObj);
 
             let updatedPost = await singlePostFromUser(post.id)
 
             setPost(updatedPost)
 
-            console.log(replyObj.reply)
+
+            let replies = await allReplies(post)
+            console.log(replies[replies.length - 1].reply_body + " <-----")
+            setReplies(replies)
+
 
             setReply("")
             ref.current.value =  ''
@@ -160,16 +165,6 @@ const PostView = () => {
                         <button className='post-view-buttons' value={post.id} onClick={editing}>Edit post</button>
                     </div>
 
-
-                    <div className='image-rendering'>
-
-                        {console.log(post.image)}
-
-                            {post.image &&(
-                            <img src={post.image} alt = 'Displayed Visual' className = 'image-rendered-post-view'></img>
-                            )}
-
-                    </div>
                             
                     <div className='comments'>
 
@@ -180,20 +175,20 @@ const PostView = () => {
 
                         <div className='comment-section'>
 
-                            {post.replies ? (
+                            {replies ? (
 
-                                post.replies.map((reply) => (
+                                replies.map((reply) => (
                                     <div key = {reply.reply_id}>
                                         <hr color='gray' width = {900}></hr>
                                         <br></br>
                                         <div className='image-text'>
-                                        {<img className='profile-picture-comments' src={`data:image/jpg;base64,${user.profile_pic}`} alt = 'User Chosen Profile'></img>}
+                                       
                                         <small className='user-info-comment'><b> {reply.user} {user.first_name} {user.last_name}</b></small>
                                         </div>
                                         <br></br>
                                         <br></br>
                                         <div className='comment-text'>
-                                        <Comment postIndex={postIndex} loggedIn={user.loggedInUser} content={reply}/>
+                                        <Comment post={post} content={reply}/>
                                             {/* New componenet, Comment, to render the comments to a post with following props */}
                                         </div>
 
