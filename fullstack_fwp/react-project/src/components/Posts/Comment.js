@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { userContext } from '../Global_Pages/UserContext';
+import { getComments, createComment} from "../../data/repository";
 import "./Comment.css"
 
 
@@ -10,59 +11,53 @@ function Comment(props) {
     const [replying, setReplying] = useState(false)
     const [replyText, setReplyText] = useState('')
     const [content, setContent] = useState(props.content)      // Reply
+    const [comments, setComments] = useState([])
 
     function replytextinput(event) {
         setReplyText(event.target.value)
     }
 
 
-    // function submitReply() {
-
-    //     // Updates the whole JSON post object in local storage
-    //     // with updated information (the threded reply)
+    async function submitReply() {
 
 
-    //     const replyObj = {
-    //         reply: replyText,
-    //         reply_id: Date.now(),
-    //         user : localStorage.getItem("loggedInUser"),    // The author, set to anyone currently logged in
-    //     }
+        const commentObj = {
+            comment_body: replyText,
+            comment_id: Date.now(),
+            user: user.username,    // The author, set to anyone currently logged in
+            reply_id: props.content.reply_id
 
-    //     let userInfo = props.userObj
-    //     let postIndex = props.postIndex
-    //     let postReplies = userInfo.posts[postIndex].replies
+        }
 
-    //     if (replyText.length > 0){
+        console.log(commentObj)
+
+        if (replyText.length > 0) {
             
-    //         // Search for the index of the reply to add to, from JSON file
-    //         for (let i = 0; i < postReplies.length; ++i) {
-    //             if (parseInt(postReplies[i].id) === parseInt(props.content.id)) {
-                    
-    //                 // Then, add replyObj to its replies array
-    //                 userInfo.posts[postIndex].replies[i].replies.unshift(replyObj)
-    //                 localStorage.setItem(props.loggedIn, JSON.stringify(userInfo))
+            // Add comment in database
+            let newComment = await createComment(commentObj)
 
-    //                 setContent(userInfo.posts[postIndex].replies[i])
-    //             }
-    //         }
+            // Reload the comments, with the newly created comment
+            let comments = await getComments(props.content)     // Content is the reply from props
+            setComments(comments)
 
-    //         setReplyText("")
-    //         setReplying(false)
 
-    //    } 
-    //    else{
-    //     window.alert("Replies cannot be empty!")
-    //    }
+            setReplyText("")
+            setReplying(false)
+
+       } 
+       else{
+        window.alert("Replies cannot be empty!")
+       }
     
-    // }
+    }
 
 
   return (
     <div>
 
-        <p>{props.content.reply}</p>
+        <p>{props.content.reply_body}</p>
 
-        {/* <br></br>
+        <br></br>
         <button className="add-reply-button" onClick={() => setReplying(true)}>Add reply</button>
 
         {replying ? (
@@ -80,18 +75,17 @@ function Comment(props) {
 
             <div>
                 
-                {content.replies.length > 0 ? (
+                {comments.length > 0 ? (
                     <div className="nested-comments">
-                        {content.replies.map((reply) => (
+                        {comments.map((comment) => (
                             
-                            <div className="comment" key={reply.id}>
+                            <div className="comment" key={comment.comment_id}>
                                 <hr width = {450}></hr>
                                 <div className="image-text">
-                                {<img className='profile-picture-comments-replies' src={`data:image/jpg;base64,${user.profile_pic}`} alt = 'User Chosen Profile'></img>}
-                                <small><b>{reply.user} {user.first_name} {user.last_name}</b></small>
+                                <small><b>{comment.user} {user.first_name} {user.last_name}</b></small>
                                 </div>
                                 <div className="comment-text-replies">
-                                <p>{reply.reply}</p>
+                                <p>{comment.comment_body}</p>
                                 </div>
                             </div>
                         ))}
@@ -101,7 +95,7 @@ function Comment(props) {
                 }
 
             </div>
-        } */}
+        }
         
     </div>
   )

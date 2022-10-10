@@ -4,12 +4,13 @@ import Comment from './Comment';
 import "./PostView.css"
 import { userContext } from '../Global_Pages/UserContext';
 import { postContext } from '../Global_Pages/PostContext';
-import {deletePost, updatePost, allReplies, createReply, singlePostFromUser, getPostFromUser} from "../../data/repository";
+import { findUser, updatePost, allReplies, createReply, singlePostFromUser, getPostFromUser} from "../../data/repository";
 
 
-const PostView = () => {
+const PostView = (props) => {
 
     const {user, setUser} = useContext(userContext)
+    const [curUser, setCurUser] = useState('')
     const {posts, setPosts} = useContext(postContext)
     const idObj = useParams()
     const [post, setPost] = useState("")
@@ -18,6 +19,7 @@ const PostView = () => {
     const [edit, setEdit] = useState(false)
     const [body, setBody] = useState(null)
     const [reply, setReply] = useState('')
+    const [replies, setReplies] = useState([])
     let navigate = useNavigate();
     let ref = useRef();
     
@@ -30,6 +32,9 @@ const PostView = () => {
             let postObj = await singlePostFromUser(idObj.id)
             setPost(postObj)
             setFound(true)
+
+            let crUser = await findUser(postObj.user_id)
+            setCurUser(crUser)
 
     }
 
@@ -108,18 +113,17 @@ const PostView = () => {
 
         if (reply.length > 0) {
 
-            console.log(post, "i am before")
-
-
-            await createReply(replyObj);
+            let newReply = await createReply(replyObj);
 
             let updatedPost = await singlePostFromUser(post.id)
 
             setPost(updatedPost)
 
-            console.log(post, "i am after")
 
-            console.log(replyObj.reply)
+            let replies = await allReplies(post)
+            console.log(replies[replies.length - 1].reply_body + " <-----")
+            setReplies(replies)
+
 
             setReply("")
             ref.current.value =  ''
@@ -133,7 +137,19 @@ const PostView = () => {
 
     }
 
+    
+    function follow() {
 
+        // Adds the current user to the following list
+        // of the post's author in the form of a JSON object.
+
+        
+
+    }
+
+    function unfollow() {
+
+    }
 
 
     if ((found === false)) {
@@ -149,8 +165,14 @@ const PostView = () => {
 
         <div className='post-view'>
 
+            <div className='following-buttons'>
+                <button onClick = {follow} className='post-following'>Follow</button>
+                <button onClick = {unfollow} className='post-following'>Unfollow</button>
+
+            </div>
+
             <h1 className='post-title'>{post.title}</h1> 
-            <small className='post-created-by'> Post Created by: {user.first_name} {user.last_name}</small>
+            <small className='post-created-by'> Post Created by: {curUser.first_name} {curUser.last_name}</small>
             <br></br>
 
             {edit === false ? (
@@ -165,16 +187,6 @@ const PostView = () => {
                         <button className='post-view-buttons' value={post.id} onClick={editing}>Edit post</button>
                     </div>
 
-
-                    <div className='image-rendering'>
-
-                        {console.log(post.image)}
-
-                            {post.image &&(
-                            <img src={post.image} alt = 'Displayed Visual' className = 'image-rendered-post-view'></img>
-                            )}
-
-                    </div>
                             
                     <div className='comments'>
 
@@ -185,20 +197,20 @@ const PostView = () => {
 
                         <div className='comment-section'>
 
-                            {post.replies ? (
+                            {replies ? (
 
-                                post.replies.map((reply) => (
+                                replies.map((reply) => (
                                     <div key = {reply.reply_id}>
                                         <hr color='gray' width = {900}></hr>
                                         <br></br>
                                         <div className='image-text'>
-                                        {<img className='profile-picture-comments' src={`data:image/jpg;base64,${user.profile_pic}`} alt = 'User Chosen Profile'></img>}
+                                       
                                         <small className='user-info-comment'><b> {reply.user} {user.first_name} {user.last_name}</b></small>
                                         </div>
                                         <br></br>
                                         <br></br>
                                         <div className='comment-text'>
-                                        <Comment postIndex={postIndex} loggedIn={user.loggedInUser} content={reply}/>
+                                        <Comment post={post} content={reply}/>
                                             {/* New componenet, Comment, to render the comments to a post with following props */}
                                         </div>
 

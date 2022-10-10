@@ -19,6 +19,7 @@ db.sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
 db.user = require("./models/user.js")(db.sequelize, DataTypes);
 db.post = require("./models/post.js")(db.sequelize, DataTypes);
 db.reply = require("./models/reply.js")(db.sequelize, DataTypes);
+db.comment = require("./models/comment.js")(db.sequelize, DataTypes);
 
 
 
@@ -36,7 +37,7 @@ db.user.hasMany(db.post)
 
 
 
-// Relate post and comments
+// Relate post and reply
 
 db.reply.belongsTo(db.post, {
   foreignKey: {
@@ -48,6 +49,19 @@ db.reply.belongsTo(db.post, {
 
 db.post.hasMany(db.reply)
 
+
+
+// Relate reply and comment
+
+db.comment.belongsTo(db.reply, {
+  foreignKey: {
+    name: "reply_id",
+    allowNull: false
+  },
+  onDelete: "CASCADE"
+})
+
+db.reply.hasMany(db.comment)
 
 
 

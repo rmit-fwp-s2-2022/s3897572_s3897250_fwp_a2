@@ -3,7 +3,7 @@ module.exports = (express, app) => {
   const router = express.Router();
 
   // Select all replies.
-  router.get("/", controller.allReplies);
+  router.post("/all", controller.allReplies);
 
   // Create a reply.
   router.post("/createReply", controller.createReply);
