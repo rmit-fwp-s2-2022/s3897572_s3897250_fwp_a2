@@ -22,6 +22,12 @@ async function findUser(id) {
   return response.data;
 }
 
+async function getUsers() {
+  const response = await axios.get(API_HOST + `/api/users/`);
+
+  return response.data;
+}
+
 async function createUser(user) {
   const response = await axios.post(API_HOST + "/api/users", user);
 
@@ -125,7 +131,7 @@ function removeUser() {
 }
 
 export {
-  verifyUser, findUser, createUser,
+  verifyUser, findUser, createUser, getUsers,
   getPosts, createPost, getPostFromUser,
   getUser, removeUser, setUser,
   updateUser, deleteUser, deletePost, updatePost,

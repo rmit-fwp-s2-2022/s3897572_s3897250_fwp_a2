@@ -4,12 +4,13 @@ import Comment from './Comment';
 import "./PostView.css"
 import { userContext } from '../Global_Pages/UserContext';
 import { postContext } from '../Global_Pages/PostContext';
-import {deletePost, updatePost, allReplies, createReply, singlePostFromUser, getPostFromUser} from "../../data/repository";
+import { findUser, updatePost, allReplies, createReply, singlePostFromUser, getPostFromUser} from "../../data/repository";
 
 
-const PostView = () => {
+const PostView = (props) => {
 
     const {user, setUser} = useContext(userContext)
+    const [curUser, setCurUser] = useState('')
     const {posts, setPosts} = useContext(postContext)
     const idObj = useParams()
     const [post, setPost] = useState("")
@@ -31,6 +32,9 @@ const PostView = () => {
             let postObj = await singlePostFromUser(idObj.id)
             setPost(postObj)
             setFound(true)
+
+            let crUser = await findUser(postObj.user_id)
+            setCurUser(crUser)
 
     }
 
@@ -133,7 +137,19 @@ const PostView = () => {
 
     }
 
+    
+    function follow() {
 
+        // Adds the current user to the following list
+        // of the post's author in the form of a JSON object.
+
+        
+
+    }
+
+    function unfollow() {
+
+    }
 
 
     if ((found === false)) {
@@ -149,8 +165,14 @@ const PostView = () => {
 
         <div className='post-view'>
 
+            <div className='following-buttons'>
+                <button onClick = {follow} className='post-following'>Follow</button>
+                <button onClick = {unfollow} className='post-following'>Unfollow</button>
+
+            </div>
+
             <h1 className='post-title'>{post.title}</h1> 
-            <small className='post-created-by'> Post Created by: {user.first_name} {user.last_name}</small>
+            <small className='post-created-by'> Post Created by: {curUser.first_name} {curUser.last_name}</small>
             <br></br>
 
             {edit === false ? (

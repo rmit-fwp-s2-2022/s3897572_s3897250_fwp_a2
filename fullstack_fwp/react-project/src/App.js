@@ -13,6 +13,7 @@ import Footer from "./fragments/Footer";
 import CreatePost from "./components/Posts/CreatePost"
 import ProfilePosts from "./components/Posts/ProfilePosts"
 import PostView from "./components/Posts/PostView";
+import Users from "./components/Posts/Users"
 
 // ProfilePosts, PostView
 
@@ -36,7 +37,7 @@ export default function App() {
             <Route path="/Login" element={<Login/>}></Route>
             <Route path="/Profile" element={<Profile/>}></Route> 
             <Route path="/ProfileManagement" element={<ProfileManagement/>}></Route>
-
+            <Route path="/Users" element={<Users/>}></Route>
 
                 <Route path="/ProfilePosts"> 
                   <Route path=":id" element={<ProfilePosts/>}/>
