@@ -102,6 +102,19 @@ const ProfileManage = () => {
     
 
     return(
+
+        <div className='row-profile-manage'>
+
+            <div className='cover-img-container'>
+
+                <div className='cover-img'>
+                    <div className='top-right'><p>Your Default Cover Photo. Feature to Change Under Works :)</p></div>
+                    <img src="/images/Profile_Page/cover_page.jpg" className='cover-img' alt=''></img>
+                </div>
+
+            </div>
+
+
         <div className='profile-container-manage'>
             <div className='profile-info-manage'>
                 <h1 className='profile-title-manage'>Edit Your Profile</h1>
@@ -153,8 +166,11 @@ const ProfileManage = () => {
                 </div>
             
             </div>
+        
+        </div>
 
     </div>
+
         
 
     )

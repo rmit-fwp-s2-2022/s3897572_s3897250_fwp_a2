@@ -51,19 +51,11 @@ const Profile = () =>{
                 <div className='user-info-container'>
 
                 <div className='img-container'>
+                    <div className='top-right'><p>Your Default Cover Photo. Feature to Change Under Works :)</p></div>
 
                     <img src="/images/Profile_Page/cover_page.jpg" className='cover-img' alt=''></img>
                 
                 </div>
-
-                <div className='text-container'>
-
-                    <h3> ayoo</h3>
-
-
-
-                </div>
-
 
                 </div>
             </div>

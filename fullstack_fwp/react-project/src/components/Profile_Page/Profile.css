@@ -2,6 +2,14 @@
     overflow-x: hidden;
 }
 
+.top-right {
+    position: absolute;
+    top: 120px;
+    right: 16px;
+    color: white;
+  }
+
+
 
 .profile-info-container{
     height: 480px;

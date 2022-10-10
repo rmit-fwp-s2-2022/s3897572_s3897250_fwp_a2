@@ -35,16 +35,33 @@ exports.login = async (req, res) => {
 // Create a user in the database.
 exports.create = async (req, res) => {
   const hash = await argon2.hash(req.body.password, { type: argon2.argon2id });
-  
-  const user = await db.user.create({
-    username: req.body.username,
-    password_hash: hash,
-    user_id: req.body.user_id,
-    first_name: req.body.firstname,
-    last_name: req.body.lastname,
-  });
 
-  res.json(user);
+  const user_search = await db.user.findOne({where:{username:req.body.username}});
+
+  console.log(user_search)
+
+  if (user_search === null){
+
+    const user = await db.user.create({
+      username: req.body.username,
+      password_hash: hash,
+      user_id: req.body.user_id,
+      first_name: req.body.firstname,
+      last_name: req.body.lastname,
+    });
+
+    res.json(user);
+  
+  }
+
+  else{
+
+    return false;
+
+
+  }
+
+  
 };
 
 // Updates user from the database
