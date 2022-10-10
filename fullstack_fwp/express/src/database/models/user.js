@@ -29,10 +29,11 @@ module.exports = (sequelize, DataTypes) =>
     },
     date_joined: {
       type: DataTypes.STRING,
-      default: "none"
+      defaultValue: "none"
     },
     followers: {
-      type: DataTypes.JSON,
+      type: DataTypes.STRING,
+      defaultValue: JSON.stringify([])
     }
 
   }, {

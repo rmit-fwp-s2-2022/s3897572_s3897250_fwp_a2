@@ -2,18 +2,18 @@ import "./Users.css"
 import React, {useState, useRef, useContext, useEffect } from "react";
 import { getUsers, setUser } from "../../data/repository";
 import { Link } from 'react-router-dom';
+import { userContext } from '../Global_Pages/UserContext';
 
 
 const Users = () => {
 
 
     const [users, setUsers] = useState([])
+    const {user, setUser} = useContext(userContext)
 
 
     useEffect(() => {
-        
         allUsers()
-
     }, [])
 
     async function allUsers() {
@@ -28,8 +28,9 @@ return (
     <div>
 
         {users.length > 0 ? (
+            
 
-                users.map((user) =>(
+                users.map((user) => (
                     <div className='posts-snippet'>
 
                         {/* Creates multiple links (to PostView.js component) with the post id in the url to identify each post*/}

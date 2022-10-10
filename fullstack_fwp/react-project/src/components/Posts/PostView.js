@@ -4,7 +4,7 @@ import Comment from './Comment';
 import "./PostView.css"
 import { userContext } from '../Global_Pages/UserContext';
 import { postContext } from '../Global_Pages/PostContext';
-import { findUser, updatePost, allReplies, createReply, singlePostFromUser, getPostFromUser} from "../../data/repository";
+import { findUser, updatePost, allReplies, createReply, singlePostFromUser, updateUser} from "../../data/repository";
 
 
 const PostView = (props) => {
@@ -20,6 +20,7 @@ const PostView = (props) => {
     const [body, setBody] = useState(null)
     const [reply, setReply] = useState('')
     const [replies, setReplies] = useState([])
+    const [followed, setFollowed] = useState(false)
     let navigate = useNavigate();
     let ref = useRef();
     
@@ -35,6 +36,14 @@ const PostView = (props) => {
 
             let crUser = await findUser(postObj.user_id)
             setCurUser(crUser)
+
+            let replies = await allReplies(postObj)
+            setReplies(replies)
+
+            if (crUser.followers.includes(user.username)) {
+                setFollowed(true)
+            }
+
 
     }
 
@@ -121,7 +130,6 @@ const PostView = (props) => {
 
 
             let replies = await allReplies(post)
-            console.log(replies[replies.length - 1].reply_body + " <-----")
             setReplies(replies)
 
 
@@ -138,16 +146,35 @@ const PostView = (props) => {
     }
 
     
-    function follow() {
+    async function follow() {
 
         // Adds the current user to the following list
         // of the post's author in the form of a JSON object.
 
+
+        let followerList = JSON.parse(curUser.followers)
+        followerList.push(user.username)
+        curUser.followers = JSON.stringify(followerList)
         
+        let newCurUser = await updateUser(curUser)
+
+        setCurUser(newCurUser)
+        setFollowed(true)
 
     }
 
-    function unfollow() {
+    async function unfollow() {
+
+        let followerList = JSON.parse(curUser.followers)
+
+        let indexRemoval = followerList.indexOf(user.username)
+        followerList.splice(indexRemoval, 1)
+        curUser.followers = JSON.stringify(followerList)
+        
+        let newCurUser = await updateUser(curUser)
+
+        setCurUser(newCurUser)
+        setFollowed(false)
 
     }
 
@@ -165,9 +192,14 @@ const PostView = (props) => {
 
         <div className='post-view'>
 
+           
             <div className='following-buttons'>
-                <button onClick = {follow} className='post-following'>Follow</button>
-                <button onClick = {unfollow} className='post-following'>Unfollow</button>
+
+                { followed === true? (
+                    <button onClick = {unfollow} className='post-following'>Unfollow</button>
+                ) :
+                    <button onClick = {follow} className='post-following'>Follow</button>
+                }
 
             </div>
 
