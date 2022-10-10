@@ -5,6 +5,9 @@ import "./PostView.css"
 import { userContext } from '../Global_Pages/UserContext';
 import { postContext } from '../Global_Pages/PostContext';
 import { findUser, updatePost, allReplies, createReply, singlePostFromUser, updateUser} from "../../data/repository";
+import ReactQuill, {UnprivilegedEditor} from "react-quill";
+import "quill/dist/quill.snow.css";
+
 
 
 const PostView = (props) => {
@@ -80,12 +83,25 @@ const PostView = (props) => {
             // Submits the data from the form into html localstorage
             // via setting a stringified json obj.
 
+        if(ref.current.value.replace(/<(.|\n)*?>/g, "").trim().length === 0) {
+            window.alert("A post cannot be empty.");
+            return;
+          }
+        
 
-        if ((post.body != null) && (ref.current.value.length > 0)) {
+        if(ref.current.value.length > 600){
+            window.alert("Post cannot have more than 600 characters");
+            return;
+        }
+
+
+        if ((ref.current.value.length > 0)) {
 
             post.body = ref.current.value
             setPost(post)
             setEdit(false)
+
+            setBody('') 
 
             
             await updatePost(post)
@@ -213,7 +229,7 @@ const PostView = (props) => {
 
 
                 <div className='post-upper'>
-                    <p className='post-body'>{post.body}</p>
+                    <p className='post-body'> <div dangerouslySetInnerHTML={{ __html: post.body}} /></p>
                     <div className='post-buttons'>
                         <button className='post-view-buttons' value={post.id} onClick={deletePost}>Delete post</button>
                         <button className='post-view-buttons' value={post.id} onClick={editing}>Edit post</button>
@@ -223,7 +239,7 @@ const PostView = (props) => {
                     <div className='comments'>
 
                         <div className='comments-add'>
-                            <textarea onChange={replyinput} placeholder="Add a comment to this post" ref = {ref}></textarea>
+                            <ReactQuill theme="snow" value = {reply} onChange={setReply} style={{ height: "180px" }} ref = {ref}/>
                             <button onClick={submitreply} className='add-comment'>Add a comment</button>
                         </div>
 
@@ -269,8 +285,7 @@ const PostView = (props) => {
                 <div>
                     <div className='post-upper'>
 
-                        <textarea className='post-upper-textarea' cols="79" rows="20" defaultValue={post.body} onChange={bodyinput} ref = {ref}></textarea>
-
+                        <ReactQuill theme="snow" defaultValue = {post.body} onChange={setBody} style={{ height: "180px" }} ref = {ref}/>
                         
                         <div className='post-buttons'>
                             <button className='post-view-buttons' onClick={submit}>Submit</button>

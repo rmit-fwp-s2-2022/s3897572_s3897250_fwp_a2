@@ -3,6 +3,8 @@ import React, { useState, useEffect, useContext, useRef} from "react";
 import "./CreatePost.css"
 import { userContext } from '../Global_Pages/UserContext';
 import {createPost} from "../../data/repository";
+import ReactQuill, {UnprivilegedEditor} from "react-quill";
+import "quill/dist/quill.snow.css";
 
 function CreatePost() {
 
@@ -14,6 +16,8 @@ function CreatePost() {
     const [invalidimage, setInvalid] = useState(null)
     const navigate = useNavigate()
     const ref = useRef(null)
+
+
 
 
     function bodyinput(event) {
@@ -64,12 +68,13 @@ function CreatePost() {
         // Creates a post object and then adds it to posts attribute
         // in local storage.
 
-        if (((body === "") || (title === ""))) {
+        if (((body.replace(/<(.|\n)*?>/g, "").trim().length === 0)) || (title === "")) {
             alert("Post or Title cannot be empty")
         }
-        else if ((body.length > 250)) {
-            alert("Post cannot have more than 250 characters")
+        else if ((body.length > 600)) {
+            alert("Post cannot have more than 600 characters")
         }
+
         else {
 
             // Post is valid and added to localstorage
@@ -90,7 +95,7 @@ function CreatePost() {
             await createPost(post)
 
             // navigate("/ProfilePost)
-            navigate("/ProfileManagement")
+            navigate(`/ProfilePosts/${user.user_id}`)
             alert("New post created!")
 
         }
@@ -103,10 +108,23 @@ function CreatePost() {
 
 
     return (
+
+        <div className="row-create">
+
+        <div className='img-container-better'>
+
+        <img src = "/images/Create_Page/interactions-better.png" className='interaction-better-img' alt=''></img>
+
+        </div>
+
+
+        <div className="column">
+
         <div className='create-post-container'>
             
             <div className='create-post'>
                 <h1>Create a post</h1>
+                <p>Post will be created by: {user.username}</p>
             </div>
 
             <div className='post-form'>
@@ -117,7 +135,9 @@ function CreatePost() {
 
                 <form className='post-input'>
                     <label htmlFor='text'></label>
-                    <textarea placeholder='write something....' onChange={bodyinput}></textarea>
+                    <div className='quill-editor'>
+                    <ReactQuill theme="snow" value = {body} onChange={setBody} style={{ height: "180px" }} ref = {ref}/>
+                    </div>
                 </form>
             </div>
             
@@ -148,13 +168,26 @@ function CreatePost() {
                     <div className='image-container'>
                         <div className='image-cancel'>
 
-                             <img src={(image)} onError={handleBrokenImage} alt = 'No visual to display' className='preview-resize' height={1000} width = {700}></img>
+                             <img src={(image)} onError={handleBrokenImage} alt = 'No visual to display' className='preview-resize' height={300} width = {700}></img>
 
                         </div>
                     </div>
                     
             </div>
-            )};   
+            )}
+
+            {!image && (
+
+                <div className='no-image-uploaded-message'>
+
+                    <h3>You have not selected an image to upload with this post</h3>
+                </div>
+            
+            )}
+
+        </div>
+
+        </div>   
 
 
 

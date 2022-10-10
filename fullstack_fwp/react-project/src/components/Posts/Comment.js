@@ -55,7 +55,7 @@ function Comment(props) {
   return (
     <div>
 
-        <p>{props.content.reply_body}</p>
+        <p><div dangerouslySetInnerHTML={{ __html: props.content.reply_body}}/></p>
 
         <br></br>
         <button className="add-reply-button" onClick={() => setReplying(true)}>Add reply</button>

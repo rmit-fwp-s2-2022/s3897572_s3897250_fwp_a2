@@ -57,7 +57,7 @@ function ProfilePosts() {
                             {/* Creates multiple links (to PostView.js component) with the post id in the url to identify each post*/}
                             <Link key={post.id} to={`/PostView/${post.id}`} className = 'profile-post-links'><h1>Title: {post.title}</h1></Link>
                             {/* <PostView author={curUser}/> */}
-                            <p>Content: {post.body}</p>
+                            <p>Content: <div dangerouslySetInnerHTML={{ __html: post.body}}></div></p>
                         </div>
                     ))
                 }
