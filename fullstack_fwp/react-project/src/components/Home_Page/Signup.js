@@ -141,7 +141,7 @@ function SignUp() {
 
       <div className="signup-box">
         <label htmlFor="lastname" className="control-label">Last name</label>
-                <input name="lastname" id="firstname" className="form-control"
+                <input name="lastname" id="lastname" className="form-control"
                   value={fields.lastname} onChange={handleInputChange} />
                 {errors.lastname &&
                   <div className="text-danger">{errors.lastname}</div>

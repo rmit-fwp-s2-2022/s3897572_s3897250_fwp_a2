@@ -108,11 +108,16 @@ const PostView = () => {
 
         if (reply.length > 0) {
 
+            console.log(post, "i am before")
+
+
             await createReply(replyObj);
 
             let updatedPost = await singlePostFromUser(post.id)
 
             setPost(updatedPost)
+
+            console.log(post, "i am after")
 
             console.log(replyObj.reply)
 
