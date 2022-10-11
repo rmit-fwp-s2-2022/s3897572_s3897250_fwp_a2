@@ -25,7 +25,7 @@ const Users = () => {
 
 return (
 
-    <div>
+    <div className="user-display-container">
 
         {users.length > 0 ? (
             

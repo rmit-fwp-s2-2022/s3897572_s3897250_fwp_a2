@@ -15,10 +15,11 @@ module.exports = (express, app) => {
   router.post("/", controller.create);
 
   // Deletes a given post
-  router.post("/delete", controller.deletePost)
+  router.delete("/delete/:id", controller.deletePost)
 
   // Updates a given post
   router.post("/update", controller.updatePost)
+
 
 
   // Add routes to server.

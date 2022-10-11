@@ -52,7 +52,7 @@ exports.create = async (req, res) => {
 exports.deletePost = async (req, res) => {
   const deletePost = await db.post.destroy({
     where: {
-      id: req.body.id
+      id: req.params.id
     }
   });
 

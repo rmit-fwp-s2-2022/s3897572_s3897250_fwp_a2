@@ -75,8 +75,8 @@ async function createPost(post) {
   return response.data;
 }
 
-async function deletePost(post) {
-  const response = await axios.post(API_HOST + "/api/posts/delete", post);
+async function deletePost(id) {
+  const response = await axios.delete(API_HOST + `/api/posts/delete/${id}`);
 
   return response.data;
 }
@@ -86,6 +86,8 @@ async function updatePost(post) {
 
   return response.data;
 }
+
+
 
 
 // --- Replies ---------------------------------------------------------------------------------------

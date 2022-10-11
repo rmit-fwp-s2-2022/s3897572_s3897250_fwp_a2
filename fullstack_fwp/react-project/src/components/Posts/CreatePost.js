@@ -94,6 +94,8 @@ function CreatePost() {
 
             await createPost(post)
 
+            await image
+
             // navigate("/ProfilePost)
             navigate(`/ProfilePosts/${user.user_id}`)
             alert("New post created!")

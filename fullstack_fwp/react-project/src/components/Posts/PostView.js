@@ -4,7 +4,7 @@ import Comment from './Comment';
 import "./PostView.css"
 import { userContext } from '../Global_Pages/UserContext';
 import { postContext } from '../Global_Pages/PostContext';
-import { findUser, updatePost, allReplies, createReply, singlePostFromUser, updateUser} from "../../data/repository";
+import { findUser, updatePost, allReplies, createReply, singlePostFromUser, updateUser, deletePost} from "../../data/repository";
 import ReactQuill, {UnprivilegedEditor} from "react-quill";
 import "quill/dist/quill.snow.css";
 
@@ -24,6 +24,8 @@ const PostView = (props) => {
     const [reply, setReply] = useState('')
     const [replies, setReplies] = useState([])
     const [followed, setFollowed] = useState(false)
+    const [isViewPoster, setViewPoster] = useState(null)
+
     let navigate = useNavigate();
     let ref = useRef();
     
@@ -37,6 +39,13 @@ const PostView = (props) => {
             setPost(postObj)
             setFound(true)
 
+            console.log(user.user_id, "user", postObj.user_id, "post")
+
+            if (user.user_id === postObj.user_id){
+                console.log("Executed")
+                setViewPoster(true)
+            }
+
             let crUser = await findUser(postObj.user_id)
             setCurUser(crUser)
 
@@ -46,7 +55,6 @@ const PostView = (props) => {
             if (crUser.followers.includes(user.username)) {
                 setFollowed(true)
             }
-
 
     }
 
@@ -60,13 +68,15 @@ const PostView = (props) => {
     }
 
 
-    async function deletePost(event) {
+
+
+    async function HandledeletePost(event) {
 
             // Deletes the post (using the postsIndex to find
             // which post to delete)
             
 
-        await deletePost(post)
+        await deletePost(post.id)
 
         navigate(-1)
         alert("Post deleted!")
@@ -92,7 +102,7 @@ const PostView = (props) => {
         if(ref.current.value.length > 600){
             window.alert("Post cannot have more than 600 characters");
             return;
-        }
+        }   
 
 
         if ((ref.current.value.length > 0)) {
@@ -206,7 +216,17 @@ const PostView = (props) => {
 
     return (
 
-        <div className='post-view'>
+        <div className='post-container'>
+
+        <div className='post-container-banner'>
+
+            <h3> Post Title:  {post.title}</h3>
+            <small className='post-created-by'> Post Created by: {curUser.first_name} {curUser.last_name}</small>
+
+
+        </div>
+
+        <div className='post-view-view'>
 
            
             <div className='following-buttons'>
@@ -218,10 +238,10 @@ const PostView = (props) => {
                 }
 
             </div>
-
-            <h1 className='post-title'>{post.title}</h1> 
-            <small className='post-created-by'> Post Created by: {curUser.first_name} {curUser.last_name}</small>
-            <br></br>
+            
+            <div className='post-information'>
+            <p className='post-title'>{post.title}</p> 
+            </div>
 
             {edit === false ? (
 
@@ -231,8 +251,19 @@ const PostView = (props) => {
                 <div className='post-upper'>
                     <p className='post-body'> <div dangerouslySetInnerHTML={{ __html: post.body}} /></p>
                     <div className='post-buttons'>
-                        <button className='post-view-buttons' value={post.id} onClick={deletePost}>Delete post</button>
-                        <button className='post-view-buttons' value={post.id} onClick={editing}>Edit post</button>
+                        {console.log(isViewPoster,  "ayoo viewer")}
+                        <button className='post-view-buttons' value={post.id} onClick={HandledeletePost} disabled = {!isViewPoster}>Delete post</button>
+                        <button className='post-view-buttons' value={post.id} onClick={editing} disabled = {!isViewPoster}>Edit post</button>
+                    </div>
+
+                    <div className='image-rendering'>
+
+                        {console.log(post.image)}
+
+                            {post.image &&(
+                            <img src={post.image} alt = 'Displayed Visual' className = 'image-rendered-post-view'></img>
+                            )}
+
                     </div>
 
                             
@@ -281,25 +312,27 @@ const PostView = (props) => {
 
                 // Else if edit is true, show body in textarea for editing, submit button and image.
 
-
                 <div>
-                    <div className='post-upper'>
+                <div className='post-upper'>
 
-                        <ReactQuill theme="snow" defaultValue = {post.body} onChange={setBody} style={{ height: "180px" }} ref = {ref}/>
-                        
-                        <div className='post-buttons'>
-                            <button className='post-view-buttons' onClick={submit}>Submit</button>
-                        </div>
-
+                    <ReactQuill theme="snow" defaultValue = {post.body} onChange={setBody} style={{ height: "180px" }} ref = {ref}/>
+                    
+                    <div className='post-buttons'>
+                        <button className='post-view-buttons' onClick={submit}>Submit</button>
                     </div>
 
                 </div>
 
-                }
+            </div>
 
-                        
-        </div>
-    )
+            }
+
+                    
+    </div>
+
+    </div>
+
+)
 
 }
 
@@ -310,3 +343,5 @@ export default PostView
 //      - Make new replies state to hold replies
 //      - Map out replies/users in html
 //      - Implement comments component
+
+
