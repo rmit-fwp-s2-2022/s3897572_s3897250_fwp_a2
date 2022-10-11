@@ -34,6 +34,10 @@ module.exports = (sequelize, DataTypes) =>
     followers: {
       type: DataTypes.STRING,
       defaultValue: JSON.stringify([])
+    },
+    following: {
+      type: DataTypes.STRING,
+      defaultValue: JSON.stringify([])
     }
 
   }, {
