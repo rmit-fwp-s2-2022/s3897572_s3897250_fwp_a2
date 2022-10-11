@@ -122,24 +122,54 @@ return (
                     { Muser.followers.includes(user.username) ? (
                         // If logged in user is inside followers list current mapped user
 
-                        <div><Link key={Muser.user_id} to={`/ProfilePosts/${Muser.user_id}`} className = 'profile-post-links'><h1>{Muser.username}'s profile</h1></Link>
-                            <button value={Muser.user_id} onClick={unfollow}>Unfollow</button>
+                        <div className="box-info-container">
+
+                        <div className="user-info-container">
+
+                        <div className="user-information-follow"><Link key={Muser.user_id} to={`/ProfilePosts/${Muser.user_id}`} className = 'profile-post-links'><h1>User:  {Muser.username}'s profile</h1></Link>
+                        
+                        </div>
 
                         </div>
+
+                        <div className="button-container">
+
+                        <div className="unfollow-follow-button">
+
+                        <button value={Muser.user_id} onClick={unfollow}>Unfollow</button>
+
+                        </div>
+
+                        </div>
+
+                        </div>
+
                 
                         
                     ) :
 
                         // If logged in user is not a follower of current mapped user 
-                    <div>
+                    <div className="box-info-container">
 
-                        {Muser.username !== user.username &&
-                        <div>
-                            <h1>{Muser.username} - {Muser.first_name} {Muser.last_name}</h1>
-                            <button value={Muser.user_id} onClick={follow}>Follow</button>
-                        </div>
-                        } 
+                    <div className = "user-information-follow">
+                        <h1>User:  {Muser.username} - {Muser.first_name} {Muser.last_name}</h1>
+                    
                     </div>
+
+                    <div className="buttons-container">
+
+                    <div className = "unfollow-follow-button">
+
+                    <button value={Muser.user_id} onClick={follow}>Follow</button>
+
+                    </div>
+
+                    </div>
+
+                    </div>
+
+
+
 
                     }
 

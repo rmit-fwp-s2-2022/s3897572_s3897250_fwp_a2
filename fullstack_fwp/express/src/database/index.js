@@ -102,9 +102,21 @@ async function seedData() {
   const argon2 = require("argon2");
 
   const testing_id = parseInt(Date.now())
+  const testing_id1 = parseInt(Date.now())
+  const testing_id2 = parseInt(Date.now())
+  const testing_id3 = parseInt(Date.now())
+  const testing_id4 = parseInt(Date.now())
+
+
+
 
   let hash = await argon2.hash("abc123", { type: argon2.argon2id });
-  await db.user.create({ username: "testingrecord", user_id: testing_id, password_hash: hash, first_name: "testingrecord", last_name : "testingrecord", profile_pic: "testingrecord" , email: "testingrecord@gmail.com"});
+  await db.user.create({ username: "testingrecord", user_id: testing_id, password_hash: hash, first_name: "testingrecord", last_name : "testingrecord", profile_pic: "testingrecord"});
+  await db.user.create({ username: "testingrecord1", user_id: 23233, password_hash: hash, first_name: "testingrecord", last_name : "testingrecord", profile_pic: "testingrecord"});
+  await db.user.create({ username: "testingrecord2", user_id: 234234, password_hash: hash, first_name: "testingrecord", last_name : "testingrecord", profile_pic: "testingrecord"});
+  await db.user.create({ username: "testingrecord3", user_id: 3242435, password_hash: hash, first_name: "testingrecord", last_name : "testingrecord", profile_pic: "testingrecord"});
+  await db.user.create({ username: "testingrecord4", user_id: 324243511, password_hash: hash, first_name: "testingrecord", last_name : "testingrecord", profile_pic: "testingrecord"});
+
 
 
   await db.post.create({

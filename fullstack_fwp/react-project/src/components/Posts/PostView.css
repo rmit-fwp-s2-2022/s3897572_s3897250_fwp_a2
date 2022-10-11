@@ -24,6 +24,52 @@
     box-shadow:  rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; ;
 }
 
+
+.top-button-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.following-buttons{
+    display: flex;
+}
+
+.following-buttons button{
+    background-color: black;
+    color: white;
+    width: 200px;
+    padding: 15px;
+}
+
+.following-buttons button:hover{
+    color: pink;
+    font-size: 110%;
+}
+
+.like-dislike-buttons{
+    display: flex;
+    gap: 50px;
+    flex-direction: column;
+}
+
+.like-dislike-buttons button{
+    background-color: black;
+    color: white;
+    width: 200px;
+    padding: 15px;
+}
+
+.like-dislike-buttons button:hover{
+    color: pink;
+    font-size: 110%;
+
+
+}
+
+
+
+
 .post-information{
     display: flex;
     justify-content: center;
@@ -37,6 +83,7 @@
 .post-title{
     text-align: center;
     color: black;
+
 }
 
 .post-created-by{
@@ -44,7 +91,7 @@
 }
 
 .post-title{
-    font-size: 40px;
+    font-size: 20px;
 }
 
 .post-upper {
@@ -122,7 +169,7 @@
 .comments-add {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 120px;
     height: auto;
 }
 
@@ -132,6 +179,8 @@
     padding: 10px;
     box-shadow: rgba(3, 3, 3, 0.2) 0px 7px 29px 0px;
     font-size: small;
+    background-color: black;
+    color: white;
 }
 
 .comments-add button:hover{
