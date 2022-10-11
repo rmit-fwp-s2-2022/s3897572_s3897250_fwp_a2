@@ -80,6 +80,8 @@ return (
 
     <div className="user-display-container">
 
+       {console.log(users)}
+
         {users.length > 0 ? (
             
                 users.map((Muser) => (
@@ -98,8 +100,13 @@ return (
 
                             // If logged in user is not a follower of current mapped user 
                         <div>
-                            <h1>{Muser.username}</h1>
-                            <button value={Muser.user_id} onClick={follow}>Follow</button>
+
+                            {Muser.username !== user.username &&
+                            <div>
+                                <h1>{Muser.username}</h1>
+                                <button value={Muser.user_id} onClick={follow}>Follow</button>
+                            </div>
+                            } 
                         </div>
 
                         }
