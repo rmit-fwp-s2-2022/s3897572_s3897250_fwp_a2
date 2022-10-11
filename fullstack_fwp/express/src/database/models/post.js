@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) =>
     image: {
         type: DataTypes.STRING(144),
     }
-
   }, {
     // Don't add the timestamp attributes (updatedAt, createdAt).
     timestamps: false

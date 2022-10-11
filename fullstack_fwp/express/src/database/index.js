@@ -20,6 +20,7 @@ db.user = require("./models/user.js")(db.sequelize, DataTypes);
 db.post = require("./models/post.js")(db.sequelize, DataTypes);
 db.reply = require("./models/reply.js")(db.sequelize, DataTypes);
 db.comment = require("./models/comment.js")(db.sequelize, DataTypes);
+db.reactions = require("./models/reactions.js")(db.sequelize, DataTypes);
 
 
 
@@ -65,6 +66,21 @@ db.reply.hasMany(db.comment)
 
 
 
+// Relate reactions and post
+
+db.reactions.belongsTo(db.post, {
+  foreignKey: {
+    name: "id",
+    allowNull: false
+  },
+  onDelete: "CASCADE"
+})
+
+db.post.hasOne(db.reactions)
+
+
+
+
 // Include a sync option with seed data logic included.
 db.sync = async () => {
   // Sync schema.
@@ -104,6 +120,8 @@ async function seedData() {
   await db.reply.create({id: 1, reply: 'reply', user: 'testingrecord', reply_id: parseInt(Date.now()), date: new Date().toLocaleDateString()});
   // console.log(replyObj)
 
+  await db.reactions.create({id: 1, reactions_id: parseInt(Date.now())})
+  
 }
 
 module.exports = db;

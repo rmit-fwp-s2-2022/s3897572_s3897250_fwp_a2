@@ -4,9 +4,10 @@ import Comment from './Comment';
 import "./PostView.css"
 import { userContext } from '../Global_Pages/UserContext';
 import { postContext } from '../Global_Pages/PostContext';
-import { findUser, updatePost, allReplies, createReply, singlePostFromUser, updateUser, deletePost} from "../../data/repository";
+import { findUser, updatePost, allReplies, createReply, singlePostFromUser, updateUser, deletePost, updateReactions, getReactions } from "../../data/repository";
 import ReactQuill, {UnprivilegedEditor} from "react-quill";
 import "quill/dist/quill.snow.css";
+import e from 'cors';
 
 
 
@@ -25,6 +26,9 @@ const PostView = (props) => {
     const [replies, setReplies] = useState([])
     const [followed, setFollowed] = useState(false)
     const [isViewPoster, setViewPoster] = useState(null)
+    const [liked, setLiked] = useState(false)
+    const [disliked, setDisliked] = useState(false)
+
 
     let navigate = useNavigate();
     let ref = useRef();
@@ -61,6 +65,25 @@ const PostView = (props) => {
                 setFollowed(true)
             }
 
+
+
+            // Check if user reactions for post and adjust state accordingly
+
+            let reactions = await getReactions(postObj.id)
+            let likedList = JSON.parse(reactions.peopleWhoHaveLiked)
+            let dislikedList = JSON.parse(reactions.peopleWhoHaveDisliked)
+
+            if (likedList.includes(user.username)) {
+                setLiked(true)
+                setDisliked(false)
+            }
+            else if (dislikedList.includes(user.username)) {
+                setDisliked(true)
+                setLiked(false)
+            }
+            else {
+
+            }
     }
 
 
@@ -73,13 +96,10 @@ const PostView = (props) => {
     }
 
 
-
-
     async function HandledeletePost(event) {
 
             // Deletes the post (using the postsIndex to find
-            // which post to delete)
-            
+            // which post to delete) 
 
         await deletePost(post.id)
 
@@ -103,12 +123,10 @@ const PostView = (props) => {
             return;
           }
         
-
         if(ref.current.value.length > 600){
             window.alert("Post cannot have more than 600 characters");
             return;
         }   
-
 
         if ((ref.current.value.length > 0)) {
 
@@ -118,15 +136,12 @@ const PostView = (props) => {
 
             setBody('') 
 
-            
             await updatePost(post)
 
         } 
         else {
             window.alert("Post cannot be empty. ")
         }
-
-
     }
 
 
@@ -136,7 +151,6 @@ const PostView = (props) => {
 
         // Should also update post object in state 
         // by retrieving it from the database again.
-
 
 
         let curDate = new Date()
@@ -150,33 +164,26 @@ const PostView = (props) => {
             date: curDate,
         }
 
-
         if (reply.length > 0) {
-
+            
             let newReply = await createReply(replyObj);
-
             let updatedPost = await singlePostFromUser(post.id)
 
             setPost(updatedPost)
 
-
             let replies = await allReplies(post)
             setReplies(replies)
-
 
             setReply("")
             ref.current.value =  ''
 
         }
-        
-        
         else {
             window.alert("You comment cannot be empty.")
         }
-
     }
 
-    
+
     async function follow() {
 
         // Adds the current user to the following list
@@ -215,10 +222,81 @@ const PostView = (props) => {
 
     
 
+    async function like() {
+        // Update like section of posts reaction table record
+        // Set's true for liked state.
+
+        if (liked === false) {
+
+            let reactions = await getReactions(post.id)
+            let likedUsers = JSON.parse(reactions.peopleWhoHaveLiked)
+            let dislikedUsers = JSON.parse(reactions.peopleWhoHaveDisliked)
+            let indexRemoval = dislikedUsers.indexOf(user.username)
+
+            if (indexRemoval === -1) {      // if user has not liked, add to disliked
+                likedUsers.push(user.username)
+            }
+            else {      // else if user has liked but has now disliked, take user out from liked and into disliked
+                dislikedUsers.splice(indexRemoval, 1)
+                likedUsers.push(user.username)
+            }
+
+            reactions.peopleWhoHaveLiked = JSON.stringify(likedUsers)
+            reactions.peopleWhoHaveDisliked = JSON.stringify(dislikedUsers)
+
+            await updateReactions(reactions)
+
+            setLiked(true)
+            setDisliked(false)
+
+        }
+    }
+
+
+    async function dislike() {
+        // Update dislike section of posts reaction table record
+        // Set's true for disliked state.
+
+
+        if (disliked === false) {
+
+            let reactions = await getReactions(post.id)
+            let likedUsers = JSON.parse(reactions.peopleWhoHaveLiked)
+            let dislikedUsers = JSON.parse(reactions.peopleWhoHaveDisliked)
+            let indexRemoval = likedUsers.indexOf(user.username)
+
+            if (indexRemoval === -1) {      // if user has not liked, add to disliked
+                dislikedUsers.push(user.username)
+            }
+            else {      // else if user has liked but has now disliked, take user out from liked and into disliked
+                likedUsers.splice(indexRemoval, 1)
+                dislikedUsers.push(user.username)
+            }
+
+            reactions.peopleWhoHaveLiked = JSON.stringify(likedUsers)
+            reactions.peopleWhoHaveDisliked = JSON.stringify(dislikedUsers)
+
+            await updateReactions(reactions)
+
+            setDisliked(true)
+            setLiked(false)
+            
+        }
+    }
+
     // - Relate post with reactions
     // - Have a method to check for the columns for their values
     // - If the value is true for a certain reaction (column), load it in state
     // - Use the state to render the 
+
+
+
+
+
+
+
+
+
 
 
     return (
@@ -246,10 +324,8 @@ const PostView = (props) => {
             </div>
 
             <div>
-
-                <button>Like</button>
-                <button>Dislike</button>
-
+                <button onClick={like}>Like</button>
+                <button onClick={dislike}>Dislike</button>
             </div>
             
             <div className='post-information'>
@@ -264,14 +340,14 @@ const PostView = (props) => {
                 <div className='post-upper'>
                     <p className='post-body'> <div dangerouslySetInnerHTML={{ __html: post.body}} /></p>
                     <div className='post-buttons'>
-                        {console.log(isViewPoster,  "ayoo viewer")}
+                        {/* {console.log(isViewPoster,  "ayoo viewer")} */}
                         <button className='post-view-buttons' value={post.id} onClick={HandledeletePost} disabled = {!isViewPoster}>Delete post</button>
                         <button className='post-view-buttons' value={post.id} onClick={editing} disabled = {!isViewPoster}>Edit post</button>
                     </div>
 
                     <div className='image-rendering'>
 
-                        {console.log(post.image)}
+                        {/* {console.log(post.image)} */}
 
                             {post.image &&(
                             <img src={post.image} alt = 'Displayed Visual' className = 'image-rendered-post-view'></img>
