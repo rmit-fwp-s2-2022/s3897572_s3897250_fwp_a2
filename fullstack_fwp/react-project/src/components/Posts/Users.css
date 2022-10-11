@@ -1,3 +1,13 @@
 .user-display-container{
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
+    gap: 50px;
+}
+
+.user-title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 35px;
 }

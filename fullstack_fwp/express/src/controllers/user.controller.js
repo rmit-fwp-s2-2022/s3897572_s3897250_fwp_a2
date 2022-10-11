@@ -67,7 +67,7 @@ exports.create = async (req, res) => {
 // Updates user from the database
 exports.update = async (req, res) => {
 
-  const updated = await db.user.update({username: req.body.username, first_name: req.body.first_name, last_name: req.body.last_name, followers: req.body.followers}, 
+  const updated = await db.user.update({username: req.body.username, first_name: req.body.first_name, last_name: req.body.last_name, followers: req.body.followers, following: req.body.following}, 
     { where: { user_id: req.body.user_id}
     });
 

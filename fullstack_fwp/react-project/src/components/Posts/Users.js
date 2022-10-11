@@ -1,5 +1,5 @@
 import "./Users.css"
-import React, {useState, useRef, useContext, useEffect } from "react";
+import React, {useState, useRef, useContext, useEffect, useSyncExternalStore } from "react";
 import { getUsers, setUser } from "../../data/repository";
 import { Link } from 'react-router-dom';
 import { userContext } from '../Global_Pages/UserContext';
@@ -9,7 +9,7 @@ const Users = () => {
 
 
     const [users, setUsers] = useState([])
-    const [following, setFollowing] = useState([])
+    const [following, setFollowing] = useState(false)
     const [followed, setFollowed] = useState(false)
     const {user, setUser} = useContext(userContext)
     const [curDelete, setCurDelete] = useState(false)
@@ -26,6 +26,9 @@ const Users = () => {
         // Loads in all users
 
         let users = await getUsers()
+
+        users.pop()
+
         setUsers(users)
 
     }
@@ -42,16 +45,27 @@ const Users = () => {
         let user_id = event.target.value
         let curUser = await findUser(user_id)
 
+        console.log("i am curUser", curUser)
+
         let followerList = JSON.parse(curUser.followers)
         followerList.push(user.username)
         curUser.followers = JSON.stringify(followerList)
         
         await updateUser(curUser)
         setFollowed(true)
+
+
+        let followingList = JSON.parse(user.following)
+        followingList.push(curUser.username)
+        user.following = JSON.stringify(followingList)
         
+        await updateUser(user)
+        setFollowing(true)
+
 
     }
 
+   
     
     async function unfollow(event) {
 
@@ -69,7 +83,17 @@ const Users = () => {
 
         setFollowed(false)
 
+        let followingList_ = JSON.parse(user.following)
+
+        let indexRemoval_ = followingList_.indexOf(curUser.username)
+        followingList_.splice(indexRemoval, 1)
+        user.following = JSON.stringify(followingList_)
+        await updateUser(user)
+        setFollowing(false)
+
     }
+
+
 
 
     // Conditional to check if current user
@@ -80,6 +104,13 @@ return (
 
     <div className="user-display-container">
 
+    <div className="user-title">
+
+        <h3>View and Follow Your Colleagues</h3>
+
+
+    </div>
+
        {console.log(users)}
 
         {users.length > 0 ? (
@@ -88,28 +119,32 @@ return (
 
                     <div className='posts-snippet'>
 
-                        { Muser.followers.includes(user.username) ? (
-                            // If logged in user is inside followers list current mapped user
+                    { Muser.followers.includes(user.username) ? (
+                        // If logged in user is inside followers list current mapped user
 
-                            <div><Link key={Muser.user_id} to={`/ProfilePosts/${Muser.user_id}`} className = 'profile-post-links'><h1>{Muser.username}'s profile</h1></Link>
-                                <button value={Muser.user_id} onClick={unfollow}>Unfollow</button>
+                        <div><Link key={Muser.user_id} to={`/ProfilePosts/${Muser.user_id}`} className = 'profile-post-links'><h1>{Muser.username}'s profile</h1></Link>
+                            <button value={Muser.user_id} onClick={unfollow}>Unfollow</button>
 
-                            </div>
-                            
-                        ) :
-
-                            // If logged in user is not a follower of current mapped user 
-                        <div>
-
-                            {Muser.username !== user.username &&
-                            <div>
-                                <h1>{Muser.username}</h1>
-                                <button value={Muser.user_id} onClick={follow}>Follow</button>
-                            </div>
-                            } 
                         </div>
+                
+                        
+                    ) :
 
-                        }
+                        // If logged in user is not a follower of current mapped user 
+                    <div>
+
+                        {Muser.username !== user.username &&
+                        <div>
+                            <h1>{Muser.username} - {Muser.first_name} {Muser.last_name}</h1>
+                            <button value={Muser.user_id} onClick={follow}>Follow</button>
+                        </div>
+                        } 
+                    </div>
+
+                    }
+
+        
+
                         
                     </div>
                 ))
