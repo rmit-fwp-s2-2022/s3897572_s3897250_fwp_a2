@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import React, {useState, useRef, useContext } from "react";
+import React, {useState, useRef, useContext, useEffect } from "react";
 import Comment from './Comment';
 import "./PostView.css"
 import { userContext } from '../Global_Pages/UserContext';
@@ -28,6 +28,11 @@ const PostView = (props) => {
 
     let navigate = useNavigate();
     let ref = useRef();
+
+
+    useEffect(() => {
+
+    }, [followed])
     
 
     async function getPostFromParams() {
@@ -184,7 +189,6 @@ const PostView = (props) => {
         
         let newCurUser = await updateUser(curUser)
 
-        setCurUser(newCurUser)
         setFollowed(true)
 
     }
@@ -199,7 +203,6 @@ const PostView = (props) => {
         
         let newCurUser = await updateUser(curUser)
 
-        setCurUser(newCurUser)
         setFollowed(false)
 
     }
@@ -211,7 +214,6 @@ const PostView = (props) => {
     }
 
     
-
 
 
     return (
