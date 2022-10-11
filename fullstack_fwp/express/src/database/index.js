@@ -121,7 +121,7 @@ async function seedData() {
   // console.log(replyObj)
 
   await db.reactions.create({id: 1, reactions_id: parseInt(Date.now())})
-
+  
 }
 
 module.exports = db;

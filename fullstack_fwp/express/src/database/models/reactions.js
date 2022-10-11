@@ -4,17 +4,25 @@ module.exports = (sequelize, DataTypes) =>
         type: DataTypes.BIGINT,
         primaryKey: true      
     },
-    like: {
+    liked: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
-    dislike: {
+    disliked: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
     },
     likeCount: {              
         type: DataTypes.INTEGER,
         defaultValue: 0
+    },
+    peopleWhoHaveLiked: {
+      type: DataTypes.STRING,
+      defaultValue: JSON.stringify([])
+    },
+    peopleWhoHaveDisliked: {
+      type: DataTypes.STRING,
+      defaultValue: JSON.stringify([])
     }
   
   }, {

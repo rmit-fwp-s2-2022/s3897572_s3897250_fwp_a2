@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useContext, useRef} from "react";
 import "./CreatePost.css"
 import { userContext } from '../Global_Pages/UserContext';
-import {createPost} from "../../data/repository";
+import { createPost, createReactions } from "../../data/repository";
 import ReactQuill, {UnprivilegedEditor} from "react-quill";
 import "quill/dist/quill.snow.css";
 
@@ -78,14 +78,21 @@ function CreatePost() {
         else {
 
             // Post is valid and added to localstorage
-        
+            
+            let post_id = parseInt(Date.now())
+
             const post = {
                 title: title,
                 username: user.username,
                 user_id: user.user_id,
                 body: body,
-                id: parseInt(Date.now()),
+                id: post_id,
                 image: image.length > 0 ? image : "no-image"
+            }
+
+            const reactions = {
+                id: post_id,
+                reactions_id: parseInt(Date.now()),
             }
 
 
@@ -93,6 +100,7 @@ function CreatePost() {
             // key as the primary key of the User table.
 
             await createPost(post)
+            await createReactions(reactions)
 
             await image
 

@@ -89,7 +89,6 @@ async function updatePost(post) {
 
 
 
-
 // --- Replies ---------------------------------------------------------------------------------------
 async function allReplies(post) {
   const response = await axios.post(API_HOST + "/api/reply/all", post);
@@ -103,6 +102,8 @@ async function createReply(post) {
   return response.data;
 }
 
+
+
 // --- Comments ---------------------------------------------------------------------------------------
 async function getComments(reply) {
   const response = await axios.post(API_HOST + "/api/comment/getComments", reply);
@@ -110,9 +111,29 @@ async function getComments(reply) {
   return response.data;
 }
 
-
 async function createComment(comment) {
   const response = await axios.post(API_HOST + "/api/comment/createComment", comment);
+
+  return response.data;
+}
+
+
+
+// --- Reactions ---------------------------------------------------------------------------------------
+async function createReactions(reactions) {
+  const response = await axios.post(API_HOST + "/api/reactions/create", reactions);
+
+  return response.data;
+}
+
+async function updateReactions(reactions) {
+  const response = await axios.post(API_HOST + "/api/reactions/update", reactions);
+
+  return response.data;
+}
+
+async function getReactions(id) {
+  const response = await axios.post(API_HOST + `/api/reactions/getReactions/${id}`);
 
   return response.data;
 }
@@ -138,5 +159,6 @@ export {
   getUser, removeUser, setUser,
   updateUser, deleteUser, deletePost, updatePost,
   allReplies, createReply, singlePostFromUser,
-  getComments, createComment
+  getComments, createComment, createReactions, 
+  updateReactions, getReactions
 }
