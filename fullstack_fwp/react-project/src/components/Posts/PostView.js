@@ -251,9 +251,9 @@ const PostView = (props) => {
             <div className='following-buttons'>
 
                 { followed === true? (
-                    <button onClick = {unfollow} className='post-following'>Unfollow</button>
+                    <button onClick = {unfollow} className='post-following' disabled = {isViewPoster}>Unfollow</button>
                 ) :
-                    <button onClick = {follow} className='post-following'>Follow</button>
+                    <button onClick = {follow} className='post-following' disabled = {isViewPoster}>Follow</button>
                 }
 
             </div>
