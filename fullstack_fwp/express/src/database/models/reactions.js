@@ -1,11 +1,15 @@
 module.exports = (sequelize, DataTypes) =>
   sequelize.define("reactions", {
+    reactions_id: {
+        type: DataTypes.BIGINT,
+        primaryKey: true      
+    },
     like: {
-      type: DataTypes.BOOlEAN,
+      type: DataTypes.BOOLEAN,
       defaultValue: false
     },
     dislike: {
-        type: DataTypes.BOOlEAN,
+        type: DataTypes.BOOLEAN,
         defaultValue: false
     },
     likeCount: {              

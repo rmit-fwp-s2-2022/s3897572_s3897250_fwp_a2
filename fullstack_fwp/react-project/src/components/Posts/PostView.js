@@ -215,6 +215,19 @@ const PostView = (props) => {
 
     
 
+    function like() {
+        // Update like section of posts reaction table record
+        // Set's true for liked state.
+
+        
+
+    }
+
+    function dislike() {
+        // Update dislike section of posts reaction table record
+        // Set's true for disliked state.
+    }
+
     // - Relate post with reactions
     // - Have a method to check for the columns for their values
     // - If the value is true for a certain reaction (column), load it in state
