@@ -90,7 +90,10 @@ return (
                         { Muser.followers.includes(user.username) ? (
                             // If logged in user is inside followers list current mapped user
 
-                            <div><Link key={Muser.user_id} to={`/ProfilePosts/${Muser.user_id}`} className = 'profile-post-links'><h1>{Muser.username}'s profile</h1></Link></div>
+                            <div><Link key={Muser.user_id} to={`/ProfilePosts/${Muser.user_id}`} className = 'profile-post-links'><h1>{Muser.username}'s profile</h1></Link>
+                                <button value={Muser.user_id} onClick={unfollow}>Unfollow</button>
+
+                            </div>
                             
                         ) :
 
@@ -98,7 +101,6 @@ return (
                         <div>
                             <h1>{Muser.username}</h1>
                             <button value={Muser.user_id} onClick={follow}>Follow</button>
-                            <button value={Muser.user_id} onClick={unfollow}>Unfollow</button>
                         </div>
 
                         }
