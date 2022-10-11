@@ -215,6 +215,11 @@ const PostView = (props) => {
 
     
 
+    // - Relate post with reactions
+    // - Have a method to check for the columns for their values
+    // - If the value is true for a certain reaction (column), load it in state
+    // - Use the state to render the 
+
 
     return (
 
@@ -229,7 +234,6 @@ const PostView = (props) => {
         </div>
 
         <div className='post-view-view'>
-
            
             <div className='following-buttons'>
 
@@ -238,6 +242,13 @@ const PostView = (props) => {
                 ) :
                     <button onClick = {follow} className='post-following'>Follow</button>
                 }
+
+            </div>
+
+            <div>
+
+                <button>Like</button>
+                <button>Dislike</button>
 
             </div>
             
