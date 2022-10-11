@@ -26,8 +26,8 @@ const PostView = (props) => {
     const [replies, setReplies] = useState([])
     const [followed, setFollowed] = useState(false)
     const [isViewPoster, setViewPoster] = useState(null)
-    const [liked, setLiked] = useState(null)
-    const [disliked, setDisliked] = useState(null)
+    const [liked, setLiked] = useState(false)
+    const [disliked, setDisliked] = useState(false)
 
 
     let navigate = useNavigate();
@@ -65,17 +65,24 @@ const PostView = (props) => {
                 setFollowed(true)
             }
 
+
+
             // Check if user reactions for post and adjust state accordingly
 
-            let reactions = await getReactions(post.id)
-            let liked = JSON.parse(reactions.peopleWhoHaveLiked)
-            let disliked = JSON.parse(reactions.disliked)
+            let reactions = await getReactions(postObj.id)
+            let likedList = JSON.parse(reactions.peopleWhoHaveLiked)
+            let dislikedList = JSON.parse(reactions.peopleWhoHaveDisliked)
 
-            if (liked.includes(user.username)) {
+            if (likedList.includes(user.username)) {
                 setLiked(true)
+                setDisliked(false)
             }
-            else if (disliked.includes(user.username)) {
+            else if (dislikedList.includes(user.username)) {
                 setDisliked(true)
+                setLiked(false)
+            }
+            else {
+
             }
     }
 
@@ -218,15 +225,29 @@ const PostView = (props) => {
     async function like() {
         // Update like section of posts reaction table record
         // Set's true for liked state.
-        
-        if (liked != true) {
+
+        if (liked === false) {
 
             let reactions = await getReactions(post.id)
             let likedUsers = JSON.parse(reactions.peopleWhoHaveLiked)
-            likedUsers.push(user.username)
+            let dislikedUsers = JSON.parse(reactions.peopleWhoHaveDisliked)
+            let indexRemoval = dislikedUsers.indexOf(user.username)
+
+            if (indexRemoval === -1) {      // if user has not liked, add to disliked
+                likedUsers.push(user.username)
+            }
+            else {      // else if user has liked but has now disliked, take user out from liked and into disliked
+                dislikedUsers.splice(indexRemoval, 1)
+                likedUsers.push(user.username)
+            }
+
             reactions.peopleWhoHaveLiked = JSON.stringify(likedUsers)
+            reactions.peopleWhoHaveDisliked = JSON.stringify(dislikedUsers)
+
+            await updateReactions(reactions)
 
             setLiked(true)
+            setDisliked(false)
 
         }
     }
@@ -237,7 +258,7 @@ const PostView = (props) => {
         // Set's true for disliked state.
 
 
-        if (disliked != true) {
+        if (disliked === false) {
 
             let reactions = await getReactions(post.id)
             let likedUsers = JSON.parse(reactions.peopleWhoHaveLiked)
@@ -245,14 +266,20 @@ const PostView = (props) => {
             let indexRemoval = likedUsers.indexOf(user.username)
 
             if (indexRemoval === -1) {      // if user has not liked, add to disliked
-                dislikedUsers.push(dislikedUsers)
+                dislikedUsers.push(user.username)
             }
             else {      // else if user has liked but has now disliked, take user out from liked and into disliked
                 likedUsers.splice(indexRemoval, 1)
-                dislikedUsers.push(dislikedUsers)
+                dislikedUsers.push(user.username)
             }
 
             reactions.peopleWhoHaveLiked = JSON.stringify(likedUsers)
+            reactions.peopleWhoHaveDisliked = JSON.stringify(dislikedUsers)
+
+            await updateReactions(reactions)
+
+            setDisliked(true)
+            setLiked(false)
             
         }
     }
@@ -261,6 +288,15 @@ const PostView = (props) => {
     // - Have a method to check for the columns for their values
     // - If the value is true for a certain reaction (column), load it in state
     // - Use the state to render the 
+
+
+
+
+
+
+
+
+
 
 
     return (
@@ -304,14 +340,14 @@ const PostView = (props) => {
                 <div className='post-upper'>
                     <p className='post-body'> <div dangerouslySetInnerHTML={{ __html: post.body}} /></p>
                     <div className='post-buttons'>
-                        {console.log(isViewPoster,  "ayoo viewer")}
+                        {/* {console.log(isViewPoster,  "ayoo viewer")} */}
                         <button className='post-view-buttons' value={post.id} onClick={HandledeletePost} disabled = {!isViewPoster}>Delete post</button>
                         <button className='post-view-buttons' value={post.id} onClick={editing} disabled = {!isViewPoster}>Edit post</button>
                     </div>
 
                     <div className='image-rendering'>
 
-                        {console.log(post.image)}
+                        {/* {console.log(post.image)} */}
 
                             {post.image &&(
                             <img src={post.image} alt = 'Displayed Visual' className = 'image-rendered-post-view'></img>
