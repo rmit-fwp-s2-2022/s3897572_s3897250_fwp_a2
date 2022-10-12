@@ -23,10 +23,6 @@ module.exports = (sequelize, DataTypes) =>
       type: DataTypes.STRING,
       defaultValue: "none"
     },
-    email: {
-      type: DataTypes.STRING,
-      default: "peanutbutterjelly@gmail.com"
-    },
     date_joined: {
       type: DataTypes.STRING,
       defaultValue: "none"

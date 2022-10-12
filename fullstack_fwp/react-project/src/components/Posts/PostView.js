@@ -7,7 +7,6 @@ import { postContext } from '../Global_Pages/PostContext';
 import { findUser, updatePost, allReplies, createReply, singlePostFromUser, updateUser, deletePost, updateReactions, getReactions } from "../../data/repository";
 import ReactQuill, {UnprivilegedEditor} from "react-quill";
 import "quill/dist/quill.snow.css";
-import e from 'cors';
 
 
 
@@ -312,26 +311,36 @@ const PostView = (props) => {
         </div>
 
         <div className='post-view-view'>
-           
-            <div className='following-buttons'>
+        
+        {edit === false &&
 
-                { followed === true? (
-                    <button onClick = {unfollow} className='post-following' disabled = {isViewPoster}>Unfollow</button>
-                ) :
-                    <button onClick = {follow} className='post-following' disabled = {isViewPoster}>Follow</button>
-                }
+            <div className='top-button-container'>
 
-            </div>
 
-            <div>
+            <div className='like-dislike-buttons'>
                 <button onClick={like}>Like</button>
                 <button onClick={dislike}>Dislike</button>
             </div>
-            
+
             <div className='post-information'>
-            <p className='post-title'>{post.title}</p> 
+                <p className='post-title'>{post.title}</p> 
             </div>
 
+            <div className='following-buttons'>
+
+            { followed === true? (
+                <button onClick = {unfollow} className='post-following' disabled = {isViewPoster}>Unfollow {curUser.first_name}</button>
+            ) :
+                <button onClick = {follow} className='post-following' disabled = {isViewPoster}>Follow {curUser.first_name}</button>
+            }
+
+            </div>
+
+            </div>
+
+            }
+            
+    
             {edit === false ? (
 
                 // If edit is false, show only delete and edit options
@@ -347,10 +356,10 @@ const PostView = (props) => {
 
                     <div className='image-rendering'>
 
-                        {/* {console.log(post.image)} */}
+                        {console.log(post.image)}
 
-                            {post.image &&(
-                            <img src={post.image} alt = 'Displayed Visual' className = 'image-rendered-post-view'></img>
+                            {post.image !=='no-image' &&(
+                            <img src={post.image} alt = '' className = 'image-rendered-post-view'  onerror="this.style.display='none'"></img>
                             )}
 
                     </div>
@@ -403,6 +412,10 @@ const PostView = (props) => {
 
                 <div>
                 <div className='post-upper'>
+
+                    <div className='post-information'>
+                        <p className='post-title'>Post Title : {post.title}</p> 
+                    </div>
 
                     <ReactQuill theme="snow" defaultValue = {post.body} onChange={setBody} style={{ height: "180px" }} ref = {ref}/>
                     

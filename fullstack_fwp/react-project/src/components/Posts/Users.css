@@ -1,13 +1,52 @@
 .user-display-container{
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
     gap: 50px;
+    min-height: 100vh;
 }
 
 .user-title{
+    background-color: black;
+    color: wheat;
+    padding: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 35px;
+    font-size: 15px;
 }
+
+
+.posts-snippet{
+    display: flex;
+}
+
+.user-information-follow{
+    font-size: 10px;
+}
+
+.box-info-container{
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+}
+
+
+.unfollow-follow-button button{
+    width: 600px;
+    padding: 15px;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+}
+
+.unfollow-follow-button button:hover{
+    color: pink;
+    font-size: 110%;
+
+}
+
+
+

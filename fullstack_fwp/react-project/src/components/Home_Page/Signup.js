@@ -41,6 +41,7 @@ function SignUp() {
 
     if (user_obj !== false){
       // Set user state.
+
       setUser(user_obj)
 
       localStorage.setItem("user", JSON.stringify(user_obj))
@@ -56,6 +57,22 @@ function SignUp() {
     }
 
   }
+
+  function date_generate() {
+
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+
+    const currDate = new Date().getDate().toString();
+    const currYear = new Date().getFullYear().toString();
+    const currMonth = monthNames[new Date().getMonth()];
+    const currDay = new Date().toLocaleString('en-US', {weekday: 'long'});
+
+    const finalDate = 'Joined: ' + currDay + " " + currDate + " " + currMonth + " " + currYear;
+
+    return finalDate;
+
+}
 
 
   const handleValidation = async () => {
