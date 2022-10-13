@@ -27,8 +27,6 @@ const Users = () => {
 
         let users = await getUsers()
 
-        users.pop()
-
         setUsers(users)
 
     }

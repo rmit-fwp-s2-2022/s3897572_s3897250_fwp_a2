@@ -56,8 +56,9 @@
 .like-dislike-buttons button{
     background-color: black;
     color: white;
-    width: 200px;
+    width: 140px;
     padding: 15px;
+    border-radius: 15px;
 }
 
 .like-dislike-buttons button:hover{
@@ -67,7 +68,16 @@
 
 }
 
+.liked {
+    background-color: red;
+    padding: 15px 32px;
+}
 
+.disliked {
+    background-color: red;
+    padding: 15px 32px;
+
+}
 
 
 .post-information{
