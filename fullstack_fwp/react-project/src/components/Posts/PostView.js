@@ -27,6 +27,7 @@ const PostView = (props) => {
     const [isViewPoster, setViewPoster] = useState(null)
     const [liked, setLiked] = useState(false)
     const [disliked, setDisliked] = useState(false)
+    const [likeCount, setLikeCount] = useState(0)
 
 
     let navigate = useNavigate();
@@ -83,6 +84,8 @@ const PostView = (props) => {
             else {
 
             }
+
+            setLikeCount(reactions.likeCount)
     }
 
 
@@ -242,9 +245,19 @@ const PostView = (props) => {
 
             reactions.peopleWhoHaveLiked = JSON.stringify(likedUsers)
             reactions.peopleWhoHaveDisliked = JSON.stringify(dislikedUsers)
+        
+            // Update counter
+            if (disliked) {
+                reactions.likeCount = reactions.likeCount + 2
+            }
+            else {
+                reactions.likeCount = reactions.likeCount + 1
+            }
+
 
             await updateReactions(reactions)
 
+            setLikeCount(reactions.likeCount)
             setLiked(true)
             setDisliked(false)
 
@@ -275,8 +288,19 @@ const PostView = (props) => {
             reactions.peopleWhoHaveLiked = JSON.stringify(likedUsers)
             reactions.peopleWhoHaveDisliked = JSON.stringify(dislikedUsers)
 
+            // Update counter
+            if (liked) {
+                reactions.likeCount = reactions.likeCount - 2
+            }
+            else {
+                reactions.likeCount = reactions.likeCount - 1
+            }
+
+
             await updateReactions(reactions)
 
+
+            setLikeCount(reactions.likeCount)
             setDisliked(true)
             setLiked(false)
             
@@ -317,24 +341,49 @@ const PostView = (props) => {
             <div className='top-button-container'>
 
 
-            <div className='like-dislike-buttons'>
-                <button onClick={like}>Like</button>
-                <button onClick={dislike}>Dislike</button>
-            </div>
+                { liked === false && disliked === false ? (
+                    
+                        <div className='like-dislike-buttons'>
+                            <button onClick={like}>Like</button>
+                            <h4>{likeCount}</h4>
+                            <button onClick={dislike}>Dislike</button>
+                        </div>
 
-            <div className='post-information'>
-                <p className='post-title'>{post.title}</p> 
-            </div>
+                ):
 
-            <div className='following-buttons'>
+                    <div>
+                        { liked ? (
+                            <div className='like-dislike-buttons'>
+                                <button style={{backgroundColor: 'red', borderStyle: 'none'}} onClick={like}>Liked</button>
+                                <h4>{likeCount}</h4>
+                                <button onClick={dislike}>Dislike</button>
+                            </div>
+                        ):
+                            <div className='like-dislike-buttons'>
+                                <button onClick={like}>Like</button>
+                                <h4>{likeCount}</h4>
+                                <button style={{backgroundColor: 'red', borderStyle: 'none'}} onClick={dislike}>Disliked</button>
+                            </div>
+                        }
+                    </div>
 
-            { followed === true? (
-                <button onClick = {unfollow} className='post-following' disabled = {isViewPoster}>Unfollow {curUser.first_name}</button>
-            ) :
-                <button onClick = {follow} className='post-following' disabled = {isViewPoster}>Follow {curUser.first_name}</button>
-            }
+                }
 
-            </div>
+
+
+                <div className='post-information'>
+                    <p className='post-title'>{post.title}</p> 
+                </div>
+
+                <div className='following-buttons'>
+
+                    { followed === true ? (
+                        <button onClick = {unfollow} className='post-following' disabled = {isViewPoster}>Unfollow {curUser.first_name}</button>
+                    ) :
+                        <button onClick = {follow} className='post-following' disabled = {isViewPoster}>Follow {curUser.first_name}</button>
+                    }
+
+                </div>
 
             </div>
 

@@ -17,6 +17,7 @@ exports.createReactions = async (req, res) => {
       const updatedReactionsObj = await db.reactions.update({
           liked: req.body.liked,
           disliked: req.body.disliked,
+          likeCount: req.body.likeCount,
           peopleWhoHaveLiked: req.body.peopleWhoHaveLiked,
           peopleWhoHaveDisliked: req.body.peopleWhoHaveDisliked
       },

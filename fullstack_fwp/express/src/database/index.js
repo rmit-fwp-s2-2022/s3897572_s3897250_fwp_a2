@@ -125,7 +125,7 @@ async function seedData() {
     body: 'req.body.body',
     id: 1,
     image: 'req.body.image',
-    user_id: testing_id
+    user_id: 23233
   });
 
 
