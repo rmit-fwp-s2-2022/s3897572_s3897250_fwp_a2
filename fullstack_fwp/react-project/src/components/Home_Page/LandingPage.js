@@ -19,6 +19,8 @@ const Main = () => {
 
         <div className="main-content">
 
+             <h1>oo</h1>
+
             <div className = "webinfo-container">
 
                 <div className="website-information"> 
@@ -35,7 +37,7 @@ const Main = () => {
                 
             </div>
         
-                <div className = "text-info">What makes LAN better, for us and you?</div>
+                <div className = "text-info" id='damn'>What makes LAN better, for us and you?</div>
 
                         <div className = "boxes-container">
 

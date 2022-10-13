@@ -78,8 +78,6 @@ exports.update = async (req, res) => {
 // Deletes user from the database
 exports.delete = async (req, res) => {
 
-  console.log(req.params.id, "damnn id")
-
   const to_be_deleted = await db.user.destroy({where: {user_id:req.params.id} 
   
   });

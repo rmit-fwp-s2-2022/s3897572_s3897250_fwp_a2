@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    overflow-x: hidden;
 }
 
 .post-container-banner{
@@ -170,7 +171,6 @@
     display: flex;
     flex-direction: column;
     gap: 120px;
-    height: auto;
 }
 
 .comments-add button {
