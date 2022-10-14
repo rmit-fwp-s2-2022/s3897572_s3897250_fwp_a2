@@ -418,8 +418,10 @@ const PostView = (props) => {
 
                         <div className='comments-add'>
                             <ReactQuill theme="snow" value = {reply} onChange={setReply} style={{ height: "180px" }} ref = {ref}/>
-                            <button onClick={submitreply} className='add-comment'>Add a comment</button>
                         </div>
+
+                        <button onClick={submitreply} className='add-comment'>Add a comment</button>
+                                
 
                         <div className='comment-section'>
 

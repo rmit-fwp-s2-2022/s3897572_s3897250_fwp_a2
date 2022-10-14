@@ -8,8 +8,9 @@ const Profile = () =>{
 
     const {user, setUser} = useContext(userContext);
 
+
     
-    const [imageLink] = useState(user.profile_pic)
+    //const [imageLink] = useState(user.profile_pic)
     let navigate = useNavigate()
 
 

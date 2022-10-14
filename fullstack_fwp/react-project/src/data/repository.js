@@ -41,11 +41,10 @@ async function updateUser(user) {
 }
 
 async function deleteUser(id) {
-    const response = await axios.delete(API_HOST + `/api/users/delete/${id}`);
-
-    console.log(response, "respoonse")
-    
+    const response = await axios.delete(API_HOST + `/api/users/delete/${id}`);   
+  
     return response.data;
+
 }
   
 

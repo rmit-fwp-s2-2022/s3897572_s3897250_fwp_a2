@@ -4,7 +4,7 @@ import { verifyUser } from "../../data/repository";
 import {userContext} from "../Global_Pages/UserContext"
 import './Login.css'
 
-export default function Login() {
+export default function Login(props) {
   const navigate = useNavigate();
   const {user, setUser} = useContext(userContext)
 
@@ -26,6 +26,12 @@ export default function Login() {
       setFields({ ...fields, password: "" });
       setErrorMessage("Username and / or password invalid, please try again.");
       return;
+    }
+
+    if (props.handleSubmit){
+        props.handleSubmit(event)
+        navigate("/")
+        return;
     }
 
     // Set user state.

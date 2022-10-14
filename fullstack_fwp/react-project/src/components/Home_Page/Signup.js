@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import {userContext} from "../Global_Pages/UserContext"
 import {findUser, createUser} from "../../data/repository";
 import './Signup.css'
+import ProfilePosts from "../Posts/ProfilePosts";
 
-function SignUp() {
+function SignUp(props) {
 
   const navigate = useNavigate();
 
@@ -22,7 +23,7 @@ function SignUp() {
     setFields({ ...fields, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = async (event ) =>{
+const handleSubmit = async (event ) =>{
 
     event.preventDefault();
 
@@ -32,6 +33,11 @@ function SignUp() {
 
     if(!isValid)
       return;
+
+      if (props.handleSubmit){
+        props.handleSubmit(event)
+        return;
+      }
 
     // Create user.
 
