@@ -94,59 +94,22 @@ describe("If Sign up is sucessfully occuring different approach", () => {
 
 describe("Testing with invalid inputs during sign-up and then with valid inputs, then to finally submit the form", () => {
 
-    it("Testing with invalid inputs, and see if they are being captured correctly", async() => {
-
-        const username = screen.getByRole('textbox', {
-            name: /username/i
-          })
-
-        user.type(username, "parthivskill@gmail.com")
-
-        const firstname = screen.getByRole('textbox', {
-            name: /first name/i
-          })
-
-        user.type(firstname, "Parth")
-
-        const lastname = screen.getByRole('textbox', {
-            name: /last name/i
-          })
-
-        user.type(lastname, "Kulkarni")
-
-        const password = screen.getByLabelText(/password/i) 
-
-        user.type(password, "01877PARTHh!")
+    const mockFn = jest.fn();
 
 
-        user.click(screen.getByRole('button', {name: /sign up/i}));
-
-        await waitFor(() => {
-            expect(mockFn).toHaveBeenCalledTimes(1);
-        })
-
-
-
-
-    
-    })
-
-
-})
-
-
-test("Testing if key elements(inputs and sign up button) in the sign-up form exist", () => {
-
-    
+    beforeEach(() => {
         
         // eslint-disable-next-line testing-library/no-render-in-setup
-    const {container} = render(
+        render(
 
+
+
+        
         <BrowserRouter>
 
         <userContext.Provider value={"parthivskill@gmail.com"}>
 
-        <Signup/>
+        <Signup handleSubmit = {mockFn} setUser = {mockFn}/>
 
         </userContext.Provider>
 
@@ -154,27 +117,57 @@ test("Testing if key elements(inputs and sign up button) in the sign-up form exi
         
     );
 
+    })
 
 
+    it("Testing with all blank inputs", async() => {
 
-    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
-    const inputNode_username = container.querySelector('#username');
-    expect(inputNode_username).toBeInTheDocument();
+        user.click(screen.getByRole('button', {name: /sign up/i}));
 
-    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
-    const inputNode_userfirstname = container.querySelector('#firstname');
-    expect(inputNode_userfirstname).toBeInTheDocument();
+        await waitFor(() =>{
+            expect(mockFn).toHaveBeenCalledTimes(0) // It will be called 0 times it will not go through
+                                                    // to submission (handleSumbit line 38..)
+        })
+
+        expect(screen.getByText("Username is required.")).toBeInTheDocument();
+        expect(screen.getByText("First name is required.")).toBeInTheDocument();
+        expect(screen.getByText("Last name is required.")).toBeInTheDocument();
+        expect(screen.getByText("Password is required.")).toBeInTheDocument();
+
+
+        const username = screen.getByRole('textbox', {
+            name: /username/i
+          })
+
+        user.type(username, "parthivskillgmail.com")
+
+
+        const firstname = screen.getByRole('textbox', {
+            name: /first name/i
+          })
+
+        user.type(firstname, "Parth67")
+
+        const lastname = screen.getByRole('textbox', {
+            name: /last name/i
+          })
+
+        user.type(lastname, "KuKIA889lkarni")
+
+        const password = screen.getByLabelText(/password/i) 
+
+        user.type(password, "01877PARTHhxasiduoakldasdioasiodasdioasdiouasiodauo!")
+
+
+        user.click(screen.getByRole('button', {name: /sign up/i}));
+
+        await waitFor(() => {
+            expect(mockFn).toHaveBeenCalledTimes(0);
+        })
+
     
-    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
-    const inputNode_userlastname = container.querySelector('#lastname');
-    expect(inputNode_userlastname).toBeInTheDocument();
+    })
 
-    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
-    const inputNode_userpassword = container.querySelector('#password');
-    expect(inputNode_userpassword).toBeInTheDocument();
-
-    const button_signup = screen.getByRole("button");
-    expect(button_signup).toBeInTheDocument();
 
 })
 
@@ -225,6 +218,8 @@ describe("Login working with user that is already in the database and user not i
         await waitFor(() => {
             expect(mockFn).toHaveBeenCalledTimes(1);
         })
+
+
     
     })
     
@@ -260,61 +255,30 @@ describe("Login working with user that is already in the database and user not i
 
 
 
-/*
-
-describe("Checking whether the userContext the value that user signs with is reflected on the screen", () => {
-
-    const mockdata = {user_id:12134234, user_name: 'parthivskill@gmail.com', first_name: 'Parth', last_name: 'Kulkarni', date_joined: 'none'}
-                     // In the DB the user table contains more attributes, but they are not necessary here for our testing purposes.
-
-    const setUser = jest.fn(mockdata)                 
-    
-    render(
-        <BrowserRouter>
-        <userContext.Provider value={{addItem}}>
-            <Profile />
-        </userContext.Provider>
-        </BrowserRouter>
-
-        )
-
-    
-    it("Check whether the signed up user value that is supposdely stored in context is correct dipslaying on site", () => {
-        expect(screen.getByText("parthivskill@gmail.com")).toBeInTheDocument();
-    })
 
 
 
-//https://polvara.me/posts/mocking-context-with-react-testing-library
+test("Testing whether if user changes their details, it's again reflected on the profile page", () =>{
 
-
-
-
-})
-
-
-
-describe("Testing whether if user changes their details, it's again reflected on the profile page", () =>{
-
-    const mockdata = {user_id:12134234, user_name: 'parthivskill@gmail.com', first_name: 'Parth', last_name: 'Kulkarni', date_joined: 'none'}
+    const mockdata = {user_id:12134234, username: 'parthivskill@gmail.com', first_name: 'Parth', last_name: 'Kulkarni', date_joined: 'none'}
                      // In the DB the user table contains more attributes, but they are not necessary here for our testing purposes.
 
     render(
         <BrowserRouter>
-        <userContext.Provider value={"parthivskill@gmail.com"}>
+        <userContext.Provider value={{user: mockdata}}>
             <Profile/>
         </userContext.Provider>
         </BrowserRouter>
 
         )
+    
 
+    expect(screen.getByText(mockdata.username, {exact:false})).toBeInTheDocument();
+    
+    
+    })
 
-
-
-})
-
-
-*/ 
+ 
 
 
 
