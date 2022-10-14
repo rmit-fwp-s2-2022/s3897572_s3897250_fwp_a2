@@ -34,6 +34,10 @@ module.exports = (sequelize, DataTypes) =>
     following: {
       type: DataTypes.STRING,
       defaultValue: JSON.stringify([])
+    },
+    blocked: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
 
   }, {

@@ -10,7 +10,6 @@ const Header = () => {
     // of the client viewing the website.
 
     const {user, setUser} = useContext(userContext)
-    console.log(user)
 
     function handleLogout() {
         removeUser();
