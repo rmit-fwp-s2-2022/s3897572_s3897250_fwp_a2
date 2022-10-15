@@ -27,12 +27,18 @@ export default function Login(props) {
       setErrorMessage("Username and / or password invalid, please try again.");
       return;
     }
-
-    if (props.handleSubmit){
-        props.handleSubmit(event)
-        navigate("/")
-        return;
+    
+    if (user_obj.blocked === true) {
+      setFields({ ...fields, password: "" });
+      setErrorMessage("Your account has been blocked")
+      return
     }
+
+    // if (props.handleSubmit){
+    //     props.handleSubmit(event)
+    //     navigate("/")
+    //     return;
+    // }
 
     // Set user state.
     setUser(user_obj);

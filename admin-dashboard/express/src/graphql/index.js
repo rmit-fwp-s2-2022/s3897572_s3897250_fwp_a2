@@ -14,7 +14,7 @@ graphql.schema = buildSchema(`
   # Behind the scenes the database pet table has an additional field called email which is a FK to owner.
   
   type user {
-    user_id: Int,
+    user_id: String,
     username: String,
     password_hash: String,
     first_name: String,
@@ -22,6 +22,7 @@ graphql.schema = buildSchema(`
     date_joined: String,
     followers: String,
     following: String,
+    account_status: Boolean,
     posts: [post]
   }
 
@@ -60,20 +61,21 @@ graphql.schema = buildSchema(`
   # The input type can be used for incoming data.
 
   input userInput {
-    user_id: Int,
+    user_id: String,
     username: String,
     password_hash: String,
     first_name: String,
     last_name: String,
     date_joined: String,
     followers: String,
-    following: String
+    following: String,
+    account_status: Boolean
   }
   
   input postInput {
     title: String,
     body: String,
-    id: Int,
+    id: String,
     image: String
   }
 
@@ -102,15 +104,16 @@ graphql.schema = buildSchema(`
   # Queries (read-only operations).
 
   type Query {
-    all_users: [user]
+    all_users: [user],
+    all_posts: [post]
   }
 
 
   # Mutations (modify data in the underlying data-source, i.e., the database).
 
   type Mutation {
-    create_user(input: userInput): user,
-
+    update_user(input: userInput): user,
+    delete_post(input: postInput): post
   }
 `);
 
@@ -118,15 +121,33 @@ graphql.schema = buildSchema(`
 graphql.root = {
   // Queries.
   all_users: async () => {
-    return await db.user.findAll({ include: { model: db.post, as: "posts" } });
+    return await db.user.findAll();
+  },
+  all_posts: async () => {
+    return await db.post.findAll();
   },
 
   // Mutations.
-  create_user: async (args) => {
-    const user = await db.user.create(args.input);
+  update_user: async (args) => {
+    const user = await db.user.update({blocked: args.input.account_status},
+      {where: {
+        user_id: parseInt(args.input.user_id)
+      }
+    });
 
     return user;
+  },
+  delete_post: async (args) => {
+    const post = await db.post.destroy(
+      { where: {
+        id: parseInt(args.input.id)
+      }
+    });
+
+    return post;
   }
+
+
 };
 
 module.exports = graphql;
