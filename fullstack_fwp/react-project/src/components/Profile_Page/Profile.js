@@ -71,15 +71,15 @@ const Profile = () =>{
 
                 <div className='user-container'>
                 <div className= 'user-info'>
-                    <p>Full Name: {user.first_name + " " +  user.last_name}</p>
+                    <p data-testid = 'name'>Full Name: {user.first_name + " " +  user.last_name}</p>
                 </div>
 
                 <div className='email-info'>
-                    <p>Email: {user.username}</p>
+                    <p data-testid='email'>Email: {user.username}</p>
                 </div>
 
                 <div className='joined-info'>
-                    <p>{user.date_joined}</p>
+                    <p data-testid = 'date-joined'>{user.date_joined}</p>
                 </div>
 
                 </div>

@@ -6,11 +6,11 @@ import { createPost, createReactions } from "../../data/repository";
 import ReactQuill, {UnprivilegedEditor} from "react-quill";
 import "quill/dist/quill.snow.css";
 
-function CreatePost() {
+function CreatePost() { //props was passed through here for unit testing
 
     const {user, setUser} = useContext(userContext)
 
-    const [body, setBody] = useState("")
+    const [body, setBody] = useState('') //props.text was pass through here for unit testing
     const [title, setTitle] = useState("")
     const [image, setImage] = useState('')
     const [invalidimage, setInvalid] = useState(null)
@@ -68,16 +68,30 @@ function CreatePost() {
         // Creates a post object and then adds it to posts attribute
         // in local storage.
 
+
         if (((body.replace(/<(.|\n)*?>/g, "").trim().length === 0)) || (title === "")) {
             alert("Post or Title cannot be empty")
+            
         }
         else if ((body.length > 600)) {
             alert("Post cannot have more than 600 characters")
         }
 
+    
+
         else {
 
             // Post is valid and added to localstorage
+
+            
+           /* if (props.submitpost){        This was used for unit testing
+                console.log("bruhh ")
+                props.submitpost()
+                return;
+            } */
+
+            console.log("executing post sumbission")
+    
             
             let post_id = parseInt(Date.now())
 
@@ -140,12 +154,12 @@ function CreatePost() {
             <div className='post-form'>
                 <form className='post-input'>
                     <label htmlFor='title'></label>
-                    <input className='title-input' type='text' placeholder='Enter title' onChange={titleinput} maxLength = {150}></input>
+                    <input className='title-input' type='text' placeholder='Enter title' onChange={titleinput} maxLength = {150} data-testid = "title-input-unit-testing"></input>
                 </form>
 
                 <form className='post-input'>
                     <label htmlFor='text'></label>
-                    <div className='quill-editor'>
+                    <div className='quill-editor'> 
                     <ReactQuill theme="snow" value = {body} onChange={setBody} style={{ height: "180px" }} ref = {ref}/>
                     </div>
                 </form>

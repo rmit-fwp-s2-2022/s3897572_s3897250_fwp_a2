@@ -16,7 +16,7 @@ const PostView = (props) => {
     const [curUser, setCurUser] = useState('')
     const {posts, setPosts} = useContext(postContext)
     const idObj = useParams()
-    const [post, setPost] = useState("")
+    const [post, setPost] = useState('')
     const [postIndex, setPostIndex] = useState("")
     const [found, setFound] = useState(false)
     const [edit, setEdit] = useState(false)
@@ -328,7 +328,7 @@ const PostView = (props) => {
 
         <div className='post-container-banner'>
 
-            <h3> Post Title:  {post.title}</h3>
+            <h3 data-testid = "title-unit-testing-postsx"> Post Title:  {post.title}</h3>
             <small className='post-created-by'> Post Created by: {curUser.first_name} {curUser.last_name}</small>
 
 
@@ -344,8 +344,8 @@ const PostView = (props) => {
                 { liked === false && disliked === false ? (
                     
                         <div className='like-dislike-buttons'>
-                            <button onClick={like}>Like</button>
-                            <h4>{likeCount}</h4>
+                            <button data-testid = "like-button" onClick={like}>Like</button>
+                            <h4 data-testid = "like-counter">{likeCount}</h4>
                             <button onClick={dislike}>Dislike</button>
                         </div>
 
@@ -354,15 +354,15 @@ const PostView = (props) => {
                     <div>
                         { liked ? (
                             <div className='like-dislike-buttons'>
-                                <button style={{backgroundColor: 'red', borderStyle: 'none'}} onClick={like}>Liked</button>
-                                <h4>{likeCount}</h4>
-                                <button onClick={dislike}>Dislike</button>
+                                <button data-testid = "like-button" style={{backgroundColor: 'red', borderStyle: 'none'}} onClick={like}>Liked</button>
+                                <h4 data-testid = "like-counter">{likeCount}</h4>
+                                <button data-testid = "dislike-button" onClick={dislike}>Dislike</button>
                             </div>
                         ):
                             <div className='like-dislike-buttons'>
-                                <button onClick={like}>Like</button>
-                                <h4>{likeCount}</h4>
-                                <button style={{backgroundColor: 'red', borderStyle: 'none'}} onClick={dislike}>Disliked</button>
+                                <button data-testid = "like-button" onClick={like}>Like</button>
+                                <h4 data-test-id = "like-counter">{likeCount}</h4>
+                                <button data-testid = "dislike-button" style={{backgroundColor: 'red', borderStyle: 'none'}} onClick={dislike}>Disliked</button>
                             </div>
                         }
                     </div>
@@ -408,7 +408,7 @@ const PostView = (props) => {
                         {console.log(post.image)}
 
                             {post.image !=='no-image' &&(
-                            <img src={post.image} alt = '' className = 'image-rendered-post-view'  onerror="this.style.display='none'"></img>
+                            <img src={post.image} alt = '' className = 'image-rendered-post-view'  onError="this.style.display='none'"></img>
                             )}
 
                     </div>

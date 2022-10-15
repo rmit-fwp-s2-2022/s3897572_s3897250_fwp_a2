@@ -61,6 +61,9 @@ const Users = () => {
         setFollowing(true)
 
 
+        console.log(user)
+
+
     }
 
    

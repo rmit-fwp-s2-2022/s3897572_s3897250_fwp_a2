@@ -1,12 +1,10 @@
 import { render, screen, fireEvent, getByRole, waitFor} from "@testing-library/react";
 import { BrowserRouter, Routes } from "react-router-dom";
 import { userContext } from "../Global_Pages/UserContext";
-import {within} from '@testing-library/dom'
-import { useContext, useState } from "react";
 
 import user from "@testing-library/user-event";
-import Signup from "./Signup";
-import Login from "./Login";
+import Signup from "../Home_Page/Signup";
+import Login from "../Home_Page/Login";
 import Profile from "../Profile_Page/Profile";
 //Testing if the form has been submitted
 
@@ -20,8 +18,6 @@ import Profile from "../Profile_Page/Profile";
                    // Login - Interaction test, give inputs and capute errors and then give inputs again
                    // API Functions in front end in sign up, profile , login
                    // Profile Managment when user changes details the value in context is also changed.. test that 
-
-
 
 
 
@@ -92,7 +88,7 @@ describe("If Sign up is sucessfully occuring different approach", () => {
 
 
 
-describe("Testing with invalid inputs during sign-up and then with valid inputs, then to finally submit the form", () => {
+describe("Testing with invalid inputs during sign-up and then with valid inputs.", () => {
 
     const mockFn = jest.fn();
 
@@ -102,9 +98,6 @@ describe("Testing with invalid inputs during sign-up and then with valid inputs,
         // eslint-disable-next-line testing-library/no-render-in-setup
         render(
 
-
-
-        
         <BrowserRouter>
 
         <userContext.Provider value={"parthivskill@gmail.com"}>
@@ -129,10 +122,10 @@ describe("Testing with invalid inputs during sign-up and then with valid inputs,
                                                     // to submission (handleSumbit line 38..)
         })
 
-        expect(screen.getByText("Username is required.")).toBeInTheDocument();
-        expect(screen.getByText("First name is required.")).toBeInTheDocument();
-        expect(screen.getByText("Last name is required.")).toBeInTheDocument();
-        expect(screen.getByText("Password is required.")).toBeInTheDocument();
+        expect(await screen.findByText("Username is required.")).toBeInTheDocument();
+        expect(await screen.findByText("First name is required.")).toBeInTheDocument();
+        expect(await screen.findByText("Last name is required.")).toBeInTheDocument();
+        expect(await screen.findByText("Password is required.")).toBeInTheDocument();
 
 
         const username = screen.getByRole('textbox', {
@@ -164,6 +157,15 @@ describe("Testing with invalid inputs during sign-up and then with valid inputs,
         await waitFor(() => {
             expect(mockFn).toHaveBeenCalledTimes(0);
         })
+
+        expect(await screen.findByText("Email formatting is not correct.")).toBeInTheDocument();
+        expect(await screen.findByText("First Name cannot contain symbols or numbers")).toBeInTheDocument();
+        expect(await screen.findByText("Last Name cannot contain symbols or numbers")).toBeInTheDocument();
+        expect(await screen.findByText("Passwords should contain 8 to 15 characters, one uppercase letter, one numeric digit and one special character")).toBeInTheDocument();
+
+
+
+        
 
     
     })
@@ -254,10 +256,6 @@ describe("Login working with user that is already in the database and user not i
 })
 
 
-
-
-
-
 test("Testing whether if user changes their details, it's again reflected on the profile page", () =>{
 
     const mockdata = {user_id:12134234, username: 'parthivskill@gmail.com', first_name: 'Parth', last_name: 'Kulkarni', date_joined: 'none'}
@@ -273,9 +271,10 @@ test("Testing whether if user changes their details, it's again reflected on the
         )
     
 
-    expect(screen.getByText(mockdata.username, {exact:false})).toBeInTheDocument();
-    
-    
+    expect(screen.getByTestId('email')).toHaveTextContent(mockdata.username);
+    expect(screen.getByTestId('name')).toHaveTextContent(mockdata.first_name);
+    expect(screen.getByTestId('name')).toHaveTextContent(mockdata.last_name);
+
     })
 
  
