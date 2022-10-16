@@ -31,7 +31,7 @@ import './Login.css'
 */
 
 
-export default function Login(props) {
+export default function Login() { // props was passed here for unit testing
   const navigate = useNavigate();
   const {user, setUser} = useContext(userContext)
 
@@ -61,11 +61,11 @@ export default function Login(props) {
       return
     }
 
-    // if (props.handleSubmit){
-    //     props.handleSubmit(event)
-    //     navigate("/")
-    //     return;
-    // }
+   /* if (props.handleSubmit){
+        props.handleSubmit(event)
+        navigate("/")
+        return;
+        } */
 
     // Set user state.
     setUser(user_obj);

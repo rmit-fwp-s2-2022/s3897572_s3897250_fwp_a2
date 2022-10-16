@@ -40,6 +40,20 @@
     display: flex;
     flex-direction: column;
     align-self: center;
+    align-items: center;
+}
+
+.post-link-input{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+.post-link-input input{
+    padding: 20px;
+    height: 20px;
+    width: 350px;
 }
 
 .image-link-error{
@@ -92,6 +106,7 @@
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     width: 600px;
     font-size: 15px;
+    height: 50px;
 }
 
 .title-input:focus{
@@ -145,6 +160,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 250px;
+    margin-top: 100px;
 }
 

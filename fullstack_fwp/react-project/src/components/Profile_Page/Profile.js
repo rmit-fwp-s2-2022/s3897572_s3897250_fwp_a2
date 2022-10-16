@@ -3,8 +3,9 @@ import './Profile.css';
 import { useContext, useState } from 'react';
 import { userContext } from '../Global_Pages/UserContext';
 import {deleteUser, removeUser} from "../../data/repository";
+import ProfilePosts from '../Posts/ProfilePosts';
 
-const Profile = () =>{
+const Profile = () =>{ //props was used for unit testing
 
     const {user, setUser} = useContext(userContext);
 
@@ -17,12 +18,13 @@ const Profile = () =>{
     async function delete_account() {
         let val = window.confirm("Are you sure you want to delete your account? This will remove you from our system and all your created posts/replies")
 
-
         console.log(user.username, "deleting")
 
         if (val) {
         
             const deleted_user = await deleteUser(user.user_id)
+
+        
         
             setUser(null)
             removeUser();
@@ -64,7 +66,7 @@ const Profile = () =>{
 
         <div className='profile-container'>
             <div className='profile-info'>
-                <h1 className='profile-title'>Profile Management (Your Profile)</h1>
+                <h1 className='profile-title'>Welcome {user.first_name}</h1>
                 <div className='img-logo'>
                     <img className='user-profile-img' src = "/images/Profile_Page/profile_img.jpg"  alt=""></img>
                 </div>

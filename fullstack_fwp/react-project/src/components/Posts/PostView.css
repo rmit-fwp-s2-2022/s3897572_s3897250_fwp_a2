@@ -110,6 +110,7 @@
     flex-direction: column;
     gap: 20px;
     padding: 0px 300px;
+    min-height: 100px;
 }
 
 
@@ -183,7 +184,7 @@
     gap: 120px;
 }
 
-.comments-add button {
+.add-comment-button button {
     border-radius: 10px;
     border-style: none;
     padding: 10px;
@@ -191,19 +192,21 @@
     font-size: small;
     background-color: black;
     color: white;
-}
-
-.comments-add button:hover{
-    opacity: 0.5;
-}
-
-.comments-add button {
-    border-radius: 10px;
-    border-style: none;
-    padding: 5px;
     width: 200px;
     align-self: center;
     font-weight: bold;
+}
+
+.add-comment-button button:hover{
+    opacity: 0.5;
+}
+
+
+.add-comment-button{
+    display: flex;
+    flex-direction: column;
+    margin-top: 35px;
+
 }
 
 .comments-add textarea {

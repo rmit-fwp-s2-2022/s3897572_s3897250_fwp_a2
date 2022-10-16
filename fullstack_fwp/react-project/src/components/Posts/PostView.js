@@ -168,7 +168,7 @@ const PostView = (props) => {
             return;
           }
 
-        if (reply.length > 0) {
+        if (reply.length > 0 && reply.length < 255) {
             
             let newReply = await createReply(replyObj);
             let updatedPost = await singlePostFromUser(post.id)
@@ -182,7 +182,7 @@ const PostView = (props) => {
 
         }
         else {
-            window.alert("Your comment cannot be empty.")
+            window.alert("Your comment should contain less than 255 characters.")
         }
     }
 
@@ -410,7 +410,9 @@ const PostView = (props) => {
                             <ReactQuill theme="snow" value = {reply} placeholder = {"Add a comment..."} onChange={setReply} style={{ height: "180px" }} ref = {ref}/>
                         </div>
 
+                        <div className='add-comment-button'>
                         <button onClick={submitreply} className='add-comment'>Add a comment</button>
+                        </div>
                                 
 
                         <div className='comment-section'>

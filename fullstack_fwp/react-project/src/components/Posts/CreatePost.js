@@ -10,7 +10,7 @@ function CreatePost() { //props was passed through here for unit testing
 
     const {user, setUser} = useContext(userContext)
 
-    const [body, setBody] = useState('') //props.text was pass through here for unit testing
+    const [body, setBody] = useState() //props.text was pass through here for unit testing
     const [title, setTitle] = useState("")
     const [image, setImage] = useState('')
     const [invalidimage, setInvalid] = useState(null)
@@ -81,14 +81,15 @@ function CreatePost() { //props was passed through here for unit testing
 
         else {
 
-            // Post is valid and added to localstorage
+            // Post is valid and added to database
 
-            
-           /* if (props.submitpost){        This was used for unit testing
-                console.log("bruhh ")
+           /* if (props.submitpost){
                 props.submitpost()
                 return;
             } */
+
+            
+
 
             console.log("executing post sumbission")
     
@@ -116,11 +117,11 @@ function CreatePost() { //props was passed through here for unit testing
             await createPost(post)
             await createReactions(reactions)
 
-            await image
 
             // navigate("/ProfilePost)
             navigate(`/ProfilePosts/${user.user_id}`)
             alert("New post created!")
+
 
         }
 
@@ -160,14 +161,16 @@ function CreatePost() { //props was passed through here for unit testing
                 <form className='post-input'>
                     <label htmlFor='text'></label>
                     <div className='quill-editor'> 
-                    <ReactQuill theme="snow" value = {body} onChange={setBody} style={{ height: "180px" }} ref = {ref}/>
+                    <ReactQuill theme="snow" value = {body} onChange={setBody} placeholder = {"Add text to Post.."} style={{ height: "180px" }} ref = {ref}/>
                     </div>
                 </form>
             </div>
             
             <div className='post-buttons'>
-                <label>Add Image with Post -- Enter URL: (Can be Local or Image Address Sourced Online)</label>
-                <input type="text" placeholder='https://...' className = 'image-upload-input' onChange = {handleImage} name ='upload' ref={ref}/>
+                <div className='post-link-input'>
+                 <input type="text" placeholder='https://...' className = 'image-upload-input' onChange = {handleImage} name ='upload' ref={ref}/>
+                 <label>Add Image with Post -- Enter URL: (Image Address Sourced Online)</label>
+                 </div>
             </div>
 
             <div className='image-link-error'>

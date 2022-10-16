@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 import {userContext} from "../Global_Pages/UserContext"
 import {findUser, createUser} from "../../data/repository";
 import './Signup.css'
-import ProfilePosts from "../Posts/ProfilePosts";
-
 
 /* MARKER INSTRUCTIONS / CODE REFERENCES:
 
@@ -28,13 +26,13 @@ import ProfilePosts from "../Posts/ProfilePosts";
     regex-letter only expression sourced from: https://stackoverflow.com/questions/3073176/javascript-regex-only-english-letters-allowed
     
 4)
-    The handleSubmit and validation code have been used from the lab 8, provided by shekhar 
+    The handleSubmit and validation code have been used from the lab 8, provided by shekhar and the team at RMIT :)
 
 */
 
 
 
-function SignUp(props) {
+function SignUp() { // props was used for unit testing
 
   const navigate = useNavigate();
 
@@ -66,7 +64,7 @@ const handleSubmit = async (event ) =>{
     /*if (props.handleSubmit){
         props.handleSubmit(event)
         return;
-      } */
+      } */ 
 
     // Create user.
 
@@ -85,9 +83,12 @@ const handleSubmit = async (event ) =>{
       setUser(user_obj)
 
       localStorage.setItem("user", JSON.stringify(user_obj))
-
       // Navigate to the home page.
       navigate("/Profile");
+
+      window.alert("Sign up successful")
+
+
 
     }
 

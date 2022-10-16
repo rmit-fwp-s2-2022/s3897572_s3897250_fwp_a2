@@ -6,9 +6,17 @@ import user from "@testing-library/user-event";
 import Signup from "../Home_Page/Signup";
 import Login from "../Home_Page/Login";
 import Profile from "../Profile_Page/Profile";
+import ProfileManage from "../ProfileManagement/profile_managment"
 //Testing if the form has been submitted
 
 
+/*General Testing Information:
+
+  Passed down context and browser within the render as this was how it was set up within our App.js 
+
+  https://testing-playground.com/ - Used this for identifying DOM Elements
+
+*/
 
 
 
@@ -21,7 +29,12 @@ import Profile from "../Profile_Page/Profile";
 
 
 
-describe("If Sign up is sucessfully occuring different approach", () => {
+// Justification: This unit test was done as ensuring users signs up with correct details is essential and a functional requirement. 
+// This why it was tested.
+// We tested it by creating a prop that was passed down within the handleSumbit component and if it was encountered by the code
+// we assumed that the sign up was successfully working. 
+
+describe("If Sign up is successfully occurring with valid inputs", () => {
 
     const mockFn = jest.fn();
 
@@ -29,11 +42,11 @@ describe("If Sign up is sucessfully occuring different approach", () => {
     beforeEach(() => {
         
         // eslint-disable-next-line testing-library/no-render-in-setup
-        render(
+        render(  
 
         <BrowserRouter>
 
-        <userContext.Provider value={"parthivskill@gmail.com"}>
+        <userContext.Provider value={"parthivskill@gmail.com"}>  
 
         <Signup handleSubmit = {mockFn} setUser = {mockFn}/>
 
@@ -84,8 +97,15 @@ describe("If Sign up is sucessfully occuring different approach", () => {
    });
 
 
+/* Justification: This tested was done to ensure that if the user makes incorrect inputs within the sign-up form they are aware, 
+                  of where they have gone wrong. This test was important for accessibility and navigational purposes. 
 
-describe("Testing with invalid inputs during sign-up and then with valid inputs.", () => {
+                  The test consists of validation messages for blank inputs and inputs that contain regex errors.
+
+
+*/
+
+describe("Testing with invalid inputs during sign-up and then with inputs that invoke regex errors .", () => {
 
     const mockFn = jest.fn();
 
@@ -110,7 +130,7 @@ describe("Testing with invalid inputs during sign-up and then with valid inputs.
     })
 
 
-    it("Testing with all blank inputs", async() => {
+    it("Testing with all blank inputs and inputs that contain regex errors", async() => {
 
         user.click(screen.getByRole('button', {name: /sign up/i}));
 
@@ -169,6 +189,15 @@ describe("Testing with invalid inputs during sign-up and then with valid inputs.
 
 
 })
+
+
+/* Justification: This test was conducted in two parts (negative and positive). The negative part we tested with user that does not 
+                  exist within the db and tested to ensure that the system did not log the user in and displayed the correct 
+                  error message. In the positive part we tested to ensure that the user is correctly logged in. 
+
+                  This test was done to ensure that the login functions are working appropriately and help assess the robustness
+                  of login inputs. 
+*/
 
 
 describe("Login working with user that is already in the database and user not in the database - POSTIVE NEGATIVE TESTING", () => {
@@ -253,7 +282,15 @@ describe("Login working with user that is already in the database and user not i
 })
 
 
-test("Testing whether if user changes their details, it's again reflected on the profile page", () =>{
+/* Justification: We tested this to ensure that the userContext Hook is correctly working. This was done, as whenever the user
+                  updates their details, it will be updated on context, so its essential that values from the context are 
+                  correctly read and mapped on to the page. 
+
+
+*/
+
+
+test("Testing whether the context hook correctly works within the Profile Component", () =>{
 
     const mockdata = {user_id:12134234, username: 'parthivskill@gmail.com', first_name: 'Parth', last_name: 'Kulkarni', date_joined: 'none'}
                      // In the DB the user table contains more attributes, but they are not necessary here for our testing purposes.
@@ -273,6 +310,8 @@ test("Testing whether if user changes their details, it's again reflected on the
     expect(screen.getByTestId('name')).toHaveTextContent(mockdata.last_name);
 
     })
+
+ 
 
  
 

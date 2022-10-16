@@ -14,6 +14,8 @@ import CreatePost from "./components/Posts/CreatePost"
 import ProfilePosts from "./components/Posts/ProfilePosts"
 import PostView from "./components/Posts/PostView";
 import Users from "./components/Posts/Users"
+;
+
 
 
 export default function App() {
@@ -22,7 +24,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
-    
+
     <userContext.Provider value={{user, setUser}}>
 
 
