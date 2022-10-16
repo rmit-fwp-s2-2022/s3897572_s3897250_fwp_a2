@@ -4,6 +4,33 @@ import { verifyUser } from "../../data/repository";
 import {userContext} from "../Global_Pages/UserContext"
 import './Login.css'
 
+
+/* MARKER INSTRUCTIONS / CODE REFERENCES:
+
+1) 
+    So this contains To check a password between 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter
+    Sourced regex expression from: https://www.w3resource.com/javascript/form/password-validation.php
+
+2) 
+    In order to validate our emails we have used the following regex expression and have got it from the following website:
+
+    regex-expression: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+
+    regex-email sourced from: https://www.w3resource.com/javascript/form/email-validation.php#:~:text=To%20get%20a%20valid%20email,%5D%2B).
+
+3) 
+    In order to validate our first name and last name to only contain letters we have used the following regex expression and got it from the following web:
+    
+    regex-expression: /^[a-zA-Z]+$/
+    regex-letter only expression sourced from: https://stackoverflow.com/questions/3073176/javascript-regex-only-english-letters-allowed
+    
+4)
+    The handleSubmit and validation code have been used from the lab 8, provided by shekhar 
+
+
+*/
+
+
 export default function Login(props) {
   const navigate = useNavigate();
   const {user, setUser} = useContext(userContext)
