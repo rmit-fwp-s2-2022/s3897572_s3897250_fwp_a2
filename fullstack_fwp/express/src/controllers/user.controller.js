@@ -48,6 +48,7 @@ exports.create = async (req, res) => {
       user_id: req.body.user_id,
       first_name: req.body.firstname,
       last_name: req.body.lastname,
+      date_joined: req.body.date_joined
     });
 
     res.json(user);
@@ -56,7 +57,7 @@ exports.create = async (req, res) => {
 
   else{
 
-    return false;
+    res.json(null)
 
 
   }

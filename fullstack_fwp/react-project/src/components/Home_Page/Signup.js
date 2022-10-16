@@ -14,7 +14,7 @@ function SignUp(props) {
   const {user, setUser} = useContext(userContext)
 
   const [fields, setFields] = useState({
-    username: "", firstname: "", lastname: "",  password: "", user_id: parseInt(Date.now())
+    username: "", firstname: "", lastname: "",  password: "", user_id: parseInt(Date.now()), date_joined: date_generate()
   });
   const [errors, setErrors] = useState({ });
 
@@ -29,23 +29,30 @@ const handleSubmit = async (event ) =>{
 
     const {isValid} = await handleValidation();
 
+    console.log(isValid)
+
     console.log(fields)
 
     if(!isValid)
       return;
 
-      if (props.handleSubmit){
+    /*if (props.handleSubmit){
         props.handleSubmit(event)
         return;
-      }
+      } */
 
     // Create user.
 
+    console.log("before user_obj")
+
     const user_obj = await createUser(fields);
 
-    console.log(user_obj, "user_obj")
+    console.log(user_obj)
 
-    if (user_obj !== false){
+    if (user_obj !== null){
+
+      console.log(user_obj, "user_obj")
+
       // Set user state.
 
       setUser(user_obj)
@@ -54,12 +61,17 @@ const handleSubmit = async (event ) =>{
 
       // Navigate to the home page.
       navigate("/Profile");
+
     }
 
     else{
-      return(
-        <div>An Account with that username already exists!</div>
-      )
+
+      const currentErrors = { } 
+      let key = "username";
+      let field = fields[key];
+      currentErrors[key] = "Username is already registered.";
+      setErrors(currentErrors)
+
     }
 
   }
@@ -93,7 +105,7 @@ const handleSubmit = async (event ) =>{
     else if(field.length > 32)
       currentErrors[key] = "Username length cannot be greater than 32.";
     else if(await findUser(fields.username) !== null)
-      currentErrors[key] = "Username is already registered.";
+      console.log("bruh you there")
     
     else if (field.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) == null)
       currentErrors[key] = "Email formatting is not correct."
@@ -128,6 +140,9 @@ const handleSubmit = async (event ) =>{
     }
 
     setErrors(currentErrors);
+
+    console.log(errors, 144)
+
 
     return {isValid: Object.keys(currentErrors).length === 0 };
   };
@@ -184,7 +199,7 @@ const handleSubmit = async (event ) =>{
       <div className="signup-box">
 
         <label htmlFor="password" className="control-label">
-                  Password <small className="text-muted">must be at least 6 characters</small>
+                  Password <small className="text-muted"></small>
                 </label>
                 <input type="password" name="password" id="password" className="form-control"
                   value={fields.password} onChange={handleInputChange} />

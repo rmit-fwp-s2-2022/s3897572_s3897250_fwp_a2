@@ -163,6 +163,11 @@ const PostView = (props) => {
             date: curDate,
         }
 
+        if(ref.current.value.replace(/<(.|\n)*?>/g, "").trim().length === 0) {
+            window.alert("You comment cannot be empty");
+            return;
+          }
+
         if (reply.length > 0) {
             
             let newReply = await createReply(replyObj);
@@ -174,11 +179,10 @@ const PostView = (props) => {
             setReplies(replies)
 
             setReply("")
-            ref.current.value =  ''
 
         }
         else {
-            window.alert("You comment cannot be empty.")
+            window.alert("Your comment cannot be empty.")
         }
     }
 
@@ -366,7 +370,7 @@ const PostView = (props) => {
                     { followed === true ? (
                         <button onClick = {unfollow} className='post-following' disabled = {isViewPoster}>Unfollow {curUser.first_name}</button>
                     ) :
-                        <button onClick = {follow} className='post-following' disabled = {isViewPoster}>Follow {curUser.first_name}</button>
+                        <button onClick = {follow} className='post-following' disabled = {isViewPoster}> Follow {curUser.first_name}</button>
                     }
 
                 </div>
@@ -403,7 +407,7 @@ const PostView = (props) => {
                     <div className='comments'>
 
                         <div className='comments-add'>
-                            <ReactQuill theme="snow" value = {reply} onChange={setReply} style={{ height: "180px" }} ref = {ref}/>
+                            <ReactQuill theme="snow" value = {reply} placeholder = {"Add a comment..."} onChange={setReply} style={{ height: "180px" }} ref = {ref}/>
                         </div>
 
                         <button onClick={submitreply} className='add-comment'>Add a comment</button>
@@ -454,7 +458,7 @@ const PostView = (props) => {
                         <p className='post-title'>Post Title : {post.title}</p> 
                     </div>
 
-                    <ReactQuill theme="snow" defaultValue = {post.body} onChange={setBody} style={{ height: "180px" }} ref = {ref}/>
+                    <ReactQuill theme="snow" defaultValue = {post.body}  placeholder = {"Edit Post..."} onChange={setBody} style={{ height: "180px" }} ref = {ref}/>
                     
                     <div className='post-buttons'>
                         <button className='post-view-buttons' onClick={submit}>Submit</button>

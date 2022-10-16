@@ -124,7 +124,7 @@ async function seedData() {
     username: 'seq.body.username',
     body: 'req.body.body',
     id: 1,
-    image: 'req.body.image',
+    image: 'no-image',
     user_id: 23233
   });
 

@@ -19,8 +19,6 @@ const Main = () => {
 
         <div className="main-content">
 
-             <h1>oo</h1>
-
             <div className = "webinfo-container">
 
                 <div className="website-information"> 
