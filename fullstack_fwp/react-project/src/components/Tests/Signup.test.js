@@ -31,9 +31,6 @@ describe("If Sign up is sucessfully occuring different approach", () => {
         // eslint-disable-next-line testing-library/no-render-in-setup
         render(
 
-
-
-        
         <BrowserRouter>
 
         <userContext.Provider value={"parthivskill@gmail.com"}>
