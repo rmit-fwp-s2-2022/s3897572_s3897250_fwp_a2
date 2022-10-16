@@ -16,18 +16,14 @@ import PostView from "./components/Posts/PostView";
 import Users from "./components/Posts/Users"
 
 
-// ProfilePosts, PostView
-
 export default function App() {
 
   const [user, setUser] = useState(getUser()); // User has not been registered, so set to null. 
-  const [posts, setPosts] = useState([])
 
   return (
     <BrowserRouter>
     
     <userContext.Provider value={{user, setUser}}>
-    <postContext.Provider value={{posts, setPosts}}>
 
 
       <Header></Header>
@@ -55,37 +51,8 @@ export default function App() {
 
       <Footer></Footer>
 
-    </postContext.Provider>
     </userContext.Provider>
 
     </BrowserRouter>
   );
 }
-
-
-
-// New file needed for public posts, would contain:
-//    - All posts in the posts database in whatever order
-//    - Would map out the posts to their corresponding PostView component
-//    - Would map out a link for ProfilePosts (to corresponding profile id's)
-
-
-  // Credit:
-
-// For this, we would need:
-//    - An API call to retrieve all posts (via users) in the database - PublicPosts
-//    - An API call (findUser) for all posts of a specific user - 
-//    - An API call for all comments of a specific post (findUser)
-//    - An API call for all replies of a specific comment (findUser)
-//    - Corresponding controllers and routes for each
-
-// Nested
-
-  // Distinction:
-
-//    - 
-
-
-// Notes:
-
-//    - Documentation for all files (seuqelize, etc)

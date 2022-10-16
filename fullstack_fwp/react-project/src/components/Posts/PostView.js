@@ -14,10 +14,8 @@ const PostView = (props) => {
 
     const {user, setUser} = useContext(userContext)
     const [curUser, setCurUser] = useState('')
-    const {posts, setPosts} = useContext(postContext)
     const idObj = useParams()
     const [post, setPost] = useState('')
-    const [postIndex, setPostIndex] = useState("")
     const [found, setFound] = useState(false)
     const [edit, setEdit] = useState(false)
     const [body, setBody] = useState(null)
@@ -100,8 +98,7 @@ const PostView = (props) => {
 
     async function HandledeletePost(event) {
 
-            // Deletes the post (using the postsIndex to find
-            // which post to delete) 
+            // Deletes the post (using the posts id)
 
         await deletePost(post.id)
 
@@ -246,7 +243,7 @@ const PostView = (props) => {
             reactions.peopleWhoHaveLiked = JSON.stringify(likedUsers)
             reactions.peopleWhoHaveDisliked = JSON.stringify(dislikedUsers)
         
-            // Update counter
+
             if (disliked) {
                 reactions.likeCount = reactions.likeCount + 2
             }
@@ -288,7 +285,7 @@ const PostView = (props) => {
             reactions.peopleWhoHaveLiked = JSON.stringify(likedUsers)
             reactions.peopleWhoHaveDisliked = JSON.stringify(dislikedUsers)
 
-            // Update counter
+
             if (liked) {
                 reactions.likeCount = reactions.likeCount - 2
             }
@@ -306,17 +303,6 @@ const PostView = (props) => {
             
         }
     }
-
-    // - Relate post with reactions
-    // - Have a method to check for the columns for their values
-    // - If the value is true for a certain reaction (column), load it in state
-    // - Use the state to render the 
-
-
-
-
-
-
 
 
 
